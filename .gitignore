@@ -3,3 +3,7 @@ node_modules
 public/bundle.*
 package-lock.json
 yarn.lock
+cache
+.cache
+vendor
+app/config/config.php
