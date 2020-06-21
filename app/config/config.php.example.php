@@ -18,6 +18,7 @@ return new \Phalcon\Config([
     ],
     'application' => [
         'appDir'         => APP_PATH . '/',
+        'routesDir'      => APP_PATH . '/routes/',
         'controllersDir' => APP_PATH . '/controllers/',
         'modelsDir'      => APP_PATH . '/models/',
         'migrationsDir'  => APP_PATH . '/migrations/',

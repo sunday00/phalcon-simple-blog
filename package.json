@@ -1,0 +1,24 @@
+{
+  "name": "phalcon-simple-blog",
+  "version": "1.0.0",
+  "description": "git clone https://github.com/sunday00/phalcon-simple-blog.git",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sunday00/phalcon-simple-blog.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sunday00/phalcon-simple-blog/issues"
+  },
+  "homepage": "https://github.com/sunday00/phalcon-simple-blog#readme",
+  "dependencies": {
+    "svelte": "^3.23.2",
+    "tailwindcss": "^1.4.6"
+  }
+}

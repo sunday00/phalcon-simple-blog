@@ -1,14 +1,20 @@
 <?php
 declare(strict_types=1);
 
+use Phalcon\Mvc\Dispatcher;
+
 use Phalcon\Escaper;
 use Phalcon\Flash\Direct as Flash;
-use Phalcon\Mvc\Model\Metadata\Memory as MetaDataAdapter;
+use Phalcon\Flash\Session as FlashSession;
+use Phalcon\Mvc\Model\MetaData\Redis as MetaDataAdapter;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\View\Engine\Php as PhpEngine;
 use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
-use Phalcon\Session\Adapter\Stream as SessionAdapter;
+
 use Phalcon\Session\Manager as SessionManager;
+use Phalcon\Session\Adapter\Redis;
+use Phalcon\Storage\AdapterFactory;
+use Phalcon\Storage\SerializerFactory;
 use Phalcon\Url as UrlResolver;
 
 /**
@@ -35,6 +41,10 @@ $di->setShared('url', function () {
  */
 $di->setShared('view', function () {
     $config = $this->getConfig();
+
+    if ($config->mode == 'dev') {
+        array_map('unlink', array_filter( (array) glob(BASE_PATH."/cache/*.php")));
+    }
 
     $view = new View();
     $view->setDI($this);
@@ -87,7 +97,9 @@ $di->setShared('db', function () {
  * If the configuration specify the use of metadata adapter use it or use memory otherwise
  */
 $di->setShared('modelsMetadata', function () {
-    return new MetaDataAdapter();
+//    return new MetaDataAdapter();
+    $config = $this->getConfig();
+    return new MetaDataAdapter( new \Phalcon\Cache\AdapterFactory, $config->redis->toArray() );
 });
 
 /**
@@ -98,10 +110,35 @@ $di->set('flash', function () {
     $flash = new Flash($escaper);
     $flash->setImplicitFlush(false);
     $flash->setCssClasses([
-        'error'   => 'alert alert-danger',
-        'success' => 'alert alert-success',
-        'notice'  => 'alert alert-info',
-        'warning' => 'alert alert-warning'
+        'error'   => 'alert alert-danger msg',
+        'success' => 'alert alert-success msg',
+        'notice'  => 'alert alert-info msg',
+        'warning' => 'alert alert-warning msg'
+    ]);
+
+    return $flash;
+});
+
+/**
+ * Register the session flash service with the Twitter Bootstrap classes
+ */
+$di->set('flashSession', function () {
+    $config = $this->getConfig();
+    $escaper = new Escaper();
+    $session = new SessionManager();
+
+    $factory = new AdapterFactory( new SerializerFactory );
+    $redis = new Redis($factory, $config->redis->toArray());
+
+    $session->setAdapter($redis)->start();
+
+    $session->setAdapter($redis);
+    $flash   = new FlashSession($escaper, $session);
+    $flash->setCssClasses([
+        'error'   => 'alert alert-danger msg',
+        'success' => 'alert alert-success msg',
+        'notice'  => 'alert alert-info msg',
+        'warning' => 'alert alert-warning msg'
     ]);
 
     return $flash;
@@ -111,12 +148,32 @@ $di->set('flash', function () {
  * Start the session the first time some component request the session service
  */
 $di->setShared('session', function () {
+    $config = $this->getConfig();
     $session = new SessionManager();
-    $files = new SessionAdapter([
-        'savePath' => sys_get_temp_dir(),
-    ]);
-    $session->setAdapter($files);
-    $session->start();
+    $factory = new AdapterFactory( new SerializerFactory );
+    $redis = new Redis($factory, $config->redis->toArray());
+
+    $session->setAdapter($redis)->start();
 
     return $session;
 });
+
+/**
+ * Overwrite custom dispatcher
+ */
+$di->set(
+    'dispatcher',
+    function () use ($di) {
+        $dispatcher = new Dispatcher();
+
+        // namespace setting
+        $dispatcher->setDefaultNamespace('App\Controllers');
+
+        // register Acl
+        $eventsManager = $di->getShared('eventsManager');
+        $eventsManager->attach('dispatch:beforeDispatch', new App\Plugins\Acl($di));
+        $dispatcher->setEventsManager($eventsManager);
+
+        return $dispatcher;
+    }
+);
