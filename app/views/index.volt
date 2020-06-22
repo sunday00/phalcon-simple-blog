@@ -12,10 +12,21 @@
         <link rel="stylesheet" href="dist/resources.e31bb0bc.css">
         
     </head>
-    <body>
-        <div class="container">
-            <?php echo $this->getContent(); ?>
+    <body class="min-h-screen flex flex-col">
+        <header class="w-screen xl flex-none">
+            {% include "layouts/header.volt" %}
+        </header>
+        <div class="w-screen xl flex flex-grow flex-1">
+            <div class="flex flex-1">
+                {% include "layouts/left.volt" %}
+                <div class="flex-grow content">
+                    <?php echo $this->getContent(); ?>
+                </div>
+            </div>
         </div>
         <script src="dist/resources.e31bb0bc.js"></script>
+        <footer class="flex-none bg-{{ theme }}-accent text-{{ theme }}-light text-center p-6">
+            {% include "layouts/footer.volt" %}
+        </footer>
     </body>
 </html>

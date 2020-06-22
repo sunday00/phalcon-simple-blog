@@ -5,6 +5,18 @@ module.exports = {
   important: false,
   separator: ':',
   theme: {
+    extend: {
+      colors: {
+        rustic: {
+          primary: '#49a79f',
+          accent: '#3a5f6b',
+          light:'#b2f5ea',
+          secondary: '#ffb87a',
+          secondaryAccent:'#ffe28e',
+          secondaryLight: '#ffe28e'
+        },
+      }
+    },
     screens: {
       sm: '640px',
       md: '768px',
@@ -17,6 +29,11 @@ module.exports = {
 
       black: '#000',
       white: '#fff',
+
+      accent: '#e37c5c',
+      light: '#ffe28e',
+      sub: '#49a79f',
+      dark: '#3a5f6b',
 
       gray: {
         100: '#f7fafc',
