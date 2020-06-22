@@ -39,10 +39,10 @@ class Acl extends Memory
                 $this->flash->error("Permission denied");
             }
 
-            $dispatcher->forward([
-                'controller' => 'auth',
-                'action'     => 'index'
-            ]);
+            // $dispatcher->forward([
+            //     'controller' => 'auth',
+            //     'action'     => 'index'
+            // ]);
 
             return false;
         }
@@ -78,7 +78,7 @@ class Acl extends Memory
 
     private function setAllows()
     {
-//        $this->allow('*', 'index', '*');
+       $this->allow('*', 'index', '*');
 //
 //        $this->allow('guest', 'auth', ['index', 'signIn', 'signUp', 'register']);
 //

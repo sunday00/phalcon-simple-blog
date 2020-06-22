@@ -2,27 +2,24 @@
   "name": "svelte-app",
   "version": "1.0.0",
   "devDependencies": {
-    "autoprefixer": "^9.8.2",
-    "cross-env": "^7.0.2",
-    "css-loader": "^3.6.0",
-    "mini-css-extract-plugin": "^0.9.0",
-    "node-sass": "^4.14.1",
-    "path": "^0.12.7",
+    "parcel-bundler": "^1.12.4",
+    "parcel-plugin-svelte": "^4.0.6",
     "postcss": "^7.0.32",
-    "postcss-cli": "^7.1.1",
-    "postcss-loader": "^3.0.0",
-    "sass-loader": "^8.0.2",
-    "style-loader": "^1.2.1",
+    "sass": "^1.26.8",
     "svelte": "^3.23.2",
-    "svelte-loader": "^2.13.6",
-    "svelte-preprocess": "^3.9.9",
-    "tailwindcss": "^1.4.6",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.12"
+    "svelte-preprocess": "^3.9.8",
+    "tailwindcss": "^1.4.6"
   },
   "dependencies": {},
   "scripts": {
-    "build": "cross-env NODE_ENV=production webpack",
-    "dev": "webpack --content-base public --mode development --watch"
-  }
+    "dev": "parcel resources/index.html --public-url ./dist/",
+    "build": "parcel build resources/index.html"
+  },
+  "browserslist": [
+    "last 3 and_chr versions",
+    "last 3 chrome versions",
+    "last 3 opera versions",
+    "last 3 ios_saf versions",
+    "last 3 safari versions"
+  ]
 }
