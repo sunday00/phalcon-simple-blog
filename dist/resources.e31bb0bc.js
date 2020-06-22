@@ -2280,20 +2280,15 @@ const file = "components/Main/Index.svelte";
 function add_css() {
   var style = (0, _internal.element)("style");
   style.id = "svelte-1rptoyp-style";
-  style.textContent = "h1.svelte-1rptoyp{text-align:center}\n";
+  style.textContent = "\n";
   (0, _internal.append_dev)(document.head, style);
 }
 
 function create_fragment(ctx) {
   let section;
-  let h1;
   const block = {
     c: function create() {
       section = (0, _internal.element)("section");
-      h1 = (0, _internal.element)("h1");
-      h1.textContent = "Hello Main.....";
-      (0, _internal.attr_dev)(h1, "class", "text-blue-200 svelte-1rptoyp");
-      (0, _internal.add_location)(h1, file, 1, 4, 14);
       (0, _internal.add_location)(section, file, 0, 0, 0);
     },
     l: function claim(nodes) {
@@ -2301,7 +2296,6 @@ function create_fragment(ctx) {
     },
     m: function mount(target, anchor) {
       (0, _internal.insert_dev)(target, section, anchor);
-      (0, _internal.append_dev)(section, h1);
     },
     p: _internal.noop,
     i: _internal.noop,
@@ -2674,7 +2668,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50580" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52419" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -2851,4 +2845,4 @@ function hmrAcceptRun(bundle, id) {
   }
 }
 },{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","index.js"], null)
-//# sourceMappingURL=dist/resources.e31bb0bc.js.map
+//# sourceMappingURL=/dist/resources.e31bb0bc.js.map

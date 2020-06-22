@@ -1,5 +1,5 @@
 <section>
-    <h1 class="text-blue-200">Hello Main.....</h1>
+    
 </section>
 
 <script>
