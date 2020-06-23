@@ -4,3 +4,45 @@
 
 @tailwind utilities;
 
+@font-face {
+  font-family: "fredric";
+  src: url("../font/Fredericka_the_Great/FrederickatheGreat-Regular.ttf");
+}
+
+@font-face {
+  font-family: "gugi";
+  src: url("../font/Gugi/Gugi-Regular.ttf");
+}
+
+@font-face {
+  font-family: "philosopher";
+  src: url("../font/Philosopher/Philosopher-Regular.ttf");
+
+}
+
+.app-left {
+  background-image: url("../img/left-background.jpg");
+  background-size: auto 107%;
+  background-position-y: bottom;
+  background-position-x: center;
+
+  h1 {
+    font-family: fredric;
+    color: white;
+    font-size: 2rem;
+    text-align: center;
+    padding-top:30px;
+    padding-bottom:30px;
+    font-weight: bold;
+  }
+
+  ul{
+    font-family: philosopher;
+    font-size: 1.5rem;
+    text-align: center;
+    color: white;
+    li {
+      margin-bottom: 20px;
+    }
+  }
+}

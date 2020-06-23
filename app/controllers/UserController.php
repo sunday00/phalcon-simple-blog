@@ -234,4 +234,28 @@ class UserController extends ControllerBase
             'action' => "index"
         ]);
     }
+
+    public function signAction ()
+    {
+
+    }
+
+    public  function doSignAction()
+    {
+        $this->view->disable();
+
+        $email      = $this->request->getPost('email', 'string');
+        $password   = $this->request->getPost('password', 'string');
+
+        $user = User::findFirst( "email = '{$email}'" );
+
+        if( $this->security->checkHash($this->request->getPost('password'), $user->password) ){
+            $this->session->set('role', 'admin');
+            return $this->response->redirect("/shielded/dashboard");
+        }
+
+        $this->flashSession->error('not permitted');
+        return $this->response->redirect("/user/sign");
+
+    }
 }

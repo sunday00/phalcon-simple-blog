@@ -1,3 +1,3 @@
-<section class="container">
+<section class="container sm:flex-1">
 
 </section>

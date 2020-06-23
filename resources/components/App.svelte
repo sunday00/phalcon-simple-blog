@@ -1,11 +1,14 @@
 {#if location.pathname == '/' }
-<Main></Main>
+    <Main></Main>
+{:else if location.pathname.startsWith('/user') }
+    <User></User>
 {:else if location.pathname.startsWith('/post') }
-<Post></Post>
+    <Post></Post>
 {/if}
 
 <script>
     import Main from './Main/Index.svelte';
+    import User from './User/Index.svelte';
     import Post from './Post/Index.svelte';
 
 </script>

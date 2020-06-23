@@ -15057,6 +15057,52 @@ video {
   transition-delay: 1000ms;
 }
 
+@font-face {
+  font-family: "fredric";
+
+  src: url("/dist/FrederickatheGreat-Regular.0b81096e.ttf");
+}
+
+@font-face {
+  font-family: "gugi";
+
+  src: url("/dist/Gugi-Regular.51a485cd.ttf");
+}
+
+@font-face {
+  font-family: "philosopher";
+
+  src: url("/dist/Philosopher-Regular.d7289ba4.ttf");
+}
+
+.app-left {
+  background-image: url("/dist/left-background.6928f6fc.jpg");
+  background-size: auto 107%;
+  background-position-y: bottom;
+  background-position-x: center;
+}
+
+.app-left h1 {
+  font-family: fredric;
+  color: white;
+  font-size: 2rem;
+  text-align: center;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  font-weight: bold;
+}
+
+.app-left ul {
+  font-family: philosopher;
+  font-size: 1.5rem;
+  text-align: center;
+  color: white;
+}
+
+.app-left ul li {
+  margin-bottom: 20px;
+}
+
 @media (min-width: 640px) {
   .sm\:space-y-0 > :not(template) ~ :not(template) {
     --space-y-reverse: 0;
