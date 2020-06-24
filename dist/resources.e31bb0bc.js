@@ -2360,90 +2360,104 @@ const file = "components/User/Index.svelte";
 function create_fragment(ctx) {
   let div3;
   let form;
+  let input0;
+  let input0_name_value;
+  let input0_value_value;
+  let t0;
   let div0;
   let label0;
-  let t1;
-  let input0;
   let t2;
+  let input1;
+  let t3;
   let div1;
   let label1;
-  let t4;
-  let input1;
   let t5;
+  let input2;
+  let t6;
   let p0;
-  let t7;
+  let t8;
   let div2;
   let button;
-  let t9;
+  let t10;
   let a;
-  let t11;
+  let t12;
   let p1;
   const block = {
     c: function create() {
       div3 = (0, _internal.element)("div");
       form = (0, _internal.element)("form");
+      input0 = (0, _internal.element)("input");
+      t0 = (0, _internal.space)();
       div0 = (0, _internal.element)("div");
       label0 = (0, _internal.element)("label");
       label0.textContent = "Email";
-      t1 = (0, _internal.space)();
-      input0 = (0, _internal.element)("input");
       t2 = (0, _internal.space)();
+      input1 = (0, _internal.element)("input");
+      t3 = (0, _internal.space)();
       div1 = (0, _internal.element)("div");
       label1 = (0, _internal.element)("label");
       label1.textContent = "Password";
-      t4 = (0, _internal.space)();
-      input1 = (0, _internal.element)("input");
       t5 = (0, _internal.space)();
+      input2 = (0, _internal.element)("input");
+      t6 = (0, _internal.space)();
       p0 = (0, _internal.element)("p");
       p0.textContent = "Please choose a password.";
-      t7 = (0, _internal.space)();
+      t8 = (0, _internal.space)();
       div2 = (0, _internal.element)("div");
       button = (0, _internal.element)("button");
       button.textContent = "Sign In";
-      t9 = (0, _internal.space)();
+      t10 = (0, _internal.space)();
       a = (0, _internal.element)("a");
       a.textContent = "Forgot Password?";
-      t11 = (0, _internal.space)();
+      t12 = (0, _internal.space)();
       p1 = (0, _internal.element)("p");
       p1.textContent = "©2020 Acme Corp. All rights reserved.";
+      (0, _internal.attr_dev)(input0, "type", "hidden");
+      (0, _internal.attr_dev)(input0, "name", input0_name_value =
+      /*csrf*/
+      ctx[0].name);
+      input0.value = input0_value_value =
+      /*csrf*/
+      ctx[0].value;
+      (0, _internal.add_location)(input0, file, 2, 8, 160);
       (0, _internal.attr_dev)(label0, "class", "block text-gray-700 text-sm font-bold mb-2");
       (0, _internal.attr_dev)(label0, "for", "username");
-      (0, _internal.add_location)(label0, file, 3, 12, 191);
-      (0, _internal.attr_dev)(input0, "class", "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline");
-      (0, _internal.attr_dev)(input0, "id", "username");
-      (0, _internal.attr_dev)(input0, "type", "text");
-      (0, _internal.attr_dev)(input0, "placeholder", "Username");
-      (0, _internal.attr_dev)(input0, "name", "email");
-      (0, _internal.add_location)(input0, file, 6, 12, 320);
+      (0, _internal.add_location)(label0, file, 4, 12, 261);
+      (0, _internal.attr_dev)(input1, "class", "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline");
+      (0, _internal.attr_dev)(input1, "id", "username");
+      (0, _internal.attr_dev)(input1, "type", "text");
+      (0, _internal.attr_dev)(input1, "placeholder", "Username");
+      (0, _internal.attr_dev)(input1, "name", "email");
+      (0, _internal.add_location)(input1, file, 7, 12, 390);
       (0, _internal.attr_dev)(div0, "class", "mb-4");
-      (0, _internal.add_location)(div0, file, 2, 8, 160);
+      (0, _internal.add_location)(div0, file, 3, 8, 230);
       (0, _internal.attr_dev)(label1, "class", "block text-gray-700 text-sm font-bold mb-2");
       (0, _internal.attr_dev)(label1, "for", "password");
-      (0, _internal.add_location)(label1, file, 10, 12, 594);
-      (0, _internal.attr_dev)(input1, "class", "shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline");
-      (0, _internal.attr_dev)(input1, "id", "password");
-      (0, _internal.attr_dev)(input1, "type", "password");
-      (0, _internal.attr_dev)(input1, "placeholder", "******************");
-      (0, _internal.attr_dev)(input1, "name", "password");
-      (0, _internal.add_location)(input1, file, 13, 12, 726);
+      (0, _internal.add_location)(label1, file, 11, 12, 664);
+      (0, _internal.attr_dev)(input2, "class", "shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline");
+      (0, _internal.attr_dev)(input2, "id", "password");
+      (0, _internal.attr_dev)(input2, "type", "password");
+      (0, _internal.attr_dev)(input2, "placeholder", "******************");
+      (0, _internal.attr_dev)(input2, "name", "password");
+      (0, _internal.add_location)(input2, file, 14, 12, 796);
       (0, _internal.attr_dev)(p0, "class", "text-red-500 text-xs italic");
-      (0, _internal.add_location)(p0, file, 15, 12, 995);
+      (0, _internal.add_location)(p0, file, 16, 12, 1065);
       (0, _internal.attr_dev)(div1, "class", "mb-6");
-      (0, _internal.add_location)(div1, file, 9, 8, 563);
+      (0, _internal.add_location)(div1, file, 10, 8, 633);
       (0, _internal.attr_dev)(button, "class", "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline");
       (0, _internal.attr_dev)(button, "type", "submit");
-      (0, _internal.add_location)(button, file, 18, 12, 1147);
+      (0, _internal.add_location)(button, file, 19, 12, 1217);
       (0, _internal.attr_dev)(a, "class", "inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800");
       (0, _internal.attr_dev)(a, "href", "#");
-      (0, _internal.add_location)(a, file, 21, 12, 1345);
+      (0, _internal.add_location)(a, file, 22, 12, 1415);
       (0, _internal.attr_dev)(div2, "class", "flex items-center justify-between");
-      (0, _internal.add_location)(div2, file, 17, 8, 1087);
+      (0, _internal.add_location)(div2, file, 18, 8, 1157);
       (0, _internal.attr_dev)(form, "class", "bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4");
       (0, _internal.attr_dev)(form, "method", "post");
       (0, _internal.attr_dev)(form, "action", "/user/sign");
       (0, _internal.add_location)(form, file, 1, 4, 56);
       (0, _internal.attr_dev)(p1, "class", "text-center text-gray-500 text-xs");
-      (0, _internal.add_location)(p1, file, 26, 4, 1527);
+      (0, _internal.add_location)(p1, file, 27, 4, 1597);
       (0, _internal.attr_dev)(div3, "class", "w-full max-w-ms h-full mx-auto flex-1");
       (0, _internal.add_location)(div3, file, 0, 0, 0);
     },
@@ -2453,23 +2467,25 @@ function create_fragment(ctx) {
     m: function mount(target, anchor) {
       (0, _internal.insert_dev)(target, div3, anchor);
       (0, _internal.append_dev)(div3, form);
+      (0, _internal.append_dev)(form, input0);
+      (0, _internal.append_dev)(form, t0);
       (0, _internal.append_dev)(form, div0);
       (0, _internal.append_dev)(div0, label0);
-      (0, _internal.append_dev)(div0, t1);
-      (0, _internal.append_dev)(div0, input0);
-      (0, _internal.append_dev)(form, t2);
+      (0, _internal.append_dev)(div0, t2);
+      (0, _internal.append_dev)(div0, input1);
+      (0, _internal.append_dev)(form, t3);
       (0, _internal.append_dev)(form, div1);
       (0, _internal.append_dev)(div1, label1);
-      (0, _internal.append_dev)(div1, t4);
-      (0, _internal.append_dev)(div1, input1);
       (0, _internal.append_dev)(div1, t5);
+      (0, _internal.append_dev)(div1, input2);
+      (0, _internal.append_dev)(div1, t6);
       (0, _internal.append_dev)(div1, p0);
-      (0, _internal.append_dev)(form, t7);
+      (0, _internal.append_dev)(form, t8);
       (0, _internal.append_dev)(form, div2);
       (0, _internal.append_dev)(div2, button);
-      (0, _internal.append_dev)(div2, t9);
+      (0, _internal.append_dev)(div2, t10);
       (0, _internal.append_dev)(div2, a);
-      (0, _internal.append_dev)(div3, t11);
+      (0, _internal.append_dev)(div3, t12);
       (0, _internal.append_dev)(div3, p1);
     },
     p: _internal.noop,
@@ -2489,7 +2505,8 @@ function create_fragment(ctx) {
   return block;
 }
 
-function instance($$self, $$props) {
+function instance($$self, $$props, $$invalidate) {
+  let csrf = document.querySelector("[name=\"csrf_token\"]").dataset;
   const writable_props = [];
   Object.keys($$props).forEach(key => {
     if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console.warn("<Index> was created with unknown prop '".concat(key, "'"));
@@ -2499,7 +2516,20 @@ function instance($$self, $$props) {
     $$scope
   } = $$props;
   (0, _internal.validate_slots)("Index", $$slots, []);
-  return [];
+
+  $$self.$capture_state = () => ({
+    csrf
+  });
+
+  $$self.$inject_state = $$props => {
+    if ("csrf" in $$props) $$invalidate(0, csrf = $$props.csrf);
+  };
+
+  if ($$props && "$$inject" in $$props) {
+    $$self.$inject_state($$props.$$inject);
+  }
+
+  return [csrf];
 }
 
 class Index extends _internal.SvelteComponentDev {

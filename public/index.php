@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use Phalcon\Di\FactoryDefault;
@@ -21,11 +22,6 @@ try {
     include APP_PATH . '/config/services.php';
 
     /**
-     * Handle routes
-     */
-    include APP_PATH . '/config/router.php';
-
-    /**
      * Get config service for use in inline setup below
      */
     $config = $di->getConfig();
@@ -34,6 +30,11 @@ try {
      * Include Autoloader
      */
     include APP_PATH . '/config/loader.php';
+
+    /**
+     * Handle routes
+     */
+    include APP_PATH . '/config/router.php';
 
     /**
      * Handle the request

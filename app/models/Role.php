@@ -24,7 +24,7 @@ class Role extends \Phalcon\Mvc\Model
     {
         $this->setSchema("phalcon_blog");
         $this->setSource("role");
-        $this->belongsTo('id', 'App\Models\User', 'id', ['alias' => 'User']);
+        $this->hasMany('id', 'App\Models\User', 'role_id', ['alias' => 'User']);
     }
 
     /**

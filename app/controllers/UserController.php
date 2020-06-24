@@ -9,6 +9,10 @@ use App\Models\User;
 
 class UserController extends ControllerBase
 {
+//    public function onConstruct(){
+    public function initialize(){
+        return parent::initialize();
+    }
     /**
      * Index action
      */
@@ -244,14 +248,16 @@ class UserController extends ControllerBase
     {
         $this->view->disable();
 
+        if( !$this->checkCsrf() ) return $this->redirectBack();
+
         $email      = $this->request->getPost('email', 'string');
         $password   = $this->request->getPost('password', 'string');
 
         $user = User::findFirst( "email = '{$email}'" );
 
         if( $this->security->checkHash($this->request->getPost('password'), $user->password) ){
-            $this->session->set('role', 'admin');
-            return $this->response->redirect("/shielded/dashboard");
+            $this->session->set('role', $user->role->title);
+            return $this->response->redirect("/shielded/dashboard/index");
         }
 
         $this->flashSession->error('not permitted');

@@ -8,5 +8,13 @@
       <path value="$PROJECT_DIR$/vendor/composer" />
     </include_path>
   </component>
-  <component name="PhpProjectSharedConfiguration" php_language_level="7" />
+  <component name="PhpProjectSharedConfiguration" php_language_level="7.4" />
+  <component name="PhpStepFilterConfiguration">
+    <skipped_functions>
+      <skipped_function name="App\Plugins\Middleware-&gt;__construct" />
+      <skipped_function name="Phalcon\Di\FactoryDefault-&gt;{closure:/Users/sunday00/workspace/projectsPHP/phalcon-simple-blog/app/config/services.php:166-179}" />
+      <skipped_function name="App\Plugins\Acl-&gt;beforeDispatch" />
+      <skipped_function name="App\Controllers\UserController-&gt;initialize" />
+    </skipped_functions>
+  </component>
 </project>

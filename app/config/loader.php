@@ -7,7 +7,6 @@ $loader = new \Phalcon\Loader();
  */
 $loader->registerDirs(
     [
-        $config->application->routesDir,
         $config->application->controllersDir,
         $config->application->modelsDir,
     ]
@@ -19,6 +18,7 @@ $loader->registerFiles([
 ]);
 
 $loader->registerNamespaces([
+    'App\Routes'        => '/app/routes/',
     'App\Controllers'   => '/app/controllers/',
     'App\Models'        => '/app/models/',
     'App\Plugins'       => '/app/plugins/',

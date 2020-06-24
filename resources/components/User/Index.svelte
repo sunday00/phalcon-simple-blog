@@ -1,5 +1,6 @@
 <div class="w-full max-w-ms h-full mx-auto flex-1">
     <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" method="post" action="/user/sign">
+        <input type="hidden" name="{csrf.name}" value="{csrf.value}">
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
                 Email
@@ -28,3 +29,7 @@
         &copy;2020 Acme Corp. All rights reserved.
     </p>
 </div>
+
+<script>
+    let csrf = document.querySelector('[name="csrf_token"]').dataset;
+</script>

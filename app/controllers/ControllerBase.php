@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use Phalcon\Mvc\Controller;
+use Phalcon\Tag;
 use App\Plugins\Setting;
 
 class ControllerBase extends Controller
@@ -13,11 +14,22 @@ class ControllerBase extends Controller
         $theme = Setting::getTheme();
         $this->view->setVar('theme', $theme);
 
-        if( $this->request->getMethod() != 'GET' && !$this->security->checkToken() ){
-            $this->flashSession->error('invalid csrf token');
-            return $this->response->redirect($_SERVER['HTTP_REFERER']);
-        }
+        Tag::prependTitle('Phalog | ');
+    }
 
-        //        Tag::prependTitle('FireBall | ');
+//    public function onConstruct()
+//    {
+//
+//    }
+
+    protected function checkCsrf()
+    {
+        return $this->security->checkToken();
+    }
+
+    protected function redirectBack($msg = 'invalid csrf token')
+    {
+        $this->flashSession->error($msg);
+        return $this->response->redirect($_SERVER['HTTP_REFERER'])->removeHeader('HTTP/1.1 302 Found')->setHeader('HTTP/1.1 303 See Other',null)->setHeader('Status', '303 See Other');
     }
 }

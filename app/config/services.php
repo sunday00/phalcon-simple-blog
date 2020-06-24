@@ -172,6 +172,7 @@ $di->set(
         // register Acl
         $eventsManager = $di->getShared('eventsManager');
         $eventsManager->attach('dispatch:beforeDispatch', new App\Plugins\Acl($di));
+        $eventsManager->attach('dispatch:beforeDispatch', new App\Plugins\Middleware($di));
         $dispatcher->setEventsManager($eventsManager);
 
         return $dispatcher;

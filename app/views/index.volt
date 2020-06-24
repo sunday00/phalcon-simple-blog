@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf_token" data-name="{{ security.getTokenKey() }}" data-value="{{ security.getToken() }}" >
-        <title>Phalcon PHP Framework</title>
+        <title>{{ get_title() }}</title>
         <link rel="shortcut icon" type="image/x-icon" href="<?php echo $this->url->get('img/favicon.ico')?>"/>
 
         <link rel="stylesheet" href="/dist/styles.5c32a3d8.css">

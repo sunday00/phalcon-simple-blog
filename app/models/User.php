@@ -74,7 +74,7 @@ class User extends \Phalcon\Mvc\Model
         $this->setSchema("phalcon_blog");
         $this->setSource("user");
         $this->hasMany('id', 'App\Models\Post', 'user_id', ['alias' => 'Post']);
-        $this->hasMany('id', 'App\Models\Role', 'id', ['alias' => 'Role']);
+        $this->belongsTo('role_id', 'App\Models\Role', 'id', ['alias' => 'Role']);
     }
 
     /**

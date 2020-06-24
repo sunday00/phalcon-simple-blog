@@ -9,6 +9,9 @@ use Phalcon\Acl\Enum;
 
 class Acl extends Memory
 {
+    private $request;
+    private $response;
+    private $security;
     private $role;
     private $session;
     private $flashSession;
@@ -16,9 +19,13 @@ class Acl extends Memory
 
     public function __construct($di)
     {
+//        $this->request = $di->getShared('request');
+//        $this->request = $di->getShared('response');
         $this->session = $di->getShared('session');
         $this->flashSession = $di->getShared('flashSession');
         $this->flash = $di->getShared('flash');
+//        $this->security = $di->getShared('security');
+
         $this->role = $this->session->get('role') ? $this->session->get('role') : 'guest';
         $this->setDefaultAction(Enum::DENY);
 
@@ -32,20 +39,20 @@ class Acl extends Memory
         $controllerName = $dispatcher->getControllerName();
         $actionName = $dispatcher->getActionName();
 
-        if( ! $this->isAllowed($this->role, $controllerName, $actionName) && !$this->session->get('role') ){
-            if( $this->flashSession->has('error') ){
-                $this->flash->error( $this->flashSession->getMessages('error')[0] );
-            } else {
-                $this->flash->error("Permission denied");
-            }
-
-            // $dispatcher->forward([
-            //     'controller' => 'auth',
-            //     'action'     => 'index'
-            // ]);
-
-            return false;
-        }
+//        if( ! $this->isAllowed($this->role, $controllerName, $actionName) && !$this->session->get('role') ){
+//            if( $this->flashSession->has('error') ){
+//                $this->flash->error( $this->flashSession->getMessages('error')[0] );
+//            } else {
+//                $this->flash->error("Permission denied");
+//            }
+//
+//            // $dispatcher->forward([
+//            //     'controller' => 'auth',
+//            //     'action'     => 'index'
+//            // ]);
+//
+//            return false;
+//        }
     }
 
     private function setRoles ()
