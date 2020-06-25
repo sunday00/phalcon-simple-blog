@@ -30,7 +30,14 @@
             </a>
         </div>
         <div>
-            <a href="/user/sign" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Login</a>
+            {%- if session.role -%}
+                <form action="{{ url.get(['for':'userLogout']) }}" method="POST">
+                    <input type="hidden" name="{{ security.getTokenKey() }}" value="{{ security.getToken() }}" />
+                    <button class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Logout</button>
+                </form>
+            {%- else -%}
+                <a href="/user/sign" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Login</a>
+            {%- endif -%}
         </div>
     </div>
 </nav>

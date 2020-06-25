@@ -99,4 +99,8 @@ class User extends \Phalcon\Mvc\Model
         return parent::findFirst($parameters);
     }
 
+    public function reset()
+    {
+        // TODO: Implement reset() method.
+    }
 }

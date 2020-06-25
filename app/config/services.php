@@ -178,3 +178,10 @@ $di->set(
         return $dispatcher;
     }
 );
+
+$di->set(
+    'userService',
+    function () use ($di) {
+        return new \App\Services\UserServices($di);
+    }
+);

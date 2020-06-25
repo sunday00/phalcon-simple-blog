@@ -10,7 +10,9 @@
     "svelte-preprocess": "^3.9.8",
     "tailwindcss": "^1.4.6"
   },
-  "dependencies": {},
+  "dependencies": {
+    "axios": "^0.19.2"
+  },
   "scripts": {
     "dev": "parcel resources/index.html --public-url /dist/",
     "build": "parcel build resources/index.html"

@@ -21,6 +21,7 @@ $loader->registerNamespaces([
     'App\Routes'        => '/app/routes/',
     'App\Controllers'   => '/app/controllers/',
     'App\Models'        => '/app/models/',
+    'App\Services'      => '/app/services/',
     'App\Plugins'       => '/app/plugins/',
 ]);
 

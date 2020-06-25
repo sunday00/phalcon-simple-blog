@@ -5,25 +5,24 @@ namespace App\Routes;
 use Phalcon\Mvc\Router\Group;
 use Phalcon\Mvc\Router\RouteInterface;
 
-class AdminRoutes extends Group
+class UserRoutes extends Group
 {
     public function initialize()
     {
-//        $this->add('/user/loginGet', 'User::loginProcessGet')->via(['GET']);
+        $this->addPost('/user/sign', [
+            'controller' => 'user',
+            'action' => 'doSign',
+        ])->setName('userLogin');
 
-        $this->add('/shielded/dashboard/:params', [
-            'controller' => 'admin',
-            'action' => 'dashboard',
-            'params' => 1
-        ])->setName('admin');;
+        $this->addPost('/user/logout', [
+            'controller' => 'user',
+            'action' => 'signOut',
+        ])->setName('userLogout');;
 
-
-
-//        $this->add('/aka/news/{str1}/{str2}', [
-//            'controller' => 'post',
-//            'action' => 'news'
-//        ]);
-
+        $this->addPost('/api/v1/user/signIn', [
+            'controller' => 'user',
+            'action' => 'doApiSign',
+        ]);
     }
 
     /**

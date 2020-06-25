@@ -7,6 +7,8 @@
 {/if}
 
 <script>
+    window.axios = require('axios');
+
     import Main from './Main/Index.svelte';
     import User from './User/Index.svelte';
     import Post from './Post/Index.svelte';

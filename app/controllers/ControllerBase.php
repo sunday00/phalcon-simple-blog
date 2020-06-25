@@ -32,4 +32,9 @@ class ControllerBase extends Controller
         $this->flashSession->error($msg);
         return $this->response->redirect($_SERVER['HTTP_REFERER'])->removeHeader('HTTP/1.1 302 Found')->setHeader('HTTP/1.1 303 See Other',null)->setHeader('Status', '303 See Other');
     }
+
+    protected function returnFailJson(array $data = ['result' => 'fail'])
+    {
+        return json_encode($data);
+    }
 }

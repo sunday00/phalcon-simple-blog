@@ -250,18 +250,26 @@ class UserController extends ControllerBase
 
         if( !$this->checkCsrf() ) return $this->redirectBack();
 
-        $email      = $this->request->getPost('email', 'string');
-        $password   = $this->request->getPost('password', 'string');
-
-        $user = User::findFirst( "email = '{$email}'" );
-
-        if( $this->security->checkHash($this->request->getPost('password'), $user->password) ){
-            $this->session->set('role', $user->role->title);
-            return $this->response->redirect("/shielded/dashboard/index");
-        }
-
-        $this->flashSession->error('not permitted');
-        return $this->response->redirect("/user/sign");
-
+        return $this->userService->getWebLoginResult();
     }
+
+    public function doApiSignAction()
+    {
+        $this->view->disable();
+        if( !$this->checkCsrf() ) return $this->returnFailJson(['error' => 'csrf', 'msg' => 'csrf is invalid']);
+
+        return $this->userService->getApiLoginResult();
+    }
+
+    public function signOutAction()
+    {
+        $this->view->disable();
+
+        if( !$this->checkCsrf() ) return $this->redirectBack();
+
+        $this->session->destroy();
+
+        return $this->response->redirect("/");
+    }
+
 }
