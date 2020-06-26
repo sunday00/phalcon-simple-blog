@@ -46,3 +46,12 @@
     }
   }
 }
+
+.app-right {
+  background-color: #f1f1f1;
+  @for $i from 1 through 6 {
+    h#{$i}.ce-header {
+      font-size: (7-$i)*0.5rem;
+    }
+  }
+}

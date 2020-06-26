@@ -5,7 +5,9 @@ namespace App\Controllers;
 
 use Phalcon\Mvc\Model\Criteria;
 use Phalcon\Paginator\Adapter\Model;
+use Phalcon\Security\Random;
 use App\Models\File;
+
 
 class FileController extends ControllerBase
 {
@@ -229,6 +231,37 @@ class FileController extends ControllerBase
         $this->dispatcher->forward([
             'controller' => "file",
             'action' => "index"
+        ]);
+    }
+
+    public function uploadByFileAction()
+    {
+        if ( !$this->request->hasFiles() ) {
+            return json_encode([
+                "success" => 0
+            ]);
+        }
+
+        $file = $this->request->getUploadedFiles()[0];
+        $ext = $file->getExtension();
+        $dir = BASE_PATH."/public/img/";
+
+        if( !is_dir($dir.date('Ymd')) ) mkdir($dir.date('Ymd'));
+
+        $path = date('Ymd')."/";
+        $name = date('His').(new Random())->hex(6).".".$ext;
+
+        $file->moveTo($dir.$path.$name);
+
+        //TODO:: dave to db process
+
+        return json_encode([
+            "success" => 1,
+            "file" => [
+                "url" => "/img/".$path.$name,
+                "original_name" => $file->getName()
+                    // ... and any additional fields you want to store, such as width, height, color, extension, etc
+            ]
         ]);
     }
 }

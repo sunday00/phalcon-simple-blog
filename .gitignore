@@ -6,4 +6,5 @@ yarn.lock
 cache
 .cache
 vendor
+!resources/components/vendor
 app/config/config.php

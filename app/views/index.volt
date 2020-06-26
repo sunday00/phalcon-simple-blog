@@ -20,7 +20,7 @@
         <div class="w-screen xl sm:flex-grow sm:flex-1 sm:flex">
             <div class="flex flex-1 flex-col sm:flex-row">
                 {% include "layouts/left.volt" %}
-                <div class="sm:flex-1 sm:flex-grow">
+                <div class="app-right sm:flex-1 sm:flex-grow">
                     <?php echo $this->getContent(); ?>
                 </div>
             </div>

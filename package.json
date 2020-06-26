@@ -2,15 +2,18 @@
   "name": "svelte-app",
   "version": "1.0.0",
   "devDependencies": {
+    "@editorjs/editorjs": "^2.18.0",
+    "@editorjs/header": "^2.5.0",
     "parcel-bundler": "^1.12.4",
     "parcel-plugin-svelte": "^4.0.6",
     "postcss": "^7.0.32",
-    "sass": "^1.26.8",
+    "sass": "^1.26.9",
     "svelte": "^3.23.2",
-    "svelte-preprocess": "^3.9.8",
+    "svelte-preprocess": "^3.9.10",
     "tailwindcss": "^1.4.6"
   },
   "dependencies": {
+    "@codexteam/ajax": "^4.2.0",
     "axios": "^0.19.2"
   },
   "scripts": {

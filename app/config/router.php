@@ -2,6 +2,7 @@
 
 use App\Routes\AdminRoutes;
 use App\Routes\UserRoutes;
+use App\Routes\FileRoutes;
 
 $router = $di->getRouter();
 
@@ -11,6 +12,7 @@ $router = $di->getRouter();
 
 $router->mount(new AdminRoutes());
 $router->mount(new UserRoutes());
+$router->mount(new FileRoutes());
 // or route group mount. route groups are in app/routes
 
 $router->handle($_SERVER['REQUEST_URI']);

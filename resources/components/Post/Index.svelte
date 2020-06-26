@@ -1,13 +1,16 @@
 <section>
-    <h1>Hello Post</h1>
+    {#if location.pathname.startsWith('/post/index') }
+
+    {:else if location.pathname.startsWith('/post/create') }
+        <Create></Create>
+    {/if}
 </section>
 
 <script>
+    import Create from "./Create.svelte";
 
 </script>
 
 <style lang="scss" type="text/scss">
-    h1 {
-        text-align: center;
-    }
+
 </style>

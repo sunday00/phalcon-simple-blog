@@ -15103,6 +15103,34 @@ video {
   margin-bottom: 20px;
 }
 
+.app-right {
+  background-color: #f1f1f1;
+}
+
+.app-right h1.ce-header {
+  font-size: 3rem;
+}
+
+.app-right h2.ce-header {
+  font-size: 2.5rem;
+}
+
+.app-right h3.ce-header {
+  font-size: 2rem;
+}
+
+.app-right h4.ce-header {
+  font-size: 1.5rem;
+}
+
+.app-right h5.ce-header {
+  font-size: 1rem;
+}
+
+.app-right h6.ce-header {
+  font-size: 0.5rem;
+}
+
 @media (min-width: 640px) {
   .sm\:space-y-0 > :not(template) ~ :not(template) {
     --space-y-reverse: 0;

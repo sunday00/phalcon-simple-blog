@@ -88,7 +88,7 @@ class PostController extends ControllerBase
             $this->tag->setDefault("active", $post->active);
             $this->tag->setDefault("created_at", $post->created_at);
             $this->tag->setDefault("updated_at", $post->updated_at);
-            
+
         }
     }
 
@@ -97,7 +97,43 @@ class PostController extends ControllerBase
      */
     public function createAction()
     {
+        if (!$this->request->isPost()) {
+            $this->dispatcher->forward([
+                'controller' => "post",
+                'action' => 'index'
+            ]);
 
+            return;
+        }
+
+        $post = new Post();
+        $post->userId = $this->request->getPost("user_id", "int");
+        $post->title = $this->request->getPost("title", "int");
+        $post->body = $this->request->getPost("body", "int");
+        $post->active = $this->request->getPost("active", "int");
+        $post->createdAt = $this->request->getPost("created_at", "int");
+        $post->updatedAt = $this->request->getPost("updated_at", "int");
+
+
+        if (!$post->save()) {
+            foreach ($post->getMessages() as $message) {
+                $this->flash->error($message);
+            }
+
+            $this->dispatcher->forward([
+                'controller' => "post",
+                'action' => 'new'
+            ]);
+
+            return;
+        }
+
+        $this->flash->success("post was created successfully");
+
+        $this->dispatcher->forward([
+            'controller' => "post",
+            'action' => 'index'
+        ]);
     }
 
     /**
@@ -136,7 +172,7 @@ class PostController extends ControllerBase
         $post->active = $this->request->getPost("active", "int");
         $post->createdAt = $this->request->getPost("created_at", "int");
         $post->updatedAt = $this->request->getPost("updated_at", "int");
-        
+
 
         if (!$post->save()) {
 
