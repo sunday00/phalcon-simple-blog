@@ -104,60 +104,32 @@ class PostController extends ControllerBase
      * Saves a post edited
      *
      */
-    public function saveAction()
+    public function storeAction()
     {
-
-        if (!$this->request->isPost()) {
-            $this->dispatcher->forward([
-                'controller' => "post",
-                'action' => 'index'
+        if ( !$this->request->isPost() || !$this->request->getPost('title') ) {
+            return json_encode([
+                'status'    => 'fail',
+                'error'     => 'Not allowed method or No title'
             ]);
-
-            return;
         }
 
-        $id = $this->request->getPost("id");
-        $post = Post::findFirstByid($id);
-
-        if (!$post) {
-            $this->flash->error("post does not exist " . $id);
-
-            $this->dispatcher->forward([
-                'controller' => "post",
-                'action' => 'index'
-            ]);
-
-            return;
-        }
-
-        $post->userId = $this->request->getPost("user_id", "int");
-        $post->title = $this->request->getPost("title", "int");
-        $post->body = $this->request->getPost("body", "int");
-        $post->active = $this->request->getPost("active", "int");
-        $post->createdAt = $this->request->getPost("created_at", "int");
-        $post->updatedAt = $this->request->getPost("updated_at", "int");
-        
+        $post = new Post();
+        $post->title = $this->request->getPost("title", "string");
+        $post->body = str_replace( "&#34;", "\"", $this->request->getPost("content", "string") );
+        $post->user_id = $this->session->get("user");
 
         if (!$post->save()) {
-
-            foreach ($post->getMessages() as $message) {
-                $this->flash->error($message);
-            }
-
-            $this->dispatcher->forward([
-                'controller' => "post",
-                'action' => 'edit',
-                'params' => [$post->id]
+            return json_encode([
+                'status'    => 'fail',
+                'error'     => 'pail to store'
             ]);
-
-            return;
         }
 
-        $this->flash->success("post was updated successfully");
+        $this->fileService->saveFile($post->id, str_replace( "&#34;", "\"", $this->request->getPost("files", "string") ));
 
-        $this->dispatcher->forward([
-            'controller' => "post",
-            'action' => 'index'
+        return json_encode([
+            'status'    => 'success',
+            'id'        => $post->id
         ]);
     }
 

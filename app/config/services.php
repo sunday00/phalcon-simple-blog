@@ -185,3 +185,10 @@ $di->set(
         return new \App\Services\UserServices($di);
     }
 );
+
+$di->set(
+    'fileService',
+    function () use ($di) {
+        return new \App\Services\FileServices($di);
+    }
+);

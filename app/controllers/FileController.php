@@ -257,7 +257,8 @@ class FileController extends ControllerBase
             "success" => 1,
             "file" => [
                 "url" => "/img/".$path.$name,
-                "original_name" => $file->getName()
+                "original_name" => $file->getName(),
+                "type" => $ext
                     // ... and any additional fields you want to store, such as width, height, color, extension, etc
             ]
         ]);

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Plugins\BatchDb;
+
 class File extends \Phalcon\Mvc\Model
 {
 
@@ -36,6 +38,12 @@ class File extends \Phalcon\Mvc\Model
     public $type;
 
     /**
+     *
+     * @var BatchDb
+     */
+    public $batchDb;
+
+    /**
      * Initialize method for model.
      */
     public function initialize()
@@ -43,6 +51,9 @@ class File extends \Phalcon\Mvc\Model
         $this->setSchema("phalcon_blog");
         $this->setSource("file");
         $this->belongsTo('post_id', 'App\Models\Post', 'id', ['alias' => 'Post']);
+
+        $this->batchDb = new BatchDb('file');
+
     }
 
     /**

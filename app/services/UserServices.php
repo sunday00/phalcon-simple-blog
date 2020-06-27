@@ -6,11 +6,6 @@ use App\Models\User;
 
 class UserServices extends BaseServices
 {
-    public function test ()
-    {
-        return $this->request;
-    }
-
     public function getWebLoginResult ()
     {
         $user = $this->getOneUserByEmail();
@@ -48,6 +43,7 @@ class UserServices extends BaseServices
     {
         if ( $this->security->checkHash($password, $user->password) ){
             $this->session->set('role', $user->role->title);
+            $this->session->set('user', $user->id);
             return true;
         }
         return false;
