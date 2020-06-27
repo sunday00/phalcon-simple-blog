@@ -253,8 +253,6 @@ class FileController extends ControllerBase
 
         $file->moveTo($dir.$path.$name);
 
-        //TODO:: dave to db process
-
         return json_encode([
             "success" => 1,
             "file" => [
@@ -263,5 +261,20 @@ class FileController extends ControllerBase
                     // ... and any additional fields you want to store, such as width, height, color, extension, etc
             ]
         ]);
+    }
+
+    public function deleteFileAction () {
+        $dir = BASE_PATH."/public/";
+        $file = $this->request->getPost('file');
+        if( is_file($dir.$file) ){
+            unlink($dir.$file);
+            return json_encode([
+                "success" => 1,
+                "file" => $file
+            ]);
+        } else {
+            dd($dir.$file);
+        }
+
     }
 }

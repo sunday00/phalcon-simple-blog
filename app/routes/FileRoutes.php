@@ -9,10 +9,15 @@ class FileRoutes extends Group
 {
     public function initialize()
     {
-        $this->add('/image/upload/file', [
-            'controller' => 'file',
-            'action' => 'uploadByFile',
+        $this->addPost('/image/upload/file', [
+            'controller'    => 'file',
+            'action'        => 'uploadByFile',
         ])->setName('image-file');;
+
+        $this->addPost('/image/delete', [
+            'controller'    => 'file',
+            'action'        => 'deleteFile',
+        ])->setName('delete-file');;
     }
 
     /**
