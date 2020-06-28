@@ -18,6 +18,11 @@ class PostRoutes extends Group
             'controller'    => 'post',
             'action'        => 'store',
         ])->setName('post-store');
+
+        $this->addGet('/api/v1/post/read/{id}', [
+            'controller'    => 'post',
+            'action'        => 'readData',
+        ])->setName('post-read');
     }
 
     /**

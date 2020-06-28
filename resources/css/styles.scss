@@ -53,5 +53,18 @@
     h#{$i}.ce-header {
       font-size: (7-$i)*0.5rem;
     }
+    h#{$i}.ce-header.sub-title {
+      font-size: (7-$i)*0.4rem;
+      padding-top: 0.4em;
+    }
+  }
+
+  #editorjs{
+    background-color: #fff;
+    padding: 40px;
+  }
+
+  pre.hljs {
+    padding: 15px;
   }
 }

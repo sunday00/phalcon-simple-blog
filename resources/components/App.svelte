@@ -1,7 +1,7 @@
 {#if location.pathname == '/' }
     <Main></Main>
 {:else}
-    <svelte:component this="{routes[controller.toLowerCase()]}"/>
+    <svelte:component this="{routes[controller.toLowerCase()]}" csrf="{csrf}" theme="{theme}"/>
 {/if}
 
 <script>
@@ -10,6 +10,9 @@
     import Main from './Main/Index.svelte';
     import User from './User/Index.svelte';
     import Post from './Post/Index.svelte';
+
+    export let csrf;
+    export let theme;
 
     const routes = {
         main : Main,

@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="/dist/styles.5c32a3d8.css">
         <script src="/dist/styles.5c32a3d8.js"></script>
         <link rel="stylesheet" href="/dist/resources.e31bb0bc.css">
-        
+
     </head>
     <body class="min-h-screen flex flex-col">
         <header class="w-screen xl flex-none">
@@ -26,7 +26,7 @@
                 </div>
             </div>
         </div>
-        <script src="/dist/resources.e31bb0bc.js"></script>
+
         <footer class="flex-none bg-{{ theme }}-accent text-{{ theme }}-light text-center p-6">
             {% include "layouts/footer.volt" %}
         </footer>
@@ -37,5 +37,6 @@
             {% endblock %}
         </div>
 
+        <script src="/dist/resources.e31bb0bc.js"></script>
     </body>
 </html>

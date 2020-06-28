@@ -52,11 +52,21 @@ class PostController extends ControllerBase
     }
 
     /**
-     * Displays the creation form
+     * Show read page for post
      */
-    public function newAction()
+    public function readAction($id)
     {
-        //
+//        $post = Post::findFirst("id={$id}");
+//        $this->view->setVar('data', $post->body);
+    }
+
+    /**
+     * Show read data for post
+     */
+    public function readDataAction($id)
+    {
+        $post = Post::findFirst("id={$id}");
+        return json_encode($post);
     }
 
     /**
@@ -115,7 +125,7 @@ class PostController extends ControllerBase
 
         $post = new Post();
         $post->title = $this->request->getPost("title", "string");
-        $post->body = str_replace( "&#34;", "\"", $this->request->getPost("content", "string") );
+        $post->body = str_replace("&#34;", "\"", urldecode( $this->request->getPost("content", "string") ));
         $post->user_id = $this->session->get("user");
 
         if (!$post->save()) {

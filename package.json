@@ -9,6 +9,7 @@
     "postcss": "^7.0.32",
     "sass": "^1.26.9",
     "svelte": "^3.23.2",
+    "svelte-highlight": "^0.6.2",
     "svelte-preprocess": "^3.9.10",
     "tailwindcss": "^1.4.6"
   },

@@ -1,4 +1,32 @@
-#editorjs.svelte-1smt372{
-  background-color:#fff;
-  padding:40px
+.progress.svelte-yah9er.svelte-yah9er{
+  position:fixed;
+  bottom:10px;
+  left:20px
+}
+
+.progress.svelte-yah9er ul.svelte-yah9er{
+  display:block;
+  width:150px
+}
+
+.progress.svelte-yah9er i.svelte-yah9er{
+  display:block;
+  width:80%;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  padding:3px;
+  color:white;
+  margin:5px auto;
+  background-color:orangered;
+  border-radius:10px;
+  text-align:center
+}
+
+.progress.svelte-yah9er ul li.pass+li.unpass i.svelte-yah9er,.progress.svelte-yah9er ul li.unpass:first-child i.svelte-yah9er{
+  width:100%
+}
+iframe.embed.svelte-16avzlq{
+  width:100%;
+  min-height:400px
 }

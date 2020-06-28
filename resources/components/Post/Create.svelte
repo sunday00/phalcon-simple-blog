@@ -22,8 +22,8 @@
     import Marker from '../vendor/marker.js';
     import Quote from '../vendor/quote.js';
 
-    let theme = document.querySelector('[name="theme"]').content;
-    let csrf = document.querySelector('[name="csrf_token"]').dataset;
+    export let csrf;
+    export let theme;
     let mode = 'create';
     let title = '';
     let content = '';
@@ -115,12 +115,12 @@
             const formData = new FormData();
             formData.append(csrf.name, csrf.value);
             formData.append('title', title);
-            formData.append('content', JSON.stringify(outputData.blocks));
+            formData.append('content', encodeURIComponent( JSON.stringify( (outputData.blocks) ) ));
             formData.append('files', JSON.stringify(files));
             axios.post(`/api/v1/post/store`, formData, {
                 headers: { 'content-type': 'multipart/form-data' },
             }).then(response => {
-                location.href = `/post/search/${response.data.id}`
+                location.href = `/post/read/${response.data.id}`
             });
         }).catch((error) => {
             console.log('Saving failed: ', error)
@@ -128,14 +128,3 @@
     }
 
 </script>
-
-<style type="text/scss">
-    #editorjs{
-        background-color: #fff;
-        padding: 40px;
-
-        h1.ce-header{
-            font-size: 2rem;
-        }
-    }
-</style>
