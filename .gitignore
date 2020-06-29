@@ -8,3 +8,6 @@ cache
 vendor
 !resources/components/vendor
 app/config/config.php
+public/img/**
+!public/img/favicon.ico
+!public/img/favicon.png
