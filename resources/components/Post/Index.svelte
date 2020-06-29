@@ -3,6 +3,8 @@
 
     {:else if location.pathname.startsWith('/post/create') }
         <Create csrf="{csrf}" theme="{theme}"></Create>
+    {:else if location.pathname.startsWith('/post/edit') }
+        <Create csrf="{csrf}" theme="{theme}" mode="edit"></Create>
     {:else if location.pathname.startsWith('/post/read') }
         <Read theme="{theme}"></Read>
     {/if}

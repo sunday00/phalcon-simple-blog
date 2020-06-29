@@ -24,10 +24,11 @@
 
     export let csrf;
     export let theme;
-    let mode = 'create';
+    export let mode = 'create';
     let title = '';
     let content = '';
     let files = [];
+    let originalFiles = [];
 
     class Image extends ImageTool{
         constructor({data, api, config}) {
@@ -44,7 +45,7 @@
         removed(){
             let file = this.data.file;
             files.splice(files.indexOf(file), 1);
-            if (mode === 'create'){
+            if ( originalFiles.indexOf(file) < 0){
                 const formData = new FormData();
                 formData.append(csrf.name, csrf.value);
                 formData.append('file', file.url);
@@ -58,9 +59,9 @@
     }
 
     const editor = new EditorJS({
-        autofocus: true,
+        autofocus: mode === 'create',
         logLevel: 'ERROR',
-        placeholder: 'Make something amazing',
+        placeholder: mode === 'create' ? 'Make something amazing' : null,
         tools: {
             header: {
                 class: Header,
@@ -110,6 +111,24 @@
         data: {}
     });
 
+    editor.isReady.then(() => {
+        if( mode === 'edit' ){
+            axios.get('/api/v1/post/read/' + location.href.split('/').pop())
+                .then((response) => {
+                    title = response.data.title;
+                    let blocks = JSON.parse(response.data.body);
+                    blocks.forEach((block) => {
+                        editor.blocks.insert(block.type, block.data);
+                        if( block.type === 'image' ){
+                            originalFiles.push(block.data.file);
+                            files.push(block.data.file);
+                        }
+                    });
+                    editor.blocks.delete(0);
+                });
+        }
+    });
+
     function submit (e) {
         editor.save().then((outputData) => {
             const formData = new FormData();
@@ -117,14 +136,19 @@
             formData.append('title', title);
             formData.append('content', encodeURIComponent( JSON.stringify( (outputData.blocks) ) ));
             formData.append('files', JSON.stringify(files));
-            axios.post(`/api/v1/post/store`, formData, {
+            if (mode === 'edit') formData.append('originalFiles', JSON.stringify(originalFiles));
+            let url = mode === 'create' ? `/api/v1/post/store` : `/api/v1/post/update/${location.href.split('/').pop()}`;
+            axios({
+                method: mode === 'create' ? 'POST' : 'PUT',
+                url,
+                data: formData,
                 headers: { 'content-type': 'multipart/form-data' },
             }).then(response => {
-                location.href = `/post/read/${response.data.id}`
+                console.log( response );
+                // location.href = `/post/read/${response.data.id}`;
             });
         }).catch((error) => {
             console.log('Saving failed: ', error)
         });
     }
-
 </script>

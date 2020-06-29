@@ -7742,7 +7742,7 @@ function create_fragment(ctx) {
       if (!mounted) {
         dispose = [(0, _internal.listen_dev)(input0, "input",
         /*input0_input_handler*/
-        ctx[4]), (0, _internal.listen_dev)(form, "submit", (0, _internal.prevent_default)(
+        ctx[5]), (0, _internal.listen_dev)(form, "submit", (0, _internal.prevent_default)(
         /*submit*/
         ctx[2]), false, true, false)];
         mounted = true;
@@ -7794,10 +7794,13 @@ function instance($$self, $$props, $$invalidate) {
   let {
     theme
   } = $$props;
-  let mode = "create";
+  let {
+    mode = "create"
+  } = $$props;
   let title = "";
   let content = "";
   let files = [];
+  let originalFiles = [];
 
   class Image extends _imageUpload.default {
     constructor({
@@ -7824,7 +7827,7 @@ function instance($$self, $$props, $$invalidate) {
       let file = this.data.file;
       files.splice(files.indexOf(file), 1);
 
-      if (mode === "create") {
+      if (originalFiles.indexOf(file) < 0) {
         const formData = new FormData();
         formData.append(csrf.name, csrf.value);
         formData.append("file", file.url);
@@ -7841,9 +7844,9 @@ function instance($$self, $$props, $$invalidate) {
   }
 
   const editor = new _editorjs.default({
-    autofocus: true,
+    autofocus: mode === "create",
     logLevel: "ERROR",
-    placeholder: "Make something amazing",
+    placeholder: mode === "create" ? "Make something amazing" : null,
     tools: {
       header: {
         class: _header.default,
@@ -7888,6 +7891,23 @@ function instance($$self, $$props, $$invalidate) {
     },
     data: {}
   });
+  editor.isReady.then(() => {
+    if (mode === "edit") {
+      axios.get("/api/v1/post/read/" + location.href.split("/").pop()).then(response => {
+        $$invalidate(1, title = response.data.title);
+        let blocks = JSON.parse(response.data.body);
+        blocks.forEach(block => {
+          editor.blocks.insert(block.type, block.data);
+
+          if (block.type === "image") {
+            originalFiles.push(block.data.file);
+            files.push(block.data.file);
+          }
+        });
+        editor.blocks.delete(0);
+      });
+    }
+  });
 
   function submit(e) {
     editor.save().then(outputData => {
@@ -7896,19 +7916,24 @@ function instance($$self, $$props, $$invalidate) {
       formData.append("title", title);
       formData.append("content", encodeURIComponent(JSON.stringify(outputData.blocks)));
       formData.append("files", JSON.stringify(files));
-      axios.post("/api/v1/post/store", formData, {
+      if (mode === "edit") formData.append("originalFiles", JSON.stringify(originalFiles));
+      let url = mode === "create" ? "/api/v1/post/store" : "/api/v1/post/update/".concat(location.href.split("/").pop());
+      axios({
+        method: mode === "create" ? "POST" : "PUT",
+        url,
+        data: formData,
         headers: {
           "content-type": "multipart/form-data"
         }
       }).then(response => {
-        location.href = "/post/read/".concat(response.data.id);
-      });
+        console.log(response);
+      }); // location.href = `/post/read/${response.data.id}`;
     }).catch(error => {
       console.log("Saving failed: ", error);
     });
   }
 
-  const writable_props = ["csrf", "theme"];
+  const writable_props = ["csrf", "theme", "mode"];
   Object.keys($$props).forEach(key => {
     if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console_1.warn("<Create> was created with unknown prop '".concat(key, "'"));
   });
@@ -7926,6 +7951,7 @@ function instance($$self, $$props, $$invalidate) {
   $$self.$set = $$props => {
     if ("csrf" in $$props) $$invalidate(3, csrf = $$props.csrf);
     if ("theme" in $$props) $$invalidate(0, theme = $$props.theme);
+    if ("mode" in $$props) $$invalidate(4, mode = $$props.mode);
   };
 
   $$self.$capture_state = () => ({
@@ -7944,6 +7970,7 @@ function instance($$self, $$props, $$invalidate) {
     title,
     content,
     files,
+    originalFiles,
     Image,
     editor,
     submit
@@ -7952,17 +7979,18 @@ function instance($$self, $$props, $$invalidate) {
   $$self.$inject_state = $$props => {
     if ("csrf" in $$props) $$invalidate(3, csrf = $$props.csrf);
     if ("theme" in $$props) $$invalidate(0, theme = $$props.theme);
-    if ("mode" in $$props) mode = $$props.mode;
+    if ("mode" in $$props) $$invalidate(4, mode = $$props.mode);
     if ("title" in $$props) $$invalidate(1, title = $$props.title);
     if ("content" in $$props) content = $$props.content;
     if ("files" in $$props) files = $$props.files;
+    if ("originalFiles" in $$props) originalFiles = $$props.originalFiles;
   };
 
   if ($$props && "$$inject" in $$props) {
     $$self.$inject_state($$props.$$inject);
   }
 
-  return [theme, title, submit, csrf, input0_input_handler];
+  return [theme, title, submit, csrf, mode, input0_input_handler];
 }
 
 class Create extends _internal.SvelteComponentDev {
@@ -7970,7 +7998,8 @@ class Create extends _internal.SvelteComponentDev {
     super(options);
     (0, _internal.init)(this, options, instance, create_fragment, _internal.safe_not_equal, {
       csrf: 3,
-      theme: 0
+      theme: 0,
+      mode: 4
     });
     (0, _internal.dispatch_dev)("SvelteRegisterComponent", {
       component: this,
@@ -8012,6 +8041,14 @@ class Create extends _internal.SvelteComponentDev {
     throw new Error("<Create>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
   }
 
+  get mode() {
+    throw new Error("<Create>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+  }
+
+  set mode(value) {
+    throw new Error("<Create>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+  }
+
 }
 
 var _default = Create;
@@ -8035,14 +8072,14 @@ const file = "components/Post/readElements/Now.svelte";
 
 function add_css() {
   var style = (0, _internal.element)("style");
-  style.id = "svelte-yah9er-style";
-  style.textContent = ".progress.svelte-yah9er.svelte-yah9er{position:fixed;bottom:10px;left:20px}.progress.svelte-yah9er ul.svelte-yah9er{display:block;width:150px}.progress.svelte-yah9er i.svelte-yah9er{display:block;width:80%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:3px;color:white;margin:5px auto;background-color:orangered;border-radius:10px;text-align:center}.progress.svelte-yah9er ul li.pass+li.unpass i.svelte-yah9er,.progress.svelte-yah9er ul li.unpass:first-child i.svelte-yah9er{width:100%}\n";
+  style.id = "svelte-1kn277t-style";
+  style.textContent = ".progress.svelte-1kn277t.svelte-1kn277t{position:fixed;bottom:10px;left:20px}.progress.svelte-1kn277t ul.svelte-1kn277t{display:block;width:150px}.progress.svelte-1kn277t i.svelte-1kn277t{display:block;width:80%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:3px;color:white;margin:5px auto;border-radius:10px;text-align:center}.progress.svelte-1kn277t ul li.pass+li.unpass i.svelte-1kn277t,.progress.svelte-1kn277t ul li.unpass:first-child i.svelte-1kn277t{width:100%}\n";
   (0, _internal.append_dev)(document.head, style);
 }
 
 function get_each_context(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[5] = list[i];
+  child_ctx[6] = list[i];
   return child_ctx;
 } // (4:8) {#each buttons as dom}
 
@@ -8053,8 +8090,9 @@ function create_each_block(ctx) {
   let i;
   let t0_value =
   /*dom*/
-  ctx[5].innerHTML + "";
+  ctx[6].innerHTML + "";
   let t0;
+  let i_class_value;
   let a_title_value;
   let t1;
   let mounted;
@@ -8066,23 +8104,25 @@ function create_each_block(ctx) {
       i = (0, _internal.element)("i");
       t0 = (0, _internal.text)(t0_value);
       t1 = (0, _internal.space)();
-      (0, _internal.attr_dev)(i, "class", "svelte-yah9er");
+      (0, _internal.attr_dev)(i, "class", i_class_value = "" + ((0, _internal.null_to_empty)("bg-".concat(
+      /*theme*/
+      ctx[0], "-secondary")) + " svelte-1kn277t"));
       (0, _internal.add_location)(i, file, 6, 20, 304);
       (0, _internal.attr_dev)(a, "href", "#");
       (0, _internal.attr_dev)(a, "title", a_title_value =
       /*dom*/
-      ctx[5].innerHTML);
+      ctx[6].innerHTML);
       (0, _internal.add_location)(a, file, 5, 16, 202);
       (0, _internal.toggle_class)(li, "unpass",
       /*dom*/
-      ctx[5].offsetTop >
+      ctx[6].offsetTop >
       /*y*/
-      ctx[0]);
+      ctx[1]);
       (0, _internal.toggle_class)(li, "pass",
       /*dom*/
-      ctx[5].offsetTop <
+      ctx[6].offsetTop <
       /*y*/
-      ctx[0]);
+      ctx[1]);
       (0, _internal.add_location)(li, file, 4, 12, 109);
     },
     m: function mount(target, anchor) {
@@ -8096,9 +8136,9 @@ function create_each_block(ctx) {
         dispose = (0, _internal.listen_dev)(a, "click", (0, _internal.prevent_default)(function () {
           if ((0, _internal.is_function)(goY(
           /*dom*/
-          ctx[5].offsetTop))) goY(
+          ctx[6].offsetTop))) goY(
           /*dom*/
-          ctx[5].offsetTop).apply(this, arguments);
+          ctx[6].offsetTop).apply(this, arguments);
         }), false, true, false);
         mounted = true;
       }
@@ -8107,36 +8147,44 @@ function create_each_block(ctx) {
       ctx = new_ctx;
       if (dirty &
       /*buttons*/
-      2 && t0_value !== (t0_value =
+      4 && t0_value !== (t0_value =
       /*dom*/
-      ctx[5].innerHTML + "")) (0, _internal.set_data_dev)(t0, t0_value);
+      ctx[6].innerHTML + "")) (0, _internal.set_data_dev)(t0, t0_value);
+
+      if (dirty &
+      /*theme*/
+      1 && i_class_value !== (i_class_value = "" + ((0, _internal.null_to_empty)("bg-".concat(
+      /*theme*/
+      ctx[0], "-secondary")) + " svelte-1kn277t"))) {
+        (0, _internal.attr_dev)(i, "class", i_class_value);
+      }
 
       if (dirty &
       /*buttons*/
-      2 && a_title_value !== (a_title_value =
+      4 && a_title_value !== (a_title_value =
       /*dom*/
-      ctx[5].innerHTML)) {
+      ctx[6].innerHTML)) {
         (0, _internal.attr_dev)(a, "title", a_title_value);
       }
 
       if (dirty &
       /*buttons, y*/
-      3) {
+      6) {
         (0, _internal.toggle_class)(li, "unpass",
         /*dom*/
-        ctx[5].offsetTop >
+        ctx[6].offsetTop >
         /*y*/
-        ctx[0]);
+        ctx[1]);
       }
 
       if (dirty &
       /*buttons, y*/
-      3) {
+      6) {
         (0, _internal.toggle_class)(li, "pass",
         /*dom*/
-        ctx[5].offsetTop <
+        ctx[6].offsetTop <
         /*y*/
-        ctx[0]);
+        ctx[1]);
       }
     },
     d: function destroy(detaching) {
@@ -8169,10 +8217,10 @@ function create_fragment(ctx) {
   let dispose;
   (0, _internal.add_render_callback)(
   /*onwindowscroll*/
-  ctx[3]);
+  ctx[4]);
   let each_value =
   /*buttons*/
-  ctx[1];
+  ctx[2];
   (0, _internal.validate_each_argument)(each_value);
   let each_blocks = [];
 
@@ -8189,9 +8237,9 @@ function create_fragment(ctx) {
         each_blocks[i].c();
       }
 
-      (0, _internal.attr_dev)(ul, "class", "svelte-yah9er");
+      (0, _internal.attr_dev)(ul, "class", "svelte-1kn277t");
       (0, _internal.add_location)(ul, file, 2, 4, 61);
-      (0, _internal.attr_dev)(div, "class", "progress svelte-yah9er");
+      (0, _internal.attr_dev)(div, "class", "progress svelte-1kn277t");
       (0, _internal.add_location)(div, file, 1, 0, 34);
     },
     l: function claim(nodes) {
@@ -8212,7 +8260,7 @@ function create_fragment(ctx) {
           scrolling_timeout = setTimeout_1(clear_scrolling, 100);
           /*onwindowscroll*/
 
-          ctx[3]();
+          ctx[4]();
         });
         mounted = true;
       }
@@ -8220,21 +8268,21 @@ function create_fragment(ctx) {
     p: function update(ctx, [dirty]) {
       if (dirty &
       /*y*/
-      1 && !scrolling) {
+      2 && !scrolling) {
         scrolling = true;
         clearTimeout(scrolling_timeout);
         scrollTo(window_1.pageXOffset,
         /*y*/
-        ctx[0]);
+        ctx[1]);
         scrolling_timeout = setTimeout_1(clear_scrolling, 100);
       }
 
       if (dirty &
-      /*buttons, y, goY*/
-      3) {
+      /*buttons, y, goY, theme*/
+      7) {
         each_value =
         /*buttons*/
-        ctx[1];
+        ctx[2];
         (0, _internal.validate_each_argument)(each_value);
         let i;
 
@@ -8284,6 +8332,9 @@ function instance($$self, $$props, $$invalidate) {
   let {
     doms
   } = $$props;
+  let {
+    theme
+  } = $$props;
   let y;
   let buttons = [];
   makeDomsLoad();
@@ -8297,11 +8348,11 @@ function instance($$self, $$props, $$invalidate) {
       Array.from(doms).forEach(dom => {
         if (dom.classList.contains("sub-title")) buttons.push(dom);else if (dom.classList.contains("article-divide")) buttons.push(dom);
       });
-      $$invalidate(1, buttons);
+      $$invalidate(2, buttons);
     }
   }
 
-  const writable_props = ["doms"];
+  const writable_props = ["doms", "theme"];
   Object.keys($$props).forEach(key => {
     if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console.warn("<Now> was created with unknown prop '".concat(key, "'"));
   });
@@ -8312,15 +8363,17 @@ function instance($$self, $$props, $$invalidate) {
   (0, _internal.validate_slots)("Now", $$slots, []);
 
   function onwindowscroll() {
-    $$invalidate(0, y = window_1.pageYOffset);
+    $$invalidate(1, y = window_1.pageYOffset);
   }
 
   $$self.$set = $$props => {
-    if ("doms" in $$props) $$invalidate(2, doms = $$props.doms);
+    if ("doms" in $$props) $$invalidate(3, doms = $$props.doms);
+    if ("theme" in $$props) $$invalidate(0, theme = $$props.theme);
   };
 
   $$self.$capture_state = () => ({
     doms,
+    theme,
     y,
     buttons,
     makeDomsLoad,
@@ -8328,24 +8381,26 @@ function instance($$self, $$props, $$invalidate) {
   });
 
   $$self.$inject_state = $$props => {
-    if ("doms" in $$props) $$invalidate(2, doms = $$props.doms);
-    if ("y" in $$props) $$invalidate(0, y = $$props.y);
-    if ("buttons" in $$props) $$invalidate(1, buttons = $$props.buttons);
+    if ("doms" in $$props) $$invalidate(3, doms = $$props.doms);
+    if ("theme" in $$props) $$invalidate(0, theme = $$props.theme);
+    if ("y" in $$props) $$invalidate(1, y = $$props.y);
+    if ("buttons" in $$props) $$invalidate(2, buttons = $$props.buttons);
   };
 
   if ($$props && "$$inject" in $$props) {
     $$self.$inject_state($$props.$$inject);
   }
 
-  return [y, buttons, doms, onwindowscroll];
+  return [theme, y, buttons, doms, onwindowscroll];
 }
 
 class Now extends _internal.SvelteComponentDev {
   constructor(options) {
     super(options);
-    if (!document.getElementById("svelte-yah9er-style")) add_css();
+    if (!document.getElementById("svelte-1kn277t-style")) add_css();
     (0, _internal.init)(this, options, instance, create_fragment, _internal.safe_not_equal, {
-      doms: 2
+      doms: 3,
+      theme: 0
     });
     (0, _internal.dispatch_dev)("SvelteRegisterComponent", {
       component: this,
@@ -8360,8 +8415,14 @@ class Now extends _internal.SvelteComponentDev {
 
     if (
     /*doms*/
-    ctx[2] === undefined && !("doms" in props)) {
+    ctx[3] === undefined && !("doms" in props)) {
       console.warn("<Now> was created without expected prop 'doms'");
+    }
+
+    if (
+    /*theme*/
+    ctx[0] === undefined && !("theme" in props)) {
+      console.warn("<Now> was created without expected prop 'theme'");
     }
   }
 
@@ -8370,6 +8431,14 @@ class Now extends _internal.SvelteComponentDev {
   }
 
   set doms(value) {
+    throw new Error("<Now>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+  }
+
+  get theme() {
+    throw new Error("<Now>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+  }
+
+  set theme(value) {
     throw new Error("<Now>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
   }
 
@@ -8551,7 +8620,10 @@ function create_if_block(ctx) {
       t1 = (0, _internal.text)(t1_value);
       t2 = (0, _internal.text)(" ]");
       (0, _internal.attr_dev)(p, "class", "text-center");
-      (0, _internal.add_location)(p, file, 3, 8, 141);
+      (0, _internal.attr_dev)(p, "theme",
+      /*theme*/
+      ctx[1]);
+      (0, _internal.add_location)(p, file, 3, 8, 187);
     },
     m: function mount(target, anchor) {
       (0, _internal.insert_dev)(target, p, anchor);
@@ -8565,6 +8637,14 @@ function create_if_block(ctx) {
       1 && t1_value !== (t1_value =
       /*data*/
       ctx[0].caption + "")) (0, _internal.set_data_dev)(t1, t1_value);
+
+      if (dirty &
+      /*theme*/
+      2) {
+        (0, _internal.attr_dev)(p, "theme",
+        /*theme*/
+        ctx[1]);
+      }
     },
     d: function destroy(detaching) {
       if (detaching) (0, _internal.detach_dev)(p);
@@ -8601,7 +8681,12 @@ function create_fragment(ctx) {
       (0, _internal.attr_dev)(img, "alt", "");
       (0, _internal.attr_dev)(img, "class", img_class_value =
       /*data*/
-      ctx[0].stretched ? "w-full" : "");
+      ctx[0].withBackground ? "bg-".concat(
+      /*theme*/
+      ctx[1], "-gray") : "");
+      (0, _internal.toggle_class)(img, "w-full",
+      /*data*/
+      ctx[0].stretched);
       (0, _internal.add_location)(img, file, 1, 4, 32);
       (0, _internal.attr_dev)(div, "class", "img-wrap my-4");
       (0, _internal.add_location)(div, file, 0, 0, 0);
@@ -8625,11 +8710,21 @@ function create_fragment(ctx) {
       }
 
       if (dirty &
+      /*data, theme*/
+      3 && img_class_value !== (img_class_value =
       /*data*/
-      1 && img_class_value !== (img_class_value =
-      /*data*/
-      ctx[0].stretched ? "w-full" : "")) {
+      ctx[0].withBackground ? "bg-".concat(
+      /*theme*/
+      ctx[1], "-gray") : "")) {
         (0, _internal.attr_dev)(img, "class", img_class_value);
+      }
+
+      if (dirty &
+      /*data, theme, data*/
+      3) {
+        (0, _internal.toggle_class)(img, "w-full",
+        /*data*/
+        ctx[0].stretched);
       }
 
       if (
@@ -8668,7 +8763,10 @@ function instance($$self, $$props, $$invalidate) {
   let {
     data
   } = $$props;
-  const writable_props = ["data"];
+  let {
+    theme
+  } = $$props;
+  const writable_props = ["data", "theme"];
   Object.keys($$props).forEach(key => {
     if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console.warn("<ImgBlock> was created with unknown prop '".concat(key, "'"));
   });
@@ -8680,28 +8778,32 @@ function instance($$self, $$props, $$invalidate) {
 
   $$self.$set = $$props => {
     if ("data" in $$props) $$invalidate(0, data = $$props.data);
+    if ("theme" in $$props) $$invalidate(1, theme = $$props.theme);
   };
 
   $$self.$capture_state = () => ({
-    data
+    data,
+    theme
   });
 
   $$self.$inject_state = $$props => {
     if ("data" in $$props) $$invalidate(0, data = $$props.data);
+    if ("theme" in $$props) $$invalidate(1, theme = $$props.theme);
   };
 
   if ($$props && "$$inject" in $$props) {
     $$self.$inject_state($$props.$$inject);
   }
 
-  return [data];
+  return [data, theme];
 }
 
 class ImgBlock extends _internal.SvelteComponentDev {
   constructor(options) {
     super(options);
     (0, _internal.init)(this, options, instance, create_fragment, _internal.safe_not_equal, {
-      data: 0
+      data: 0,
+      theme: 1
     });
     (0, _internal.dispatch_dev)("SvelteRegisterComponent", {
       component: this,
@@ -8719,6 +8821,12 @@ class ImgBlock extends _internal.SvelteComponentDev {
     ctx[0] === undefined && !("data" in props)) {
       console.warn("<ImgBlock> was created without expected prop 'data'");
     }
+
+    if (
+    /*theme*/
+    ctx[1] === undefined && !("theme" in props)) {
+      console.warn("<ImgBlock> was created without expected prop 'theme'");
+    }
   }
 
   get data() {
@@ -8726,6 +8834,14 @@ class ImgBlock extends _internal.SvelteComponentDev {
   }
 
   set data(value) {
+    throw new Error("<ImgBlock>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+  }
+
+  get theme() {
+    throw new Error("<ImgBlock>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+  }
+
+  set theme(value) {
     throw new Error("<ImgBlock>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
   }
 
@@ -24809,7 +24925,7 @@ function create_else_block(ctx) {
       p = (0, _internal.element)("p");
       t = (0, _internal.text)(t_value);
       (0, _internal.attr_dev)(p, "class", "text-red-300");
-      (0, _internal.add_location)(p, file, 19, 16, 998);
+      (0, _internal.add_location)(p, file, 19, 16, 1081);
     },
     m: function mount(target, anchor) {
       (0, _internal.insert_dev)(target, p, anchor);
@@ -24959,7 +25075,7 @@ function create_if_block_5(ctx) {
       p.textContent = "* * *";
       (0, _internal.attr_dev)(p, "class", "article-divide font-extrabold text-lg text-center my-4");
       (0, _internal.set_style)(p, "letter-spacing", "0.6rem");
-      (0, _internal.add_location)(p, file, 13, 16, 641);
+      (0, _internal.add_location)(p, file, 13, 16, 724);
     },
     m: function mount(target, anchor) {
       (0, _internal.insert_dev)(target, p, anchor);
@@ -25041,7 +25157,10 @@ function create_if_block_3(ctx) {
     props: {
       data:
       /*block*/
-      ctx[5].data
+      ctx[5].data,
+      theme:
+      /*theme*/
+      ctx[0]
     },
     $$inline: true
   });
@@ -25060,6 +25179,11 @@ function create_if_block_3(ctx) {
       4) imgblock_changes.data =
       /*block*/
       ctx[5].data;
+      if (dirty &
+      /*theme*/
+      1) imgblock_changes.theme =
+      /*theme*/
+      ctx[0];
       imgblock.$set(imgblock_changes);
     },
     i: function intro(local) {
@@ -25154,7 +25278,7 @@ function create_if_block_1(ctx) {
   const block = {
     c: function create() {
       p = (0, _internal.element)("p");
-      (0, _internal.add_location)(p, file, 5, 16, 212);
+      (0, _internal.add_location)(p, file, 5, 16, 279);
     },
     m: function mount(target, anchor) {
       (0, _internal.insert_dev)(target, p, anchor);
@@ -25275,7 +25399,7 @@ function create_each_block(ctx) {
     ctx
   });
   return block;
-} // (25:0) {#if bodyElement && bodyElement.children}
+} // (31:0) {#if bodyElement && bodyElement.children}
 
 
 function create_if_block(ctx) {
@@ -25285,7 +25409,10 @@ function create_if_block(ctx) {
     props: {
       doms:
       /*bodyElement*/
-      ctx[3].children
+      ctx[3].children,
+      theme:
+      /*theme*/
+      ctx[0]
     },
     $$inline: true
   });
@@ -25304,6 +25431,11 @@ function create_if_block(ctx) {
       8) now_1_changes.doms =
       /*bodyElement*/
       ctx[3].children;
+      if (dirty &
+      /*theme*/
+      1) now_1_changes.theme =
+      /*theme*/
+      ctx[0];
       now_1.$set(now_1_changes);
     },
     i: function intro(local) {
@@ -25323,19 +25455,25 @@ function create_if_block(ctx) {
     block,
     id: create_if_block.name,
     type: "if",
-    source: "(25:0) {#if bodyElement && bodyElement.children}",
+    source: "(31:0) {#if bodyElement && bodyElement.children}",
     ctx
   });
   return block;
 }
 
 function create_fragment(ctx) {
-  let div1;
+  let div2;
   let h1;
   let t0;
   let t1;
   let div0;
   let t2;
+  let div1;
+  let a;
+  let t3;
+  let a_href_value;
+  let a_class_value;
+  let t4;
   let if_block_anchor;
   let current;
   let each_value =
@@ -25359,7 +25497,7 @@ function create_fragment(ctx) {
   ctx[3].children && create_if_block(ctx);
   const block = {
     c: function create() {
-      div1 = (0, _internal.element)("div");
+      div2 = (0, _internal.element)("div");
       h1 = (0, _internal.element)("h1");
       t0 = (0, _internal.text)(
       /*title*/
@@ -25372,23 +25510,36 @@ function create_fragment(ctx) {
       }
 
       t2 = (0, _internal.space)();
+      div1 = (0, _internal.element)("div");
+      a = (0, _internal.element)("a");
+      t3 = (0, _internal.text)("Edit");
+      t4 = (0, _internal.space)();
       if (if_block) if_block.c();
       if_block_anchor = (0, _internal.empty)();
-      (0, _internal.attr_dev)(h1, "class", "ce-header mb-4");
+      (0, _internal.attr_dev)(h1, "class", "ce-header mb-4 font-bold text-right border-b-2");
+      (0, _internal.set_style)(h1, "margin-bottom", "20px");
       (0, _internal.add_location)(h1, file, 1, 4, 10);
-      (0, _internal.attr_dev)(div0, "class", "article body flex flex-col");
-      (0, _internal.add_location)(div0, file, 2, 4, 54);
-      (0, _internal.add_location)(div1, file, 0, 0, 0);
+      (0, _internal.attr_dev)(div0, "class", "article body flex flex-col mb-10");
+      (0, _internal.add_location)(div0, file, 2, 4, 115);
+      (0, _internal.attr_dev)(a, "href", a_href_value = "/post/edit/" + location.href.split("/").pop());
+      (0, _internal.attr_dev)(a, "class", a_class_value = "bg-" +
+      /*theme*/
+      ctx[0] + "-primary hover:bg-" +
+      /*theme*/
+      ctx[0] + "-accent text-white font-bold py-2 px-4 mt-4 rounded");
+      (0, _internal.add_location)(a, file, 24, 8, 1185);
+      (0, _internal.add_location)(div1, file, 23, 4, 1171);
+      (0, _internal.add_location)(div2, file, 0, 0, 0);
     },
     l: function claim(nodes) {
       throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     },
     m: function mount(target, anchor) {
-      (0, _internal.insert_dev)(target, div1, anchor);
-      (0, _internal.append_dev)(div1, h1);
+      (0, _internal.insert_dev)(target, div2, anchor);
+      (0, _internal.append_dev)(div2, h1);
       (0, _internal.append_dev)(h1, t0);
-      (0, _internal.append_dev)(div1, t1);
-      (0, _internal.append_dev)(div1, div0);
+      (0, _internal.append_dev)(div2, t1);
+      (0, _internal.append_dev)(div2, div0);
 
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].m(div0, null);
@@ -25397,7 +25548,11 @@ function create_fragment(ctx) {
 
 
       ctx[4](div0);
-      (0, _internal.insert_dev)(target, t2, anchor);
+      (0, _internal.append_dev)(div2, t2);
+      (0, _internal.append_dev)(div2, div1);
+      (0, _internal.append_dev)(div1, a);
+      (0, _internal.append_dev)(a, t3);
+      (0, _internal.insert_dev)(target, t4, anchor);
       if (if_block) if_block.m(target, anchor);
       (0, _internal.insert_dev)(target, if_block_anchor, anchor);
       current = true;
@@ -25439,6 +25594,16 @@ function create_fragment(ctx) {
         }
 
         (0, _internal.check_outros)();
+      }
+
+      if (!current || dirty &
+      /*theme*/
+      1 && a_class_value !== (a_class_value = "bg-" +
+      /*theme*/
+      ctx[0] + "-primary hover:bg-" +
+      /*theme*/
+      ctx[0] + "-accent text-white font-bold py-2 px-4 mt-4 rounded")) {
+        (0, _internal.attr_dev)(a, "class", a_class_value);
       }
 
       if (
@@ -25489,12 +25654,12 @@ function create_fragment(ctx) {
       current = false;
     },
     d: function destroy(detaching) {
-      if (detaching) (0, _internal.detach_dev)(div1);
+      if (detaching) (0, _internal.detach_dev)(div2);
       (0, _internal.destroy_each)(each_blocks, detaching);
       /*div0_binding*/
 
       ctx[4](null);
-      if (detaching) (0, _internal.detach_dev)(t2);
+      if (detaching) (0, _internal.detach_dev)(t4);
       if (if_block) if_block.d(detaching);
       if (detaching) (0, _internal.detach_dev)(if_block_anchor);
     }
@@ -25621,9 +25786,9 @@ var _Read = _interopRequireDefault(require("./Read.svelte"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /* components/Post/Index.svelte generated by Svelte v3.23.2 */
-const file = "components/Post/Index.svelte"; // (6:58) 
+const file = "components/Post/Index.svelte"; // (8:58) 
 
-function create_if_block_2(ctx) {
+function create_if_block_3(ctx) {
   let read;
   let current;
   read = new _Read.default({
@@ -25662,6 +25827,67 @@ function create_if_block_2(ctx) {
     },
     d: function destroy(detaching) {
       (0, _internal.destroy_component)(read, detaching);
+    }
+  };
+  (0, _internal.dispatch_dev)("SvelteRegisterBlock", {
+    block,
+    id: create_if_block_3.name,
+    type: "if",
+    source: "(8:58) ",
+    ctx
+  });
+  return block;
+} // (6:58) 
+
+
+function create_if_block_2(ctx) {
+  let create;
+  let current;
+  create = new _Create.default({
+    props: {
+      csrf:
+      /*csrf*/
+      ctx[0],
+      theme:
+      /*theme*/
+      ctx[1],
+      mode: "edit"
+    },
+    $$inline: true
+  });
+  const block = {
+    c: function create$1() {
+      (0, _internal.create_component)(create.$$.fragment);
+    },
+    m: function mount(target, anchor) {
+      (0, _internal.mount_component)(create, target, anchor);
+      current = true;
+    },
+    p: function update(ctx, dirty) {
+      const create_changes = {};
+      if (dirty &
+      /*csrf*/
+      1) create_changes.csrf =
+      /*csrf*/
+      ctx[0];
+      if (dirty &
+      /*theme*/
+      2) create_changes.theme =
+      /*theme*/
+      ctx[1];
+      create.$set(create_changes);
+    },
+    i: function intro(local) {
+      if (current) return;
+      (0, _internal.transition_in)(create.$$.fragment, local);
+      current = true;
+    },
+    o: function outro(local) {
+      (0, _internal.transition_out)(create.$$.fragment, local);
+      current = false;
+    },
+    d: function destroy(detaching) {
+      (0, _internal.destroy_component)(create, detaching);
     }
   };
   (0, _internal.dispatch_dev)("SvelteRegisterBlock", {
@@ -25759,16 +25985,18 @@ function create_fragment(ctx) {
   let show_if;
   let show_if_1;
   let show_if_2;
+  let show_if_3;
   let current_block_type_index;
   let if_block;
   let current;
-  const if_block_creators = [create_if_block, create_if_block_1, create_if_block_2];
+  const if_block_creators = [create_if_block, create_if_block_1, create_if_block_2, create_if_block_3];
   const if_blocks = [];
 
   function select_block_type(ctx, dirty) {
     if (location.pathname.startsWith("/post/index")) return 0;
     if (location.pathname.startsWith("/post/create")) return 1;
-    if (location.pathname.startsWith("/post/read")) return 2;
+    if (location.pathname.startsWith("/post/edit")) return 2;
+    if (location.pathname.startsWith("/post/read")) return 3;
     return -1;
   }
 
@@ -28050,7 +28278,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53973" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49746" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

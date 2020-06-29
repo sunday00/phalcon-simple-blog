@@ -1,15 +1,15 @@
-.progress.svelte-yah9er.svelte-yah9er{
+.progress.svelte-1kn277t.svelte-1kn277t{
   position:fixed;
   bottom:10px;
   left:20px
 }
 
-.progress.svelte-yah9er ul.svelte-yah9er{
+.progress.svelte-1kn277t ul.svelte-1kn277t{
   display:block;
   width:150px
 }
 
-.progress.svelte-yah9er i.svelte-yah9er{
+.progress.svelte-1kn277t i.svelte-1kn277t{
   display:block;
   width:80%;
   overflow:hidden;
@@ -18,12 +18,11 @@
   padding:3px;
   color:white;
   margin:5px auto;
-  background-color:orangered;
   border-radius:10px;
   text-align:center
 }
 
-.progress.svelte-yah9er ul li.pass+li.unpass i.svelte-yah9er,.progress.svelte-yah9er ul li.unpass:first-child i.svelte-yah9er{
+.progress.svelte-1kn277t ul li.pass+li.unpass i.svelte-1kn277t,.progress.svelte-1kn277t ul li.unpass:first-child i.svelte-1kn277t{
   width:100%
 }
 iframe.embed.svelte-16avzlq{

@@ -1,0 +1,1 @@
+<div class="content mx-auto w-4/5 my-12"></div>

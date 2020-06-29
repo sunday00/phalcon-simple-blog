@@ -9,6 +9,7 @@ class UserServices extends BaseServices
     public function getWebLoginResult ()
     {
         $user = $this->getOneUserByEmail();
+        if( !$user ) return $this->fail();
         $password = $this->request->getPost('password', 'string');
 
         if ($this->checkPassword($user, $password) ) return $this->response->redirect("/shielded/dashboard/index");
@@ -21,16 +22,12 @@ class UserServices extends BaseServices
     public function getApiLoginResult()
     {
         $user = $this->getOneUserByEmail();
+        if( !$user ) return $this->fail();
         $password = $this->request->getPost('password', 'string');
 
         if ($this->checkPassword($user, $password) ) return json_encode(['status' => 'ok', "action" => $this->url->get(['for'=>'admin'])]);
 
-        return json_encode([
-            'error'         => 'not permitted',
-            'msg'           => 'email or password is wrong',
-            'newCsrfName'   => $this->security->getTokenKey(),
-            'newCsrfValue'   => $this->security->getToken(),
-        ]);
+        return $this->fail();
     }
 
     public function getOneUserByEmail()
@@ -47,5 +44,15 @@ class UserServices extends BaseServices
             return true;
         }
         return false;
+    }
+
+    private function fail($error = 'not permitted', $msg = 'email or password is wrong')
+    {
+        return json_encode([
+            'error'         => $error,
+            'msg'           => $msg,
+            'newCsrfName'   => $this->security->getTokenKey(),
+            'newCsrfValue'   => $this->security->getToken(),
+        ]);
     }
 }

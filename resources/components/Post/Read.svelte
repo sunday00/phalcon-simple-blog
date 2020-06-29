@@ -1,13 +1,13 @@
 <div>
-    <h1 class="ce-header mb-4">{title}</h1>
-    <div class="article body flex flex-col" bind:this={bodyElement}>
+    <h1 class="ce-header mb-4 font-bold text-right border-b-2" style="margin-bottom: 20px;">{title}</h1>
+    <div class="article body flex flex-col mb-10" bind:this={bodyElement}>
         {#each blocks as block}
             {#if block.type === 'paragraph'}
                 <p>{@html block.data.text}</p>
             {:else if block.type === 'header'}
                 <Header level="{block.data.level}" text="{block.data.text}"></Header>
             {:else if block.type === 'image'}
-                <ImgBlock data="{block.data}"></ImgBlock>
+                <ImgBlock data="{block.data}" theme="{theme}"></ImgBlock>
             {:else if block.type === 'code'}
                 <Code data="{block.data}"></Code>
             {:else if block.type === 'delimiter'}
@@ -21,9 +21,15 @@
             {/if}
         {/each}
     </div>
+    <div>
+        <a href="/post/edit/{location.href.split('/').pop()}"
+           class="bg-{ theme }-primary hover:bg-{ theme }-accent text-white font-bold py-2 px-4 mt-4 rounded">
+            Edit
+        </a>
+    </div>
 </div>
 {#if bodyElement && bodyElement.children}
-    <Now doms="{bodyElement.children}"></Now>
+    <Now doms="{bodyElement.children}" theme="{theme}"></Now>
 {/if}
 <script>
     import Now from './readElements/Now.svelte';

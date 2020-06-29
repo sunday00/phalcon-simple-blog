@@ -76,6 +76,24 @@ class PostController extends ControllerBase
      */
     public function editAction($id)
     {
+
+    }
+
+    /**
+     * Update a post
+     *
+     * @param string $id
+     */
+    public function updateAction($id)
+    {
+        // TODO:: update post
+        // TODO:: compare original files vs now files. Both of them are comming request.
+        // TODO:: delete deleted original files.
+        // TODO:: save new files to DB. files are ignore, because physical files are already store via frontend.
+        // TODO:: return success json.
+        // TODO:: later, refactoring from duplicated store function to service logic
+
+        /*
         if (!$this->request->isPost()) {
             $post = Post::findFirstByid($id);
             if (!$post) {
@@ -98,8 +116,9 @@ class PostController extends ControllerBase
             $this->tag->setDefault("active", $post->active);
             $this->tag->setDefault("created_at", $post->created_at);
             $this->tag->setDefault("updated_at", $post->updated_at);
-            
+
         }
+        */
     }
 
     /**
@@ -131,7 +150,7 @@ class PostController extends ControllerBase
         if (!$post->save()) {
             return json_encode([
                 'status'    => 'fail',
-                'error'     => 'pail to store'
+                'error'     => 'fail to store'
             ]);
         }
 

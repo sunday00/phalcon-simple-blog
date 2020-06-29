@@ -4,7 +4,7 @@
         {#each buttons as dom}
             <li class:unpass="{ dom.offsetTop > y }" class:pass="{ dom.offsetTop < y }">
                 <a href="#" title="{dom.innerHTML}" on:click|preventDefault={goY(dom.offsetTop)}>
-                    <i>{dom.innerHTML}</i>
+                    <i class="{`bg-${theme}-secondary`}">{dom.innerHTML}</i>
                 </a>
             </li>
         {/each}
@@ -13,6 +13,7 @@
 
 <script>
     export let doms;
+    export let theme;
     let y;
     let buttons = [];
 
@@ -57,7 +58,6 @@
             padding: 3px;
             color: white;
             margin: 5px auto;
-            background-color: orangered;
             border-radius: 10px;
             text-align: center;
         }
