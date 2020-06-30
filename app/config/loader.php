@@ -25,4 +25,8 @@ $loader->registerNamespaces([
     'App\Plugins'       => '/app/plugins/',
 ]);
 
+$loader->registerClasses([
+    'App\Plugins\Arr' => 'app/plugins/Arr.php',
+]);
+
 $loader->register();

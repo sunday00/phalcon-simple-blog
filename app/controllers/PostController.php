@@ -86,39 +86,26 @@ class PostController extends ControllerBase
      */
     public function updateAction($id)
     {
-        // TODO:: update post
-        // TODO:: compare original files vs now files. Both of them are comming request.
-        // TODO:: delete deleted original files.
-        // TODO:: save new files to DB. files are ignore, because physical files are already store via frontend.
-        // TODO:: return success json.
+        // TODO:: delete deleted original files. (db and actual) (see file service)
         // TODO:: later, refactoring from duplicated store function to service logic
 
-        /*
-        if (!$this->request->isPost()) {
-            $post = Post::findFirstByid($id);
-            if (!$post) {
-                $this->flash->error("post was not found");
+        $post = Post::findFirst($id);
+        $post->title = $this->request->getJsonRawBody()->title;
+        $post->body = json_encode($this->request->getJsonRawBody()->blocks);
 
-                $this->dispatcher->forward([
-                    'controller' => "post",
-                    'action' => 'index'
-                ]);
+        $originalFiles = $this->request->getJsonRawBody()->originalFiles;
+        $files = $this->request->getJsonRawBody()->files;
+        $deletedFiles = array_diff(\App\Plugins\Arr::pluck($originalFiles, 'url'), \App\Plugins\Arr::pluck($files, 'url'));
 
-                return;
-            }
+        $this->fileService->deleteFiles($post->id, $deletedFiles);
+        $this->fileService->saveFile($post->id, json_encode($files));
 
-            $this->view->id = $post->id;
-
-            $this->tag->setDefault("id", $post->id);
-            $this->tag->setDefault("user_id", $post->user_id);
-            $this->tag->setDefault("title", $post->title);
-            $this->tag->setDefault("body", $post->body);
-            $this->tag->setDefault("active", $post->active);
-            $this->tag->setDefault("created_at", $post->created_at);
-            $this->tag->setDefault("updated_at", $post->updated_at);
-
+        if( $post->update() ){
+            return json_encode([
+                'status'    => 'success',
+                'id'        => $post->id
+            ]);
         }
-        */
     }
 
     /**

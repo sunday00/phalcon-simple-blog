@@ -7816,8 +7816,7 @@ function instance($$self, $$props, $$invalidate) {
     }
 
     updated() {
-      if (files.indexOf(this.data.file.url) < 0) {
-        let file = {};
+      if (files.indexOf(this.data.file) < 0) {
         files.push(this.data.file);
         console.log(this);
       }
@@ -7841,6 +7840,40 @@ function instance($$self, $$props, $$invalidate) {
       }
     }
 
+  }
+
+  function sendCreate(outputData) {
+    const url = "/api/v1/post/store";
+    const formData = new FormData();
+    formData.append(csrf.name, csrf.value);
+    formData.append("title", title);
+    formData.append("content", encodeURIComponent(JSON.stringify(outputData.blocks)));
+    formData.append("files", JSON.stringify(files));
+    axios.post(url, formData, {
+      headers: {
+        "content-type": "multipart/form-data"
+      }
+    }).then(response => {
+      console.log(response);
+    }); // location.href = `/post/read/${response.data.id}`;
+  }
+
+  function sendEdit(outputData) {
+    const url = "/api/v1/post/update/".concat(location.href.split("/").pop());
+    let data = {
+      csrf,
+      title,
+      blocks: outputData.blocks,
+      originalFiles,
+      files
+    };
+    axios.put(url, data, {
+      headers: {
+        "content-type": "multipart/form-data"
+      }
+    }).then(response => {
+      console.log(response);
+    }); // location.href = `/post/read/${response.data.id}`;
   }
 
   const editor = new _editorjs.default({
@@ -7911,23 +7944,7 @@ function instance($$self, $$props, $$invalidate) {
 
   function submit(e) {
     editor.save().then(outputData => {
-      const formData = new FormData();
-      formData.append(csrf.name, csrf.value);
-      formData.append("title", title);
-      formData.append("content", encodeURIComponent(JSON.stringify(outputData.blocks)));
-      formData.append("files", JSON.stringify(files));
-      if (mode === "edit") formData.append("originalFiles", JSON.stringify(originalFiles));
-      let url = mode === "create" ? "/api/v1/post/store" : "/api/v1/post/update/".concat(location.href.split("/").pop());
-      axios({
-        method: mode === "create" ? "POST" : "PUT",
-        url,
-        data: formData,
-        headers: {
-          "content-type": "multipart/form-data"
-        }
-      }).then(response => {
-        console.log(response);
-      }); // location.href = `/post/read/${response.data.id}`;
+      if (mode === "create") sendCreate(outputData);else sendEdit(outputData);
     }).catch(error => {
       console.log("Saving failed: ", error);
     });
@@ -7972,6 +7989,8 @@ function instance($$self, $$props, $$invalidate) {
     files,
     originalFiles,
     Image,
+    sendCreate,
+    sendEdit,
     editor,
     submit
   });
