@@ -86,13 +86,11 @@ class PostController extends ControllerBase
      */
     public function updateAction($id)
     {
-        // TODO:: delete deleted original files. (db and actual) (see file service)
         // TODO:: later, refactoring from duplicated store function to service logic
 
         $post = Post::findFirst($id);
         $post->title = $this->request->getJsonRawBody()->title;
         $post->body = json_encode($this->request->getJsonRawBody()->blocks);
-
         $originalFiles = $this->request->getJsonRawBody()->originalFiles;
         $files = $this->request->getJsonRawBody()->files;
         $deletedFiles = array_diff(\App\Plugins\Arr::pluck($originalFiles, 'url'), \App\Plugins\Arr::pluck($files, 'url'));
@@ -187,6 +185,38 @@ class PostController extends ControllerBase
         $this->dispatcher->forward([
             'controller' => "post",
             'action' => "index"
+        ]);
+    }
+
+    /**
+     * Deletes a post
+     *
+     * @param string $id
+     */
+    public function deleteDataAction($id)
+    {
+        $post = Post::findFirstByid($id);
+        if (!$post) {
+            $this->flash->error("post was not found");
+            return json_encode([
+                'status'    => 'fail',
+                'error'     => 'already not exists'
+            ]);
+        }
+
+        foreach( $post->getFile() as $file){
+            unlink(BASE_PATH."/public".$file->stored_name);
+        }
+
+        if (!$post->delete()) {
+            return json_encode([
+                'status'    => 'fail',
+                'error'     => 'something is wrong'
+            ]);
+        }
+
+        return json_encode([
+            'status'    => 'success'
         ]);
     }
 }

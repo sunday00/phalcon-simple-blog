@@ -7855,7 +7855,8 @@ function instance($$self, $$props, $$invalidate) {
       }
     }).then(response => {
       console.log(response);
-    }); // location.href = `/post/read/${response.data.id}`;
+      location.href = "/post/read/".concat(response.data.id);
+    });
   }
 
   function sendEdit(outputData) {
@@ -7873,7 +7874,8 @@ function instance($$self, $$props, $$invalidate) {
       }
     }).then(response => {
       console.log(response);
-    }); // location.href = `/post/read/${response.data.id}`;
+      location.href = "/post/read/".concat(response.data.id);
+    });
   }
 
   const editor = new _editorjs.default({
@@ -24928,7 +24930,7 @@ const file = "components/Post/Read.svelte";
 
 function get_each_context(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[5] = list[i];
+  child_ctx[13] = list[i];
   return child_ctx;
 } // (19:12) {:else }
 
@@ -24937,7 +24939,7 @@ function create_else_block(ctx) {
   let p;
   let t_value =
   /*block*/
-  ctx[5].type + "";
+  ctx[13].type + "";
   let t;
   const block = {
     c: function create() {
@@ -24955,7 +24957,7 @@ function create_else_block(ctx) {
       /*blocks*/
       4 && t_value !== (t_value =
       /*block*/
-      ctx[5].type + "")) (0, _internal.set_data_dev)(t, t_value);
+      ctx[13].type + "")) (0, _internal.set_data_dev)(t, t_value);
     },
     i: _internal.noop,
     o: _internal.noop,
@@ -24974,14 +24976,14 @@ function create_else_block(ctx) {
 } // (17:45) 
 
 
-function create_if_block_7(ctx) {
+function create_if_block_9(ctx) {
   let embed;
   let current;
   embed = new _Embed.default({
     props: {
       data:
       /*block*/
-      ctx[5].data
+      ctx[13].data
     },
     $$inline: true
   });
@@ -24999,7 +25001,7 @@ function create_if_block_7(ctx) {
       /*blocks*/
       4) embed_changes.data =
       /*block*/
-      ctx[5].data;
+      ctx[13].data;
       embed.$set(embed_changes);
     },
     i: function intro(local) {
@@ -25017,7 +25019,7 @@ function create_if_block_7(ctx) {
   };
   (0, _internal.dispatch_dev)("SvelteRegisterBlock", {
     block,
-    id: create_if_block_7.name,
+    id: create_if_block_9.name,
     type: "if",
     source: "(17:45) ",
     ctx
@@ -25026,14 +25028,14 @@ function create_if_block_7(ctx) {
 } // (15:45) 
 
 
-function create_if_block_6(ctx) {
+function create_if_block_8(ctx) {
   let quote;
   let current;
   quote = new _Quote.default({
     props: {
       data:
       /*block*/
-      ctx[5].data,
+      ctx[13].data,
       theme:
       /*theme*/
       ctx[0]
@@ -25054,7 +25056,7 @@ function create_if_block_6(ctx) {
       /*blocks*/
       4) quote_changes.data =
       /*block*/
-      ctx[5].data;
+      ctx[13].data;
       if (dirty &
       /*theme*/
       1) quote_changes.theme =
@@ -25077,7 +25079,7 @@ function create_if_block_6(ctx) {
   };
   (0, _internal.dispatch_dev)("SvelteRegisterBlock", {
     block,
-    id: create_if_block_6.name,
+    id: create_if_block_8.name,
     type: "if",
     source: "(15:45) ",
     ctx
@@ -25086,7 +25088,7 @@ function create_if_block_6(ctx) {
 } // (13:49) 
 
 
-function create_if_block_5(ctx) {
+function create_if_block_7(ctx) {
   let p;
   const block = {
     c: function create() {
@@ -25108,7 +25110,7 @@ function create_if_block_5(ctx) {
   };
   (0, _internal.dispatch_dev)("SvelteRegisterBlock", {
     block,
-    id: create_if_block_5.name,
+    id: create_if_block_7.name,
     type: "if",
     source: "(13:49) ",
     ctx
@@ -25117,14 +25119,14 @@ function create_if_block_5(ctx) {
 } // (11:44) 
 
 
-function create_if_block_4(ctx) {
+function create_if_block_6(ctx) {
   let code;
   let current;
   code = new _Code.default({
     props: {
       data:
       /*block*/
-      ctx[5].data
+      ctx[13].data
     },
     $$inline: true
   });
@@ -25142,7 +25144,7 @@ function create_if_block_4(ctx) {
       /*blocks*/
       4) code_changes.data =
       /*block*/
-      ctx[5].data;
+      ctx[13].data;
       code.$set(code_changes);
     },
     i: function intro(local) {
@@ -25160,7 +25162,7 @@ function create_if_block_4(ctx) {
   };
   (0, _internal.dispatch_dev)("SvelteRegisterBlock", {
     block,
-    id: create_if_block_4.name,
+    id: create_if_block_6.name,
     type: "if",
     source: "(11:44) ",
     ctx
@@ -25169,14 +25171,14 @@ function create_if_block_4(ctx) {
 } // (9:45) 
 
 
-function create_if_block_3(ctx) {
+function create_if_block_5(ctx) {
   let imgblock;
   let current;
   imgblock = new _ImgBlock.default({
     props: {
       data:
       /*block*/
-      ctx[5].data,
+      ctx[13].data,
       theme:
       /*theme*/
       ctx[0]
@@ -25197,7 +25199,7 @@ function create_if_block_3(ctx) {
       /*blocks*/
       4) imgblock_changes.data =
       /*block*/
-      ctx[5].data;
+      ctx[13].data;
       if (dirty &
       /*theme*/
       1) imgblock_changes.theme =
@@ -25220,7 +25222,7 @@ function create_if_block_3(ctx) {
   };
   (0, _internal.dispatch_dev)("SvelteRegisterBlock", {
     block,
-    id: create_if_block_3.name,
+    id: create_if_block_5.name,
     type: "if",
     source: "(9:45) ",
     ctx
@@ -25229,17 +25231,17 @@ function create_if_block_3(ctx) {
 } // (7:46) 
 
 
-function create_if_block_2(ctx) {
+function create_if_block_4(ctx) {
   let header;
   let current;
   header = new _Header.default({
     props: {
       level:
       /*block*/
-      ctx[5].data.level,
+      ctx[13].data.level,
       text:
       /*block*/
-      ctx[5].data.text
+      ctx[13].data.text
     },
     $$inline: true
   });
@@ -25257,12 +25259,12 @@ function create_if_block_2(ctx) {
       /*blocks*/
       4) header_changes.level =
       /*block*/
-      ctx[5].data.level;
+      ctx[13].data.level;
       if (dirty &
       /*blocks*/
       4) header_changes.text =
       /*block*/
-      ctx[5].data.text;
+      ctx[13].data.text;
       header.$set(header_changes);
     },
     i: function intro(local) {
@@ -25280,7 +25282,7 @@ function create_if_block_2(ctx) {
   };
   (0, _internal.dispatch_dev)("SvelteRegisterBlock", {
     block,
-    id: create_if_block_2.name,
+    id: create_if_block_4.name,
     type: "if",
     source: "(7:46) ",
     ctx
@@ -25289,11 +25291,11 @@ function create_if_block_2(ctx) {
 } // (5:12) {#if block.type === 'paragraph'}
 
 
-function create_if_block_1(ctx) {
+function create_if_block_3(ctx) {
   let p;
   let raw_value =
   /*block*/
-  ctx[5].data.text + "";
+  ctx[13].data.text + "";
   const block = {
     c: function create() {
       p = (0, _internal.element)("p");
@@ -25308,7 +25310,7 @@ function create_if_block_1(ctx) {
       /*blocks*/
       4 && raw_value !== (raw_value =
       /*block*/
-      ctx[5].data.text + "")) p.innerHTML = raw_value;
+      ctx[13].data.text + "")) p.innerHTML = raw_value;
       ;
     },
     i: _internal.noop,
@@ -25319,7 +25321,7 @@ function create_if_block_1(ctx) {
   };
   (0, _internal.dispatch_dev)("SvelteRegisterBlock", {
     block,
-    id: create_if_block_1.name,
+    id: create_if_block_3.name,
     type: "if",
     source: "(5:12) {#if block.type === 'paragraph'}",
     ctx
@@ -25333,31 +25335,31 @@ function create_each_block(ctx) {
   let if_block;
   let if_block_anchor;
   let current;
-  const if_block_creators = [create_if_block_1, create_if_block_2, create_if_block_3, create_if_block_4, create_if_block_5, create_if_block_6, create_if_block_7, create_else_block];
+  const if_block_creators = [create_if_block_3, create_if_block_4, create_if_block_5, create_if_block_6, create_if_block_7, create_if_block_8, create_if_block_9, create_else_block];
   const if_blocks = [];
 
   function select_block_type(ctx, dirty) {
     if (
     /*block*/
-    ctx[5].type === "paragraph") return 0;
+    ctx[13].type === "paragraph") return 0;
     if (
     /*block*/
-    ctx[5].type === "header") return 1;
+    ctx[13].type === "header") return 1;
     if (
     /*block*/
-    ctx[5].type === "image") return 2;
+    ctx[13].type === "image") return 2;
     if (
     /*block*/
-    ctx[5].type === "code") return 3;
+    ctx[13].type === "code") return 3;
     if (
     /*block*/
-    ctx[5].type === "delimiter") return 4;
+    ctx[13].type === "delimiter") return 4;
     if (
     /*block*/
-    ctx[5].type === "quote") return 5;
+    ctx[13].type === "quote") return 5;
     if (
     /*block*/
-    ctx[5].type === "embed") return 6;
+    ctx[13].type === "embed") return 6;
     return 7;
   }
 
@@ -25418,17 +25420,17 @@ function create_each_block(ctx) {
     ctx
   });
   return block;
-} // (31:0) {#if bodyElement && bodyElement.children}
+} // (35:0) {#if bodyElement && bodyElement.children}
 
 
-function create_if_block(ctx) {
+function create_if_block_2(ctx) {
   let now_1;
   let current;
   now_1 = new _Now.default({
     props: {
       doms:
       /*bodyElement*/
-      ctx[3].children,
+      ctx[5].children,
       theme:
       /*theme*/
       ctx[0]
@@ -25447,9 +25449,9 @@ function create_if_block(ctx) {
       const now_1_changes = {};
       if (dirty &
       /*bodyElement*/
-      8) now_1_changes.doms =
+      32) now_1_changes.doms =
       /*bodyElement*/
-      ctx[3].children;
+      ctx[5].children;
       if (dirty &
       /*theme*/
       1) now_1_changes.theme =
@@ -25472,9 +25474,210 @@ function create_if_block(ctx) {
   };
   (0, _internal.dispatch_dev)("SvelteRegisterBlock", {
     block,
+    id: create_if_block_2.name,
+    type: "if",
+    source: "(35:0) {#if bodyElement && bodyElement.children}",
+    ctx
+  });
+  return block;
+} // (39:0) {#if error_title}
+
+
+function create_if_block(ctx) {
+  let div;
+  let strong;
+  let t0;
+  let span0;
+  let t1;
+  let t2;
+  let span1;
+  let svg;
+  let title_1;
+  let t3;
+  let path;
+  let mounted;
+  let dispose;
+  let if_block =
+  /*error_title*/
+  ctx[3] === "danger" && create_if_block_1(ctx);
+  const block = {
+    c: function create() {
+      div = (0, _internal.element)("div");
+      strong = (0, _internal.element)("strong");
+      t0 = (0, _internal.space)();
+      span0 = (0, _internal.element)("span");
+      t1 = (0, _internal.space)();
+      if (if_block) if_block.c();
+      t2 = (0, _internal.space)();
+      span1 = (0, _internal.element)("span");
+      svg = (0, _internal.svg_element)("svg");
+      title_1 = (0, _internal.svg_element)("title");
+      t3 = (0, _internal.text)("Close");
+      path = (0, _internal.svg_element)("path");
+      (0, _internal.attr_dev)(strong, "class", "font-bold");
+      (0, _internal.attr_dev)(strong, "contenteditable", "true");
+      if (
+      /*error_title*/
+      ctx[3] === void 0) (0, _internal.add_render_callback)(() =>
+      /*strong_input_handler*/
+      ctx[10].call(strong));
+      (0, _internal.add_location)(strong, file, 40, 8, 1936);
+      (0, _internal.attr_dev)(span0, "class", "block w-3/4 sm:w-5/6 ");
+      (0, _internal.attr_dev)(span0, "contenteditable", "true");
+      if (
+      /*error_message*/
+      ctx[4] === void 0) (0, _internal.add_render_callback)(() =>
+      /*span0_input_handler*/
+      ctx[11].call(span0));
+      (0, _internal.add_location)(span0, file, 41, 8, 2032);
+      (0, _internal.add_location)(title_1, file, 47, 16, 2546);
+      (0, _internal.attr_dev)(path, "d", "M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z");
+      (0, _internal.add_location)(path, file, 47, 36, 2566);
+      (0, _internal.attr_dev)(svg, "class", "fill-current h-6 w-6 text-red-500");
+      (0, _internal.attr_dev)(svg, "role", "button");
+      (0, _internal.attr_dev)(svg, "xmlns", "http://www.w3.org/2000/svg");
+      (0, _internal.attr_dev)(svg, "viewBox", "0 0 20 20");
+      (0, _internal.add_location)(svg, file, 46, 12, 2391);
+      (0, _internal.attr_dev)(span1, "class", "absolute top-0 bottom-0 right-0 px-4 py-5");
+      (0, _internal.add_location)(span1, file, 45, 8, 2322);
+      (0, _internal.attr_dev)(div, "class", "bg-red-100 border border-red-400 text-red-700 px-4 py-3 my-4 rounded relative");
+      (0, _internal.attr_dev)(div, "role", "alert");
+      (0, _internal.add_location)(div, file, 39, 4, 1823);
+    },
+    m: function mount(target, anchor) {
+      (0, _internal.insert_dev)(target, div, anchor);
+      (0, _internal.append_dev)(div, strong);
+
+      if (
+      /*error_title*/
+      ctx[3] !== void 0) {
+        strong.innerHTML =
+        /*error_title*/
+        ctx[3];
+      }
+
+      (0, _internal.append_dev)(div, t0);
+      (0, _internal.append_dev)(div, span0);
+
+      if (
+      /*error_message*/
+      ctx[4] !== void 0) {
+        span0.innerHTML =
+        /*error_message*/
+        ctx[4];
+      }
+
+      (0, _internal.append_dev)(div, t1);
+      if (if_block) if_block.m(div, null);
+      (0, _internal.append_dev)(div, t2);
+      (0, _internal.append_dev)(div, span1);
+      (0, _internal.append_dev)(span1, svg);
+      (0, _internal.append_dev)(svg, title_1);
+      (0, _internal.append_dev)(title_1, t3);
+      (0, _internal.append_dev)(svg, path);
+
+      if (!mounted) {
+        dispose = [(0, _internal.listen_dev)(strong, "input",
+        /*strong_input_handler*/
+        ctx[10]), (0, _internal.listen_dev)(span0, "input",
+        /*span0_input_handler*/
+        ctx[11]), (0, _internal.listen_dev)(svg, "click",
+        /*closeError*/
+        ctx[8], false, false, false)];
+        mounted = true;
+      }
+    },
+    p: function update(ctx, dirty) {
+      if (dirty &
+      /*error_title*/
+      8 &&
+      /*error_title*/
+      ctx[3] !== strong.innerHTML) {
+        strong.innerHTML =
+        /*error_title*/
+        ctx[3];
+      }
+
+      if (dirty &
+      /*error_message*/
+      16 &&
+      /*error_message*/
+      ctx[4] !== span0.innerHTML) {
+        span0.innerHTML =
+        /*error_message*/
+        ctx[4];
+      }
+
+      if (
+      /*error_title*/
+      ctx[3] === "danger") {
+        if (if_block) {
+          if_block.p(ctx, dirty);
+        } else {
+          if_block = create_if_block_1(ctx);
+          if_block.c();
+          if_block.m(div, t2);
+        }
+      } else if (if_block) {
+        if_block.d(1);
+        if_block = null;
+      }
+    },
+    d: function destroy(detaching) {
+      if (detaching) (0, _internal.detach_dev)(div);
+      if (if_block) if_block.d();
+      mounted = false;
+      (0, _internal.run_all)(dispose);
+    }
+  };
+  (0, _internal.dispatch_dev)("SvelteRegisterBlock", {
+    block,
     id: create_if_block.name,
     type: "if",
-    source: "(31:0) {#if bodyElement && bodyElement.children}",
+    source: "(39:0) {#if error_title}",
+    ctx
+  });
+  return block;
+} // (43:8) {#if error_title === 'danger'}
+
+
+function create_if_block_1(ctx) {
+  let span;
+  let button;
+  let mounted;
+  let dispose;
+  const block = {
+    c: function create() {
+      span = (0, _internal.element)("span");
+      button = (0, _internal.element)("button");
+      button.textContent = "OK";
+      (0, _internal.attr_dev)(button, "class", "bg-red-500 text-white px-4 py-3 my-4 rounded");
+      (0, _internal.add_location)(button, file, 43, 14, 2183);
+      (0, _internal.add_location)(span, file, 43, 8, 2177);
+    },
+    m: function mount(target, anchor) {
+      (0, _internal.insert_dev)(target, span, anchor);
+      (0, _internal.append_dev)(span, button);
+
+      if (!mounted) {
+        dispose = (0, _internal.listen_dev)(button, "click", (0, _internal.prevent_default)(
+        /*deletePost*/
+        ctx[7]), false, true, false);
+        mounted = true;
+      }
+    },
+    p: _internal.noop,
+    d: function destroy(detaching) {
+      if (detaching) (0, _internal.detach_dev)(span);
+      mounted = false;
+      dispose();
+    }
+  };
+  (0, _internal.dispatch_dev)("SvelteRegisterBlock", {
+    block,
+    id: create_if_block_1.name,
+    type: "if",
+    source: "(43:8) {#if error_title === 'danger'}",
     ctx
   });
   return block;
@@ -25493,8 +25696,16 @@ function create_fragment(ctx) {
   let a_href_value;
   let a_class_value;
   let t4;
-  let if_block_anchor;
+  let form;
+  let input;
+  let input_class_value;
+  let form_action_value;
+  let t5;
+  let t6;
+  let if_block1_anchor;
   let current;
+  let mounted;
+  let dispose;
   let each_value =
   /*blocks*/
   ctx[2];
@@ -25509,11 +25720,14 @@ function create_fragment(ctx) {
     each_blocks[i] = null;
   });
 
-  let if_block =
+  let if_block0 =
   /*bodyElement*/
-  ctx[3] &&
+  ctx[5] &&
   /*bodyElement*/
-  ctx[3].children && create_if_block(ctx);
+  ctx[5].children && create_if_block_2(ctx);
+  let if_block1 =
+  /*error_title*/
+  ctx[3] && create_if_block(ctx);
   const block = {
     c: function create() {
       div2 = (0, _internal.element)("div");
@@ -25533,8 +25747,13 @@ function create_fragment(ctx) {
       a = (0, _internal.element)("a");
       t3 = (0, _internal.text)("Edit");
       t4 = (0, _internal.space)();
-      if (if_block) if_block.c();
-      if_block_anchor = (0, _internal.empty)();
+      form = (0, _internal.element)("form");
+      input = (0, _internal.element)("input");
+      t5 = (0, _internal.space)();
+      if (if_block0) if_block0.c();
+      t6 = (0, _internal.space)();
+      if (if_block1) if_block1.c();
+      if_block1_anchor = (0, _internal.empty)();
       (0, _internal.attr_dev)(h1, "class", "ce-header mb-4 font-bold text-right border-b-2");
       (0, _internal.set_style)(h1, "margin-bottom", "20px");
       (0, _internal.add_location)(h1, file, 1, 4, 10);
@@ -25547,6 +25766,16 @@ function create_fragment(ctx) {
       /*theme*/
       ctx[0] + "-accent text-white font-bold py-2 px-4 mt-4 rounded");
       (0, _internal.add_location)(a, file, 24, 8, 1185);
+      (0, _internal.attr_dev)(input, "type", "submit");
+      input.value = "Delete";
+      (0, _internal.attr_dev)(input, "class", input_class_value = "bg-" +
+      /*theme*/
+      ctx[0] + "-primary hover:bg-" +
+      /*theme*/
+      ctx[0] + "-accent text-white font-bold py-2 px-4 mt-4 rounded");
+      (0, _internal.add_location)(input, file, 29, 12, 1499);
+      (0, _internal.attr_dev)(form, "action", form_action_value = "/post/delete/" + location.href.split("/").pop());
+      (0, _internal.add_location)(form, file, 28, 8, 1388);
       (0, _internal.add_location)(div1, file, 23, 4, 1171);
       (0, _internal.add_location)(div2, file, 0, 0, 0);
     },
@@ -25566,15 +25795,27 @@ function create_fragment(ctx) {
       /*div0_binding*/
 
 
-      ctx[4](div0);
+      ctx[9](div0);
       (0, _internal.append_dev)(div2, t2);
       (0, _internal.append_dev)(div2, div1);
       (0, _internal.append_dev)(div1, a);
       (0, _internal.append_dev)(a, t3);
-      (0, _internal.insert_dev)(target, t4, anchor);
-      if (if_block) if_block.m(target, anchor);
-      (0, _internal.insert_dev)(target, if_block_anchor, anchor);
+      (0, _internal.append_dev)(div1, t4);
+      (0, _internal.append_dev)(div1, form);
+      (0, _internal.append_dev)(form, input);
+      (0, _internal.insert_dev)(target, t5, anchor);
+      if (if_block0) if_block0.m(target, anchor);
+      (0, _internal.insert_dev)(target, t6, anchor);
+      if (if_block1) if_block1.m(target, anchor);
+      (0, _internal.insert_dev)(target, if_block1_anchor, anchor);
       current = true;
+
+      if (!mounted) {
+        dispose = (0, _internal.listen_dev)(form, "submit", (0, _internal.prevent_default)(
+        /*deleteAsk*/
+        ctx[6]), false, true, false);
+        mounted = true;
+      }
     },
     p: function update(ctx, [dirty]) {
       if (!current || dirty &
@@ -25625,31 +25866,56 @@ function create_fragment(ctx) {
         (0, _internal.attr_dev)(a, "class", a_class_value);
       }
 
+      if (!current || dirty &
+      /*theme*/
+      1 && input_class_value !== (input_class_value = "bg-" +
+      /*theme*/
+      ctx[0] + "-primary hover:bg-" +
+      /*theme*/
+      ctx[0] + "-accent text-white font-bold py-2 px-4 mt-4 rounded")) {
+        (0, _internal.attr_dev)(input, "class", input_class_value);
+      }
+
       if (
       /*bodyElement*/
-      ctx[3] &&
+      ctx[5] &&
       /*bodyElement*/
-      ctx[3].children) {
-        if (if_block) {
-          if_block.p(ctx, dirty);
+      ctx[5].children) {
+        if (if_block0) {
+          if_block0.p(ctx, dirty);
 
           if (dirty &
           /*bodyElement*/
-          8) {
-            (0, _internal.transition_in)(if_block, 1);
+          32) {
+            (0, _internal.transition_in)(if_block0, 1);
           }
         } else {
-          if_block = create_if_block(ctx);
-          if_block.c();
-          (0, _internal.transition_in)(if_block, 1);
-          if_block.m(if_block_anchor.parentNode, if_block_anchor);
+          if_block0 = create_if_block_2(ctx);
+          if_block0.c();
+          (0, _internal.transition_in)(if_block0, 1);
+          if_block0.m(t6.parentNode, t6);
         }
-      } else if (if_block) {
+      } else if (if_block0) {
         (0, _internal.group_outros)();
-        (0, _internal.transition_out)(if_block, 1, 1, () => {
-          if_block = null;
+        (0, _internal.transition_out)(if_block0, 1, 1, () => {
+          if_block0 = null;
         });
         (0, _internal.check_outros)();
+      }
+
+      if (
+      /*error_title*/
+      ctx[3]) {
+        if (if_block1) {
+          if_block1.p(ctx, dirty);
+        } else {
+          if_block1 = create_if_block(ctx);
+          if_block1.c();
+          if_block1.m(if_block1_anchor.parentNode, if_block1_anchor);
+        }
+      } else if (if_block1) {
+        if_block1.d(1);
+        if_block1 = null;
       }
     },
     i: function intro(local) {
@@ -25659,7 +25925,7 @@ function create_fragment(ctx) {
         (0, _internal.transition_in)(each_blocks[i]);
       }
 
-      (0, _internal.transition_in)(if_block);
+      (0, _internal.transition_in)(if_block0);
       current = true;
     },
     o: function outro(local) {
@@ -25669,7 +25935,7 @@ function create_fragment(ctx) {
         (0, _internal.transition_out)(each_blocks[i]);
       }
 
-      (0, _internal.transition_out)(if_block);
+      (0, _internal.transition_out)(if_block0);
       current = false;
     },
     d: function destroy(detaching) {
@@ -25677,10 +25943,14 @@ function create_fragment(ctx) {
       (0, _internal.destroy_each)(each_blocks, detaching);
       /*div0_binding*/
 
-      ctx[4](null);
-      if (detaching) (0, _internal.detach_dev)(t4);
-      if (if_block) if_block.d(detaching);
-      if (detaching) (0, _internal.detach_dev)(if_block_anchor);
+      ctx[9](null);
+      if (detaching) (0, _internal.detach_dev)(t5);
+      if (if_block0) if_block0.d(detaching);
+      if (detaching) (0, _internal.detach_dev)(t6);
+      if (if_block1) if_block1.d(detaching);
+      if (detaching) (0, _internal.detach_dev)(if_block1_anchor);
+      mounted = false;
+      dispose();
     }
   };
   (0, _internal.dispatch_dev)("SvelteRegisterBlock", {
@@ -25699,11 +25969,41 @@ function instance($$self, $$props, $$invalidate) {
   } = $$props;
   let title;
   let blocks = [];
+  let error_title;
+  let error_message;
   axios.get("/api/v1/post/read/" + location.href.split("/").pop()).then(response => {
     $$invalidate(1, title = response.data.title);
     $$invalidate(2, blocks = JSON.parse(response.data.body));
   });
   let bodyElement;
+
+  function deleteAsk() {
+    $$invalidate(3, error_title = "danger");
+    $$invalidate(4, error_message = "delete permanently");
+  }
+
+  function deletePost() {
+    axios.delete("/api/v1/post/delete/" + location.href.split("/").pop()).then(response => {
+      if (response.data.status === "success") {
+        location.href = "/post";
+      } else if (response.data && response.data.error === "already not exists") {
+        $$invalidate(3, error_title = response.data.error);
+        $$invalidate(4, error_message = response.data.msg);
+        setTimeout(() => {
+          location.href = "/post";
+        }, 3000);
+      }
+    });
+  }
+
+  let refresh = () => {
+    location.reload();
+  };
+
+  let closeError = () => {
+    $$invalidate(3, error_title = null);
+  };
+
   const writable_props = ["theme"];
   Object.keys($$props).forEach(key => {
     if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console.warn("<Read> was created with unknown prop '".concat(key, "'"));
@@ -25717,8 +26017,18 @@ function instance($$self, $$props, $$invalidate) {
   function div0_binding($$value) {
     _internal.binding_callbacks[$$value ? "unshift" : "push"](() => {
       bodyElement = $$value;
-      $$invalidate(3, bodyElement);
+      $$invalidate(5, bodyElement);
     });
+  }
+
+  function strong_input_handler() {
+    error_title = this.innerHTML;
+    $$invalidate(3, error_title);
+  }
+
+  function span0_input_handler() {
+    error_message = this.innerHTML;
+    $$invalidate(4, error_message);
   }
 
   $$self.$set = $$props => {
@@ -25735,21 +26045,31 @@ function instance($$self, $$props, $$invalidate) {
     theme,
     title,
     blocks,
-    bodyElement
+    error_title,
+    error_message,
+    bodyElement,
+    deleteAsk,
+    deletePost,
+    refresh,
+    closeError
   });
 
   $$self.$inject_state = $$props => {
     if ("theme" in $$props) $$invalidate(0, theme = $$props.theme);
     if ("title" in $$props) $$invalidate(1, title = $$props.title);
     if ("blocks" in $$props) $$invalidate(2, blocks = $$props.blocks);
-    if ("bodyElement" in $$props) $$invalidate(3, bodyElement = $$props.bodyElement);
+    if ("error_title" in $$props) $$invalidate(3, error_title = $$props.error_title);
+    if ("error_message" in $$props) $$invalidate(4, error_message = $$props.error_message);
+    if ("bodyElement" in $$props) $$invalidate(5, bodyElement = $$props.bodyElement);
+    if ("refresh" in $$props) refresh = $$props.refresh;
+    if ("closeError" in $$props) $$invalidate(8, closeError = $$props.closeError);
   };
 
   if ($$props && "$$inject" in $$props) {
     $$self.$inject_state($$props.$$inject);
   }
 
-  return [theme, title, blocks, bodyElement, div0_binding];
+  return [theme, title, blocks, error_title, error_message, bodyElement, deleteAsk, deletePost, closeError, div0_binding, strong_input_handler, span0_input_handler];
 }
 
 class Read extends _internal.SvelteComponentDev {

@@ -28,6 +28,11 @@ class PostRoutes extends Group
             'controller'    => 'post',
             'action'        => 'update',
         ])->setName('post-update');
+
+        $this->addDelete('/api/v1/post/delete/{id}', [
+            'controller'    => 'post',
+            'action'        => 'deleteData',
+        ])->setName('post-delete');
     }
 
     /**

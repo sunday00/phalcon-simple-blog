@@ -10,6 +10,7 @@ class FileServices extends BaseServices
     {
         if( json_decode($files) != [] ){
             $file = new File();
+            $file->setBatchDb();
             $rows = [];
             foreach ( json_decode($files) as $postedFile ){
                 array_push( $rows, [$postId, $postedFile->original_name, $postedFile->url, $postedFile->type] );
@@ -17,12 +18,17 @@ class FileServices extends BaseServices
 
             return $file->batchDb->setRows(["post_id", "original_name", "stored_name", "type"])->setValues($rows)->insert();
         }
-        return;
+        return false;
     }
 
     public function deleteFiles($postId, $deletedFiles)
     {
-        //TODO:: delete files table by postId (all)
-        //TODO:: delete  actual file by file name via arg $deletedFiles
+        $files = File::find("post_id = {$postId}");
+        foreach ($deletedFiles as $file){
+            if( is_file(BASE_PATH."/public/".$file) ){
+                unlink(BASE_PATH."/public/".$file);
+            }
+        }
+        $files->delete();
     }
 }

@@ -53,7 +53,6 @@ class File extends \Phalcon\Mvc\Model
         $this->belongsTo('post_id', 'App\Models\Post', 'id', ['alias' => 'Post']);
 
         $this->batchDb = new BatchDb('file');
-
     }
 
     /**
@@ -78,4 +77,19 @@ class File extends \Phalcon\Mvc\Model
         return parent::findFirst($parameters);
     }
 
+    public function setBatchDb()
+    {
+        if( !$this->batchDb ) $this->batchDb = new BatchDb('file');
+    }
+
+    public function getBatchDb()
+    {
+        if( !$this->batchDb ) return new BatchDb('file');
+        return $this->batchDb;
+    }
+
+    public function reset()
+    {
+        // TODO: Implement reset() method.
+    }
 }

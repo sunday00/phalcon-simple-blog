@@ -116,7 +116,7 @@ class BatchDb
      *
      * @return void
      */
-    public function insert($ignore = false)
+    public function insert($ignore = false) :bool
     {
         $this->_validate();
 
@@ -133,7 +133,7 @@ class BatchDb
             $this->bindString
         );
 
-        $this->db->execute($query, $this->valuesFlattened);
+        return $this->db->execute($query, $this->valuesFlattened);
     }
 
     // --------------------------------------------------------------

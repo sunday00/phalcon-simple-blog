@@ -68,7 +68,7 @@
             headers: { 'content-type': 'multipart/form-data' },
         }).then(response => {
             console.log( response );
-            // location.href = `/post/read/${response.data.id}`;
+            location.href = `/post/read/${response.data.id}`;
         });
     }
 
@@ -85,7 +85,7 @@
             headers: { 'content-type': 'multipart/form-data' },
         }).then(response => {
             console.log( response );
-            // location.href = `/post/read/${response.data.id}`;
+            location.href = `/post/read/${response.data.id}`;
         });
     }
 
