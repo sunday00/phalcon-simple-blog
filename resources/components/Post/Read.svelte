@@ -21,9 +21,9 @@
             {/if}
         {/each}
     </div>
-    <div>
+    <div class="flex">
         <a href="/post/edit/{location.href.split('/').pop()}"
-           class="bg-{ theme }-primary hover:bg-{ theme }-accent text-white font-bold py-2 px-4 mt-4 rounded">
+           class="bg-{ theme }-primary hover:bg-{ theme }-accent text-white font-bold py-2 px-4 mt-4 mr-4 rounded">
             Edit
         </a>
         <form action="/post/delete/{location.href.split('/').pop()}" on:submit|preventDefault={deleteAsk}>

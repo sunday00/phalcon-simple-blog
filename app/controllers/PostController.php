@@ -6,6 +6,7 @@ namespace App\Controllers;
 use Phalcon\Mvc\Model\Criteria;
 use Phalcon\Paginator\Adapter\Model;
 use App\Models\Post;
+use Phalcon\Helper\Arr;
 
 class PostController extends ControllerBase
 {
@@ -14,7 +15,46 @@ class PostController extends ControllerBase
      */
     public function indexAction()
     {
-        //
+        $numberPage = $this->request->getQuery('page', 'int', 1);
+        $parameters = Criteria::fromInput($this->di, '\App\Models\Post', $_GET)->getParams();
+        $parameters['order'] = "id desc";
+
+        $paginator = new Model(
+            [
+                'model'      => '\App\Models\Post',
+                'parameters' => $parameters,
+                'limit'      => 3,
+                'page'       => $numberPage,
+            ]
+        );
+
+        $paginate = $paginator->paginate();
+
+        if (0 === $paginate->getTotalItems()) {
+            $this->flash->notice("The search did not find any post");
+
+            $this->dispatcher->forward([
+                "controller" => "post",
+                "action" => "index"
+            ]);
+
+            return;
+        }
+
+        $convertedItems = [];
+        foreach ($paginate->getItems() as $post){
+            $convertedItem = Arr::toObject($post);
+            $convertedBody = '';
+            foreach( Arr::pluck(Arr::pluck(json_decode($convertedItem->body), 'data'), 'text') as $str){
+                $convertedBody.=$str;
+            }
+            $convertedItem->convertedBody = mb_strimwidth($convertedBody, 0, 160, '...');
+            array_push($convertedItems, $convertedItem);
+        }
+
+        $paginate->convertedItems = $convertedItems;
+
+        $this->view->page = $paginate;
     }
 
     /**
@@ -30,7 +70,7 @@ class PostController extends ControllerBase
             [
                 'model'      => '\App\Models\Post',
                 'parameters' => $parameters,
-                'limit'      => 10,
+                'limit'      => 3,
                 'page'       => $numberPage,
             ]
         );
@@ -189,7 +229,7 @@ class PostController extends ControllerBase
     }
 
     /**
-     * Deletes a post
+     * Deletes a post via api
      *
      * @param string $id
      */

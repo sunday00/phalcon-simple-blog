@@ -15147,6 +15147,10 @@ video {
   src: url("/dist/Philosopher-Regular.d7289ba4.ttf");
 }
 
+.blogname {
+  line-height: 3rem;
+}
+
 .app-left {
   background-image: url("/dist/left-background.6928f6fc.jpg");
   background-size: auto 107%;

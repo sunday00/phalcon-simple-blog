@@ -25521,7 +25521,7 @@ function create_if_block(ctx) {
       ctx[3] === void 0) (0, _internal.add_render_callback)(() =>
       /*strong_input_handler*/
       ctx[10].call(strong));
-      (0, _internal.add_location)(strong, file, 40, 8, 1936);
+      (0, _internal.add_location)(strong, file, 40, 8, 1954);
       (0, _internal.attr_dev)(span0, "class", "block w-3/4 sm:w-5/6 ");
       (0, _internal.attr_dev)(span0, "contenteditable", "true");
       if (
@@ -25529,20 +25529,20 @@ function create_if_block(ctx) {
       ctx[4] === void 0) (0, _internal.add_render_callback)(() =>
       /*span0_input_handler*/
       ctx[11].call(span0));
-      (0, _internal.add_location)(span0, file, 41, 8, 2032);
-      (0, _internal.add_location)(title_1, file, 47, 16, 2546);
+      (0, _internal.add_location)(span0, file, 41, 8, 2050);
+      (0, _internal.add_location)(title_1, file, 47, 16, 2564);
       (0, _internal.attr_dev)(path, "d", "M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z");
-      (0, _internal.add_location)(path, file, 47, 36, 2566);
+      (0, _internal.add_location)(path, file, 47, 36, 2584);
       (0, _internal.attr_dev)(svg, "class", "fill-current h-6 w-6 text-red-500");
       (0, _internal.attr_dev)(svg, "role", "button");
       (0, _internal.attr_dev)(svg, "xmlns", "http://www.w3.org/2000/svg");
       (0, _internal.attr_dev)(svg, "viewBox", "0 0 20 20");
-      (0, _internal.add_location)(svg, file, 46, 12, 2391);
+      (0, _internal.add_location)(svg, file, 46, 12, 2409);
       (0, _internal.attr_dev)(span1, "class", "absolute top-0 bottom-0 right-0 px-4 py-5");
-      (0, _internal.add_location)(span1, file, 45, 8, 2322);
+      (0, _internal.add_location)(span1, file, 45, 8, 2340);
       (0, _internal.attr_dev)(div, "class", "bg-red-100 border border-red-400 text-red-700 px-4 py-3 my-4 rounded relative");
       (0, _internal.attr_dev)(div, "role", "alert");
-      (0, _internal.add_location)(div, file, 39, 4, 1823);
+      (0, _internal.add_location)(div, file, 39, 4, 1841);
     },
     m: function mount(target, anchor) {
       (0, _internal.insert_dev)(target, div, anchor);
@@ -25652,8 +25652,8 @@ function create_if_block_1(ctx) {
       button = (0, _internal.element)("button");
       button.textContent = "OK";
       (0, _internal.attr_dev)(button, "class", "bg-red-500 text-white px-4 py-3 my-4 rounded");
-      (0, _internal.add_location)(button, file, 43, 14, 2183);
-      (0, _internal.add_location)(span, file, 43, 8, 2177);
+      (0, _internal.add_location)(button, file, 43, 14, 2201);
+      (0, _internal.add_location)(span, file, 43, 8, 2195);
     },
     m: function mount(target, anchor) {
       (0, _internal.insert_dev)(target, span, anchor);
@@ -25764,8 +25764,8 @@ function create_fragment(ctx) {
       /*theme*/
       ctx[0] + "-primary hover:bg-" +
       /*theme*/
-      ctx[0] + "-accent text-white font-bold py-2 px-4 mt-4 rounded");
-      (0, _internal.add_location)(a, file, 24, 8, 1185);
+      ctx[0] + "-accent text-white font-bold py-2 px-4 mt-4 mr-4 rounded");
+      (0, _internal.add_location)(a, file, 24, 8, 1198);
       (0, _internal.attr_dev)(input, "type", "submit");
       input.value = "Delete";
       (0, _internal.attr_dev)(input, "class", input_class_value = "bg-" +
@@ -25773,9 +25773,10 @@ function create_fragment(ctx) {
       ctx[0] + "-primary hover:bg-" +
       /*theme*/
       ctx[0] + "-accent text-white font-bold py-2 px-4 mt-4 rounded");
-      (0, _internal.add_location)(input, file, 29, 12, 1499);
+      (0, _internal.add_location)(input, file, 29, 12, 1517);
       (0, _internal.attr_dev)(form, "action", form_action_value = "/post/delete/" + location.href.split("/").pop());
-      (0, _internal.add_location)(form, file, 28, 8, 1388);
+      (0, _internal.add_location)(form, file, 28, 8, 1406);
+      (0, _internal.attr_dev)(div1, "class", "flex");
       (0, _internal.add_location)(div1, file, 23, 4, 1171);
       (0, _internal.add_location)(div2, file, 0, 0, 0);
     },
@@ -25862,7 +25863,7 @@ function create_fragment(ctx) {
       /*theme*/
       ctx[0] + "-primary hover:bg-" +
       /*theme*/
-      ctx[0] + "-accent text-white font-bold py-2 px-4 mt-4 rounded")) {
+      ctx[0] + "-accent text-white font-bold py-2 px-4 mt-4 mr-4 rounded")) {
         (0, _internal.attr_dev)(a, "class", a_class_value);
       }
 
@@ -28617,7 +28618,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49746" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54157" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
