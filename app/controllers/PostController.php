@@ -30,15 +30,12 @@ class PostController extends ControllerBase
 
         $paginate = $paginator->paginate();
 
-        if (0 === $paginate->getTotalItems()) {
-            $this->flash->notice("The search did not find any post");
-
-            $this->dispatcher->forward([
-                "controller" => "post",
-                "action" => "index"
-            ]);
-
-            return;
+        if (0 === $paginate->getTotalItems() && $this->session->get('role')) {
+            $this->flashSession->error("The search did not find any post");
+            $this->response->redirect("/post/create");
+        } elseif ( 0 === $paginate->getTotalItems() ) {
+            $this->flashSession->error("The search did not find any post");
+            $this->response->redirect("/");
         }
 
         $convertedItems = [];

@@ -31,12 +31,8 @@
             {% include "layouts/footer.volt" %}
         </footer>
 
-        <div class="msg pop">
-            {% block msg %}
-                {{ flashSession.output() }}
-            {% endblock %}
-        </div>
+        {{ flashSession.output() }}
 
-        <script src="/dist/resources.e31bb0bc.js"></script>
-    </body>
+<script src="/dist/resources.e31bb0bc.js"></script>
+</body>
 </html>

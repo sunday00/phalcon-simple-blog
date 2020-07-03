@@ -1,4 +1,4 @@
-{#if location.pathname == '/' }
+{#if location.pathname === '/' || location.pathname === ''}
     <Main></Main>
 {:else}
     <svelte:component this="{routes[controller.toLowerCase()]}" csrf="{csrf}" theme="{theme}"/>
@@ -10,6 +10,7 @@
     import Main from './Main/Index.svelte';
     import User from './User/Index.svelte';
     import Post from './Post/Index.svelte';
+    import Admin from './Admin/Index.svelte';
 
     export let csrf;
     export let theme;
@@ -18,6 +19,7 @@
         main : Main,
         user : User,
         post : Post,
+        shielded : Admin
     }
 
     let controller = location.pathname.split("/")[1];

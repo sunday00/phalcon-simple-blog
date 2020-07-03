@@ -16,6 +16,15 @@ module.exports = {
           secondaryAccent:'#ffe28e',
           secondaryLight: '#ffe28e'
         },
+        cyber: {
+          primary: '#01100e',
+          accent: '#b100ff',
+          light:'#ae93bb',
+          gray: '#c2afca',
+          secondary: '#b26bef',
+          secondaryAccent:'#7affd0',
+          secondaryLight: '#28ff00'
+        },
       }
     },
     screens: {
@@ -741,5 +750,7 @@ module.exports = {
     transitionDelay: ['responsive'],
   },
   corePlugins: {},
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/custom-forms'),
+  ],
 }

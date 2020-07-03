@@ -2,12 +2,12 @@
 
 namespace App\Plugins;
 
+use Phalcon\Http\Cookie;
+
 class Setting
 {
     public static function getTheme ()
     {
-        //....
-
-        return 'rustic';
+        return isset($_COOKIE['theme']) ? $_COOKIE['theme'] : 'rustic';
     }
 }

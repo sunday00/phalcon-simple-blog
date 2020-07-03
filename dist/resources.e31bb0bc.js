@@ -2197,7 +2197,517 @@ function loop_guard(timeout) {
     }
   };
 }
-},{}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+},{}],"../node_modules/svelte/easing/index.mjs":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.backIn = backIn;
+exports.backInOut = backInOut;
+exports.backOut = backOut;
+exports.bounceIn = bounceIn;
+exports.bounceInOut = bounceInOut;
+exports.bounceOut = bounceOut;
+exports.circIn = circIn;
+exports.circInOut = circInOut;
+exports.circOut = circOut;
+exports.cubicIn = cubicIn;
+exports.cubicInOut = cubicInOut;
+exports.cubicOut = cubicOut;
+exports.elasticIn = elasticIn;
+exports.elasticInOut = elasticInOut;
+exports.elasticOut = elasticOut;
+exports.expoIn = expoIn;
+exports.expoInOut = expoInOut;
+exports.expoOut = expoOut;
+exports.quadIn = quadIn;
+exports.quadInOut = quadInOut;
+exports.quadOut = quadOut;
+exports.quartIn = quartIn;
+exports.quartInOut = quartInOut;
+exports.quartOut = quartOut;
+exports.quintIn = quintIn;
+exports.quintInOut = quintInOut;
+exports.quintOut = quintOut;
+exports.sineIn = sineIn;
+exports.sineInOut = sineInOut;
+exports.sineOut = sineOut;
+Object.defineProperty(exports, "linear", {
+  enumerable: true,
+  get: function () {
+    return _internal.identity;
+  }
+});
+
+var _internal = require("../internal");
+
+/*
+Adapted from https://github.com/mattdesl
+Distributed under MIT License https://github.com/mattdesl/eases/blob/master/LICENSE.md
+*/
+function backInOut(t) {
+  const s = 1.70158 * 1.525;
+  if ((t *= 2) < 1) return 0.5 * (t * t * ((s + 1) * t - s));
+  return 0.5 * ((t -= 2) * t * ((s + 1) * t + s) + 2);
+}
+
+function backIn(t) {
+  const s = 1.70158;
+  return t * t * ((s + 1) * t - s);
+}
+
+function backOut(t) {
+  const s = 1.70158;
+  return --t * t * ((s + 1) * t + s) + 1;
+}
+
+function bounceOut(t) {
+  const a = 4.0 / 11.0;
+  const b = 8.0 / 11.0;
+  const c = 9.0 / 10.0;
+  const ca = 4356.0 / 361.0;
+  const cb = 35442.0 / 1805.0;
+  const cc = 16061.0 / 1805.0;
+  const t2 = t * t;
+  return t < a ? 7.5625 * t2 : t < b ? 9.075 * t2 - 9.9 * t + 3.4 : t < c ? ca * t2 - cb * t + cc : 10.8 * t * t - 20.52 * t + 10.72;
+}
+
+function bounceInOut(t) {
+  return t < 0.5 ? 0.5 * (1.0 - bounceOut(1.0 - t * 2.0)) : 0.5 * bounceOut(t * 2.0 - 1.0) + 0.5;
+}
+
+function bounceIn(t) {
+  return 1.0 - bounceOut(1.0 - t);
+}
+
+function circInOut(t) {
+  if ((t *= 2) < 1) return -0.5 * (Math.sqrt(1 - t * t) - 1);
+  return 0.5 * (Math.sqrt(1 - (t -= 2) * t) + 1);
+}
+
+function circIn(t) {
+  return 1.0 - Math.sqrt(1.0 - t * t);
+}
+
+function circOut(t) {
+  return Math.sqrt(1 - --t * t);
+}
+
+function cubicInOut(t) {
+  return t < 0.5 ? 4.0 * t * t * t : 0.5 * Math.pow(2.0 * t - 2.0, 3.0) + 1.0;
+}
+
+function cubicIn(t) {
+  return t * t * t;
+}
+
+function cubicOut(t) {
+  const f = t - 1.0;
+  return f * f * f + 1.0;
+}
+
+function elasticInOut(t) {
+  return t < 0.5 ? 0.5 * Math.sin(+13.0 * Math.PI / 2 * 2.0 * t) * Math.pow(2.0, 10.0 * (2.0 * t - 1.0)) : 0.5 * Math.sin(-13.0 * Math.PI / 2 * (2.0 * t - 1.0 + 1.0)) * Math.pow(2.0, -10.0 * (2.0 * t - 1.0)) + 1.0;
+}
+
+function elasticIn(t) {
+  return Math.sin(13.0 * t * Math.PI / 2) * Math.pow(2.0, 10.0 * (t - 1.0));
+}
+
+function elasticOut(t) {
+  return Math.sin(-13.0 * (t + 1.0) * Math.PI / 2) * Math.pow(2.0, -10.0 * t) + 1.0;
+}
+
+function expoInOut(t) {
+  return t === 0.0 || t === 1.0 ? t : t < 0.5 ? +0.5 * Math.pow(2.0, 20.0 * t - 10.0) : -0.5 * Math.pow(2.0, 10.0 - t * 20.0) + 1.0;
+}
+
+function expoIn(t) {
+  return t === 0.0 ? t : Math.pow(2.0, 10.0 * (t - 1.0));
+}
+
+function expoOut(t) {
+  return t === 1.0 ? t : 1.0 - Math.pow(2.0, -10.0 * t);
+}
+
+function quadInOut(t) {
+  t /= 0.5;
+  if (t < 1) return 0.5 * t * t;
+  t--;
+  return -0.5 * (t * (t - 2) - 1);
+}
+
+function quadIn(t) {
+  return t * t;
+}
+
+function quadOut(t) {
+  return -t * (t - 2.0);
+}
+
+function quartInOut(t) {
+  return t < 0.5 ? +8.0 * Math.pow(t, 4.0) : -8.0 * Math.pow(t - 1.0, 4.0) + 1.0;
+}
+
+function quartIn(t) {
+  return Math.pow(t, 4.0);
+}
+
+function quartOut(t) {
+  return Math.pow(t - 1.0, 3.0) * (1.0 - t) + 1.0;
+}
+
+function quintInOut(t) {
+  if ((t *= 2) < 1) return 0.5 * t * t * t * t * t;
+  return 0.5 * ((t -= 2) * t * t * t * t + 2);
+}
+
+function quintIn(t) {
+  return t * t * t * t * t;
+}
+
+function quintOut(t) {
+  return --t * t * t * t * t + 1;
+}
+
+function sineInOut(t) {
+  return -0.5 * (Math.cos(Math.PI * t) - 1);
+}
+
+function sineIn(t) {
+  const v = Math.cos(t * Math.PI * 0.5);
+  if (Math.abs(v) < 1e-14) return 1;else return 1 - v;
+}
+
+function sineOut(t) {
+  return Math.sin(t * Math.PI / 2);
+}
+},{"../internal":"../node_modules/svelte/internal/index.mjs"}],"../node_modules/svelte/animate/index.mjs":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.flip = flip;
+
+var _easing = require("../easing");
+
+var _internal = require("../internal");
+
+function flip(node, animation, params) {
+  const style = getComputedStyle(node);
+  const transform = style.transform === 'none' ? '' : style.transform;
+  const scaleX = animation.from.width / node.clientWidth;
+  const scaleY = animation.from.height / node.clientHeight;
+  const dx = (animation.from.left - animation.to.left) / scaleX;
+  const dy = (animation.from.top - animation.to.top) / scaleY;
+  const d = Math.sqrt(dx * dx + dy * dy);
+  const {
+    delay = 0,
+    duration = d => Math.sqrt(d) * 120,
+    easing = _easing.cubicOut
+  } = params;
+  return {
+    delay,
+    duration: (0, _internal.is_function)(duration) ? duration(d) : duration,
+    easing,
+    css: (_t, u) => `transform: ${transform} translate(${u * dx}px, ${u * dy}px);`
+  };
+}
+},{"../easing":"../node_modules/svelte/easing/index.mjs","../internal":"../node_modules/svelte/internal/index.mjs"}],"../node_modules/svelte/transition/index.mjs":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.blur = blur;
+exports.crossfade = crossfade;
+exports.draw = draw;
+exports.fade = fade;
+exports.fly = fly;
+exports.scale = scale;
+exports.slide = slide;
+
+var _easing = require("../easing");
+
+var _internal = require("../internal");
+
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
+
+THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+MERCHANTABLITY OR NON-INFRINGEMENT.
+
+See the Apache Version 2.0 License for specific language governing permissions
+and limitations under the License.
+***************************************************************************** */
+function __rest(s, e) {
+  var t = {};
+
+  for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
+}
+
+function blur(node, {
+  delay = 0,
+  duration = 400,
+  easing = _easing.cubicInOut,
+  amount = 5,
+  opacity = 0
+}) {
+  const style = getComputedStyle(node);
+  const target_opacity = +style.opacity;
+  const f = style.filter === 'none' ? '' : style.filter;
+  const od = target_opacity * (1 - opacity);
+  return {
+    delay,
+    duration,
+    easing,
+    css: (_t, u) => `opacity: ${target_opacity - od * u}; filter: ${f} blur(${u * amount}px);`
+  };
+}
+
+function fade(node, {
+  delay = 0,
+  duration = 400,
+  easing = _easing.linear
+}) {
+  const o = +getComputedStyle(node).opacity;
+  return {
+    delay,
+    duration,
+    easing,
+    css: t => `opacity: ${t * o}`
+  };
+}
+
+function fly(node, {
+  delay = 0,
+  duration = 400,
+  easing = _easing.cubicOut,
+  x = 0,
+  y = 0,
+  opacity = 0
+}) {
+  const style = getComputedStyle(node);
+  const target_opacity = +style.opacity;
+  const transform = style.transform === 'none' ? '' : style.transform;
+  const od = target_opacity * (1 - opacity);
+  return {
+    delay,
+    duration,
+    easing,
+    css: (t, u) => `
+			transform: ${transform} translate(${(1 - t) * x}px, ${(1 - t) * y}px);
+			opacity: ${target_opacity - od * u}`
+  };
+}
+
+function slide(node, {
+  delay = 0,
+  duration = 400,
+  easing = _easing.cubicOut
+}) {
+  const style = getComputedStyle(node);
+  const opacity = +style.opacity;
+  const height = parseFloat(style.height);
+  const padding_top = parseFloat(style.paddingTop);
+  const padding_bottom = parseFloat(style.paddingBottom);
+  const margin_top = parseFloat(style.marginTop);
+  const margin_bottom = parseFloat(style.marginBottom);
+  const border_top_width = parseFloat(style.borderTopWidth);
+  const border_bottom_width = parseFloat(style.borderBottomWidth);
+  return {
+    delay,
+    duration,
+    easing,
+    css: t => `overflow: hidden;` + `opacity: ${Math.min(t * 20, 1) * opacity};` + `height: ${t * height}px;` + `padding-top: ${t * padding_top}px;` + `padding-bottom: ${t * padding_bottom}px;` + `margin-top: ${t * margin_top}px;` + `margin-bottom: ${t * margin_bottom}px;` + `border-top-width: ${t * border_top_width}px;` + `border-bottom-width: ${t * border_bottom_width}px;`
+  };
+}
+
+function scale(node, {
+  delay = 0,
+  duration = 400,
+  easing = _easing.cubicOut,
+  start = 0,
+  opacity = 0
+}) {
+  const style = getComputedStyle(node);
+  const target_opacity = +style.opacity;
+  const transform = style.transform === 'none' ? '' : style.transform;
+  const sd = 1 - start;
+  const od = target_opacity * (1 - opacity);
+  return {
+    delay,
+    duration,
+    easing,
+    css: (_t, u) => `
+			transform: ${transform} scale(${1 - sd * u});
+			opacity: ${target_opacity - od * u}
+		`
+  };
+}
+
+function draw(node, {
+  delay = 0,
+  speed,
+  duration,
+  easing = _easing.cubicInOut
+}) {
+  const len = node.getTotalLength();
+
+  if (duration === undefined) {
+    if (speed === undefined) {
+      duration = 800;
+    } else {
+      duration = len / speed;
+    }
+  } else if (typeof duration === 'function') {
+    duration = duration(len);
+  }
+
+  return {
+    delay,
+    duration,
+    easing,
+    css: (t, u) => `stroke-dasharray: ${t * len} ${u * len}`
+  };
+}
+
+function crossfade(_a) {
+  var {
+    fallback
+  } = _a,
+      defaults = __rest(_a, ["fallback"]);
+
+  const to_receive = new Map();
+  const to_send = new Map();
+
+  function crossfade(from, node, params) {
+    const {
+      delay = 0,
+      duration = d => Math.sqrt(d) * 30,
+      easing = _easing.cubicOut
+    } = (0, _internal.assign)((0, _internal.assign)({}, defaults), params);
+    const to = node.getBoundingClientRect();
+    const dx = from.left - to.left;
+    const dy = from.top - to.top;
+    const dw = from.width / to.width;
+    const dh = from.height / to.height;
+    const d = Math.sqrt(dx * dx + dy * dy);
+    const style = getComputedStyle(node);
+    const transform = style.transform === 'none' ? '' : style.transform;
+    const opacity = +style.opacity;
+    return {
+      delay,
+      duration: (0, _internal.is_function)(duration) ? duration(d) : duration,
+      easing,
+      css: (t, u) => `
+				opacity: ${t * opacity};
+				transform-origin: top left;
+				transform: ${transform} translate(${u * dx}px,${u * dy}px) scale(${t + (1 - t) * dw}, ${t + (1 - t) * dh});
+			`
+    };
+  }
+
+  function transition(items, counterparts, intro) {
+    return (node, params) => {
+      items.set(params.key, {
+        rect: node.getBoundingClientRect()
+      });
+      return () => {
+        if (counterparts.has(params.key)) {
+          const {
+            rect
+          } = counterparts.get(params.key);
+          counterparts.delete(params.key);
+          return crossfade(rect, node, params);
+        } // if the node is disappearing altogether
+        // (i.e. wasn't claimed by the other list)
+        // then we need to supply an outro
+
+
+        items.delete(params.key);
+        return fallback && fallback(node, params, intro);
+      };
+    };
+  }
+
+  return [transition(to_send, to_receive, false), transition(to_receive, to_send, true)];
+}
+},{"../easing":"../node_modules/svelte/easing/index.mjs","../internal":"../node_modules/svelte/internal/index.mjs"}],"../node_modules/svelte/index.mjs":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "SvelteComponent", {
+  enumerable: true,
+  get: function () {
+    return _internal.SvelteComponentDev;
+  }
+});
+Object.defineProperty(exports, "afterUpdate", {
+  enumerable: true,
+  get: function () {
+    return _internal.afterUpdate;
+  }
+});
+Object.defineProperty(exports, "beforeUpdate", {
+  enumerable: true,
+  get: function () {
+    return _internal.beforeUpdate;
+  }
+});
+Object.defineProperty(exports, "createEventDispatcher", {
+  enumerable: true,
+  get: function () {
+    return _internal.createEventDispatcher;
+  }
+});
+Object.defineProperty(exports, "getContext", {
+  enumerable: true,
+  get: function () {
+    return _internal.getContext;
+  }
+});
+Object.defineProperty(exports, "onDestroy", {
+  enumerable: true,
+  get: function () {
+    return _internal.onDestroy;
+  }
+});
+Object.defineProperty(exports, "onMount", {
+  enumerable: true,
+  get: function () {
+    return _internal.onMount;
+  }
+});
+Object.defineProperty(exports, "setContext", {
+  enumerable: true,
+  get: function () {
+    return _internal.setContext;
+  }
+});
+Object.defineProperty(exports, "tick", {
+  enumerable: true,
+  get: function () {
+    return _internal.tick;
+  }
+});
+
+var _internal = require("./internal");
+},{"./internal":"../node_modules/svelte/internal/index.mjs"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -2274,34 +2784,489 @@ exports.default = void 0;
 
 var _internal = require("svelte/internal");
 
+var _animate = require("svelte/animate");
+
+var _easing = require("svelte/easing");
+
+var _transition = require("svelte/transition");
+
+var _svelte = require("svelte");
+
 /* components/Main/Index.svelte generated by Svelte v3.23.2 */
+const {
+  document: document_1
+} = _internal.globals;
 const file = "components/Main/Index.svelte";
 
 function add_css() {
   var style = (0, _internal.element)("style");
-  style.id = "svelte-1rptoyp-style";
-  style.textContent = "\n";
-  (0, _internal.append_dev)(document.head, style);
-}
+  style.id = "svelte-8tfs0l-style";
+  style.textContent = "h1.svelte-8tfs0l.svelte-8tfs0l{text-align:right;padding-right:40px;padding-top:40px;font-size:3rem;font-weight:bold;font-family:fredric}label.svelte-8tfs0l span i.svelte-8tfs0l{display:inline-block;width:25px;height:25px}#theme-rustic+span.svelte-8tfs0l.svelte-8tfs0l{right:20px}#theme-rustic+span.svelte-8tfs0l i.svelte-8tfs0l:nth-child(1){background-color:#49a79f}#theme-rustic+span.svelte-8tfs0l i.svelte-8tfs0l:nth-child(2){background-color:#3a5f6b}#theme-rustic+span.svelte-8tfs0l i.svelte-8tfs0l:nth-child(3){background-color:#b2f5ea}#theme-rustic+span.svelte-8tfs0l i.svelte-8tfs0l:nth-child(4){background-color:#ffb87a}#theme-rustic+span.svelte-8tfs0l i.svelte-8tfs0l:nth-child(5){background-color:#ffe28e}#theme-cyber+span.svelte-8tfs0l.svelte-8tfs0l{right:20px}#theme-cyber+span.svelte-8tfs0l i.svelte-8tfs0l:nth-child(1){background-color:#01100e}#theme-cyber+span.svelte-8tfs0l i.svelte-8tfs0l:nth-child(2){background-color:#b100ff}#theme-cyber+span.svelte-8tfs0l i.svelte-8tfs0l:nth-child(3){background-color:#b26bef}#theme-cyber+span.svelte-8tfs0l i.svelte-8tfs0l:nth-child(4){background-color:#7affd0}#theme-cyber+span.svelte-8tfs0l i.svelte-8tfs0l:nth-child(5){background-color:#28ff00}\n";
+  (0, _internal.append_dev)(document_1.head, style);
+} // (2:4) {#if res === true}
 
-function create_fragment(ctx) {
+
+function create_if_block_2(ctx) {
+  let h1;
+  let h1_intro;
+  const block = {
+    c: function create() {
+      h1 = (0, _internal.element)("h1");
+      h1.textContent = "Phalog";
+      (0, _internal.attr_dev)(h1, "class", "svelte-8tfs0l");
+      (0, _internal.add_location)(h1, file, 2, 8, 37);
+    },
+    m: function mount(target, anchor) {
+      (0, _internal.insert_dev)(target, h1, anchor);
+    },
+    i: function intro(local) {
+      if (!h1_intro) {
+        (0, _internal.add_render_callback)(() => {
+          h1_intro = (0, _internal.create_in_transition)(h1, _transition.fly, {
+            x: -300,
+            duration: 400
+          });
+          h1_intro.start();
+        });
+      }
+    },
+    o: _internal.noop,
+    d: function destroy(detaching) {
+      if (detaching) (0, _internal.detach_dev)(h1);
+    }
+  };
+  (0, _internal.dispatch_dev)("SvelteRegisterBlock", {
+    block,
+    id: create_if_block_2.name,
+    type: "if",
+    source: "(2:4) {#if res === true}",
+    ctx
+  });
+  return block;
+} // (8:4) {#if res === true}
+
+
+function create_if_block_1(ctx) {
   let div;
+  let t0;
+  let span;
+  let t1;
+  let t2;
+  let div_intro;
   const block = {
     c: function create() {
       div = (0, _internal.element)("div");
-      (0, _internal.add_location)(div, file, 0, 0, 0);
+      t0 = (0, _internal.text)("Welcome!\n        Until now, ");
+      span = (0, _internal.element)("span");
+      t1 = (0, _internal.text)(
+      /*visitCount*/
+      ctx[1]);
+      t2 = (0, _internal.text)(" people dropped by here.");
+      (0, _internal.attr_dev)(span, "class", "svelte-8tfs0l");
+      (0, _internal.add_location)(span, file, 10, 19, 252);
+      (0, _internal.attr_dev)(div, "class", "text-right pr-10 mt-10 text-lg");
+      (0, _internal.add_location)(div, file, 8, 4, 137);
+    },
+    m: function mount(target, anchor) {
+      (0, _internal.insert_dev)(target, div, anchor);
+      (0, _internal.append_dev)(div, t0);
+      (0, _internal.append_dev)(div, span);
+      (0, _internal.append_dev)(span, t1);
+      (0, _internal.append_dev)(div, t2);
+    },
+    p: function update(ctx, dirty) {
+      if (dirty &
+      /*visitCount*/
+      2) (0, _internal.set_data_dev)(t1,
+      /*visitCount*/
+      ctx[1]);
+    },
+    i: function intro(local) {
+      if (!div_intro) {
+        (0, _internal.add_render_callback)(() => {
+          div_intro = (0, _internal.create_in_transition)(div, _transition.fly, {
+            x: -600,
+            duration: 800
+          });
+          div_intro.start();
+        });
+      }
+    },
+    o: _internal.noop,
+    d: function destroy(detaching) {
+      if (detaching) (0, _internal.detach_dev)(div);
+    }
+  };
+  (0, _internal.dispatch_dev)("SvelteRegisterBlock", {
+    block,
+    id: create_if_block_1.name,
+    type: "if",
+    source: "(8:4) {#if res === true}",
+    ctx
+  });
+  return block;
+} // (15:4) {#if res === true}
+
+
+function create_if_block(ctx) {
+  let div;
+  let span;
+  let t0;
+  let t1;
+  let div_intro;
+  const block = {
+    c: function create() {
+      div = (0, _internal.element)("div");
+      span = (0, _internal.element)("span");
+      t0 = (0, _internal.text)(
+      /*articleCount*/
+      ctx[2]);
+      t1 = (0, _internal.text)(" articles are posted.");
+      (0, _internal.attr_dev)(span, "class", "svelte-8tfs0l");
+      (0, _internal.add_location)(span, file, 16, 8, 439);
+      (0, _internal.attr_dev)(div, "class", "text-right pr-10 mt-10 text-lg");
+      (0, _internal.add_location)(div, file, 15, 4, 351);
+    },
+    m: function mount(target, anchor) {
+      (0, _internal.insert_dev)(target, div, anchor);
+      (0, _internal.append_dev)(div, span);
+      (0, _internal.append_dev)(span, t0);
+      (0, _internal.append_dev)(div, t1);
+    },
+    p: function update(ctx, dirty) {
+      if (dirty &
+      /*articleCount*/
+      4) (0, _internal.set_data_dev)(t0,
+      /*articleCount*/
+      ctx[2]);
+    },
+    i: function intro(local) {
+      if (!div_intro) {
+        (0, _internal.add_render_callback)(() => {
+          div_intro = (0, _internal.create_in_transition)(div, _transition.fly, {
+            x: -900,
+            duration: 1200
+          });
+          div_intro.start();
+        });
+      }
+    },
+    o: _internal.noop,
+    d: function destroy(detaching) {
+      if (detaching) (0, _internal.detach_dev)(div);
+    }
+  };
+  (0, _internal.dispatch_dev)("SvelteRegisterBlock", {
+    block,
+    id: create_if_block.name,
+    type: "if",
+    source: "(15:4) {#if res === true}",
+    ctx
+  });
+  return block;
+}
+
+function create_fragment(ctx) {
+  let div1;
+  let t0;
+  let hr;
+  let t1;
+  let t2;
+  let t3;
+  let div0;
+  let fieldset;
+  let legend;
+  let t5;
+  let p0;
+  let label0;
+  let input0;
+  let input0_value_value;
+  let t6;
+  let span0;
+  let i0;
+  let i1;
+  let i2;
+  let i3;
+  let i4;
+  let t7;
+  let p1;
+  let label1;
+  let input1;
+  let input1_value_value;
+  let t8;
+  let span1;
+  let i5;
+  let i6;
+  let i7;
+  let i8;
+  let i9;
+  let mounted;
+  let dispose;
+  let if_block0 =
+  /*res*/
+  ctx[0] === true && create_if_block_2(ctx);
+  let if_block1 =
+  /*res*/
+  ctx[0] === true && create_if_block_1(ctx);
+  let if_block2 =
+  /*res*/
+  ctx[0] === true && create_if_block(ctx);
+  const block = {
+    c: function create() {
+      div1 = (0, _internal.element)("div");
+      if (if_block0) if_block0.c();
+      t0 = (0, _internal.space)();
+      hr = (0, _internal.element)("hr");
+      t1 = (0, _internal.space)();
+      if (if_block1) if_block1.c();
+      t2 = (0, _internal.space)();
+      if (if_block2) if_block2.c();
+      t3 = (0, _internal.space)();
+      div0 = (0, _internal.element)("div");
+      fieldset = (0, _internal.element)("fieldset");
+      legend = (0, _internal.element)("legend");
+      legend.textContent = "Theme";
+      t5 = (0, _internal.space)();
+      p0 = (0, _internal.element)("p");
+      label0 = (0, _internal.element)("label");
+      input0 = (0, _internal.element)("input");
+      t6 = (0, _internal.text)(" Rustic (default)\n                    ");
+      span0 = (0, _internal.element)("span");
+      i0 = (0, _internal.element)("i");
+      i1 = (0, _internal.element)("i");
+      i2 = (0, _internal.element)("i");
+      i3 = (0, _internal.element)("i");
+      i4 = (0, _internal.element)("i");
+      t7 = (0, _internal.space)();
+      p1 = (0, _internal.element)("p");
+      label1 = (0, _internal.element)("label");
+      input1 = (0, _internal.element)("input");
+      t8 = (0, _internal.text)(" Cyber\n                    ");
+      span1 = (0, _internal.element)("span");
+      i5 = (0, _internal.element)("i");
+      i6 = (0, _internal.element)("i");
+      i7 = (0, _internal.element)("i");
+      i8 = (0, _internal.element)("i");
+      i9 = (0, _internal.element)("i");
+      (0, _internal.add_location)(hr, file, 5, 4, 102);
+      (0, _internal.add_location)(legend, file, 22, 12, 613);
+      (0, _internal.attr_dev)(input0, "type", "radio");
+      (0, _internal.attr_dev)(input0, "name", "theme");
+      (0, _internal.attr_dev)(input0, "id", "theme-rustic");
+      (0, _internal.attr_dev)(input0, "class", "form-radio text-indigo-600 w-6 h-6");
+      input0.__value = input0_value_value = "rustic";
+      input0.value = input0.__value;
+      /*$$binding_groups*/
+
+      ctx[6][0].push(input0);
+      (0, _internal.add_location)(input0, file, 25, 20, 713);
+      (0, _internal.attr_dev)(i0, "class", "svelte-8tfs0l");
+      (0, _internal.add_location)(i0, file, 30, 43, 1035);
+      (0, _internal.attr_dev)(i1, "class", "svelte-8tfs0l");
+      (0, _internal.add_location)(i1, file, 30, 50, 1042);
+      (0, _internal.attr_dev)(i2, "class", "svelte-8tfs0l");
+      (0, _internal.add_location)(i2, file, 30, 57, 1049);
+      (0, _internal.attr_dev)(i3, "class", "svelte-8tfs0l");
+      (0, _internal.add_location)(i3, file, 30, 64, 1056);
+      (0, _internal.attr_dev)(i4, "class", "svelte-8tfs0l");
+      (0, _internal.add_location)(i4, file, 30, 71, 1063);
+      (0, _internal.attr_dev)(span0, "class", "absolute svelte-8tfs0l");
+      (0, _internal.add_location)(span0, file, 30, 20, 1012);
+      (0, _internal.attr_dev)(label0, "class", "text-2xl svelte-8tfs0l");
+      (0, _internal.add_location)(label0, file, 24, 16, 668);
+      (0, _internal.add_location)(p0, file, 23, 12, 648);
+      (0, _internal.attr_dev)(input1, "type", "radio");
+      (0, _internal.attr_dev)(input1, "name", "theme");
+      (0, _internal.attr_dev)(input1, "id", "theme-cyber");
+      (0, _internal.attr_dev)(input1, "class", "form-radio text-indigo-600 w-6 h-6");
+      input1.__value = input1_value_value = "cyber";
+      input1.value = input1.__value;
+      /*$$binding_groups*/
+
+      ctx[6][0].push(input1);
+      (0, _internal.add_location)(input1, file, 35, 20, 1197);
+      (0, _internal.attr_dev)(i5, "class", "svelte-8tfs0l");
+      (0, _internal.add_location)(i5, file, 40, 43, 1506);
+      (0, _internal.attr_dev)(i6, "class", "svelte-8tfs0l");
+      (0, _internal.add_location)(i6, file, 40, 50, 1513);
+      (0, _internal.attr_dev)(i7, "class", "svelte-8tfs0l");
+      (0, _internal.add_location)(i7, file, 40, 57, 1520);
+      (0, _internal.attr_dev)(i8, "class", "svelte-8tfs0l");
+      (0, _internal.add_location)(i8, file, 40, 64, 1527);
+      (0, _internal.attr_dev)(i9, "class", "svelte-8tfs0l");
+      (0, _internal.add_location)(i9, file, 40, 71, 1534);
+      (0, _internal.attr_dev)(span1, "class", "absolute svelte-8tfs0l");
+      (0, _internal.add_location)(span1, file, 40, 20, 1483);
+      (0, _internal.attr_dev)(label1, "class", "text-2xl svelte-8tfs0l");
+      (0, _internal.add_location)(label1, file, 34, 16, 1152);
+      (0, _internal.add_location)(p1, file, 33, 12, 1132);
+      (0, _internal.attr_dev)(fieldset, "class", "border border-2 w-5/6 mx-auto py-6 px-10 m-6 relative");
+      (0, _internal.add_location)(fieldset, file, 21, 8, 528);
+      (0, _internal.add_location)(div0, file, 20, 4, 514);
+      (0, _internal.add_location)(div1, file, 0, 0, 0);
     },
     l: function claim(nodes) {
       throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     },
     m: function mount(target, anchor) {
-      (0, _internal.insert_dev)(target, div, anchor);
+      (0, _internal.insert_dev)(target, div1, anchor);
+      if (if_block0) if_block0.m(div1, null);
+      (0, _internal.append_dev)(div1, t0);
+      (0, _internal.append_dev)(div1, hr);
+      (0, _internal.append_dev)(div1, t1);
+      if (if_block1) if_block1.m(div1, null);
+      (0, _internal.append_dev)(div1, t2);
+      if (if_block2) if_block2.m(div1, null);
+      (0, _internal.append_dev)(div1, t3);
+      (0, _internal.append_dev)(div1, div0);
+      (0, _internal.append_dev)(div0, fieldset);
+      (0, _internal.append_dev)(fieldset, legend);
+      (0, _internal.append_dev)(fieldset, t5);
+      (0, _internal.append_dev)(fieldset, p0);
+      (0, _internal.append_dev)(p0, label0);
+      (0, _internal.append_dev)(label0, input0);
+      input0.checked = input0.__value ===
+      /*checkedTheme*/
+      ctx[3];
+      (0, _internal.append_dev)(label0, t6);
+      (0, _internal.append_dev)(label0, span0);
+      (0, _internal.append_dev)(span0, i0);
+      (0, _internal.append_dev)(span0, i1);
+      (0, _internal.append_dev)(span0, i2);
+      (0, _internal.append_dev)(span0, i3);
+      (0, _internal.append_dev)(span0, i4);
+      (0, _internal.append_dev)(fieldset, t7);
+      (0, _internal.append_dev)(fieldset, p1);
+      (0, _internal.append_dev)(p1, label1);
+      (0, _internal.append_dev)(label1, input1);
+      input1.checked = input1.__value ===
+      /*checkedTheme*/
+      ctx[3];
+      (0, _internal.append_dev)(label1, t8);
+      (0, _internal.append_dev)(label1, span1);
+      (0, _internal.append_dev)(span1, i5);
+      (0, _internal.append_dev)(span1, i6);
+      (0, _internal.append_dev)(span1, i7);
+      (0, _internal.append_dev)(span1, i8);
+      (0, _internal.append_dev)(span1, i9);
+
+      if (!mounted) {
+        dispose = [(0, _internal.listen_dev)(input0, "change",
+        /*input0_change_handler*/
+        ctx[5]), (0, _internal.listen_dev)(input0, "click",
+        /*setTheme*/
+        ctx[4], false, false, false), (0, _internal.listen_dev)(input1, "change",
+        /*input1_change_handler*/
+        ctx[7]), (0, _internal.listen_dev)(input1, "click",
+        /*setTheme*/
+        ctx[4], false, false, false)];
+        mounted = true;
+      }
     },
-    p: _internal.noop,
-    i: _internal.noop,
+    p: function update(ctx, [dirty]) {
+      if (
+      /*res*/
+      ctx[0] === true) {
+        if (if_block0) {
+          if (dirty &
+          /*res*/
+          1) {
+            (0, _internal.transition_in)(if_block0, 1);
+          }
+        } else {
+          if_block0 = create_if_block_2(ctx);
+          if_block0.c();
+          (0, _internal.transition_in)(if_block0, 1);
+          if_block0.m(div1, t0);
+        }
+      } else if (if_block0) {
+        if_block0.d(1);
+        if_block0 = null;
+      }
+
+      if (
+      /*res*/
+      ctx[0] === true) {
+        if (if_block1) {
+          if_block1.p(ctx, dirty);
+
+          if (dirty &
+          /*res*/
+          1) {
+            (0, _internal.transition_in)(if_block1, 1);
+          }
+        } else {
+          if_block1 = create_if_block_1(ctx);
+          if_block1.c();
+          (0, _internal.transition_in)(if_block1, 1);
+          if_block1.m(div1, t2);
+        }
+      } else if (if_block1) {
+        if_block1.d(1);
+        if_block1 = null;
+      }
+
+      if (
+      /*res*/
+      ctx[0] === true) {
+        if (if_block2) {
+          if_block2.p(ctx, dirty);
+
+          if (dirty &
+          /*res*/
+          1) {
+            (0, _internal.transition_in)(if_block2, 1);
+          }
+        } else {
+          if_block2 = create_if_block(ctx);
+          if_block2.c();
+          (0, _internal.transition_in)(if_block2, 1);
+          if_block2.m(div1, t3);
+        }
+      } else if (if_block2) {
+        if_block2.d(1);
+        if_block2 = null;
+      }
+
+      if (dirty &
+      /*checkedTheme*/
+      8) {
+        input0.checked = input0.__value ===
+        /*checkedTheme*/
+        ctx[3];
+      }
+
+      if (dirty &
+      /*checkedTheme*/
+      8) {
+        input1.checked = input1.__value ===
+        /*checkedTheme*/
+        ctx[3];
+      }
+    },
+    i: function intro(local) {
+      (0, _internal.transition_in)(if_block0);
+      (0, _internal.transition_in)(if_block1);
+      (0, _internal.transition_in)(if_block2);
+    },
     o: _internal.noop,
     d: function destroy(detaching) {
-      if (detaching) (0, _internal.detach_dev)(div);
+      if (detaching) (0, _internal.detach_dev)(div1);
+      if (if_block0) if_block0.d();
+      if (if_block1) if_block1.d();
+      if (if_block2) if_block2.d();
+      /*$$binding_groups*/
+
+      ctx[6][0].splice(
+      /*$$binding_groups*/
+      ctx[6][0].indexOf(input0), 1);
+      /*$$binding_groups*/
+
+      ctx[6][0].splice(
+      /*$$binding_groups*/
+      ctx[6][0].indexOf(input1), 1);
+      mounted = false;
+      (0, _internal.run_all)(dispose);
     }
   };
   (0, _internal.dispatch_dev)("SvelteRegisterBlock", {
@@ -2314,8 +3279,58 @@ function create_fragment(ctx) {
   return block;
 }
 
-function instance($$self, $$props) {
-  const writable_props = [];
+function getCookie(name) {
+  let cookies = document.cookie.split("; ");
+  let cookieVal;
+  cookies.forEach(cookie => {
+    let [k, v] = cookie.split("=");
+    if (k === name) cookieVal = v;
+  });
+  return cookieVal;
+}
+
+function instance($$self, $$props, $$invalidate) {
+  let {
+    res = false
+  } = $$props;
+  let {
+    visitCount = 0
+  } = $$props;
+  let {
+    articleCount = 0
+  } = $$props;
+  let checkedTheme = "rustic";
+  (0, _svelte.onMount)(async () => {
+    $$invalidate(0, res = true);
+    axios.get("/api/v1/getTheme").then(response => {
+      $$invalidate(3, checkedTheme = response.data.theme);
+    });
+
+    if (getCookie("visited") && getCookie("posts")) {
+      $$invalidate(1, visitCount = getCookie("visited"));
+      $$invalidate(2, articleCount = getCookie("posts"));
+      return;
+    }
+
+    axios.get("/api/v1/info").then(response => {
+      $$invalidate(1, visitCount = response.data.visit);
+      $$invalidate(2, articleCount = response.data.post);
+      let date = new Date();
+      date.setTime(Date.now() + 1000 * 60 * 60 * 24);
+      document.cookie = "visited=".concat(visitCount, ";expires=").concat(date.toGMTString(), ";path=/;SameSite=Strict;");
+      document.cookie = "posts=".concat(articleCount, ";expires=").concat(date.toGMTString(), ";path=/;SameSite=Strict;");
+    });
+  });
+
+  function setTheme(e) {
+    let date = new Date();
+    date.setTime(Date.now() + 1000 * 60 * 60 * 24 * 365);
+    document.cookie = "theme=".concat(e.target.value, ";expires=").concat(date.toGMTString(), ";path=/;SameSite=Strict;");
+    $$invalidate(3, checkedTheme = e.target.value);
+    location.reload();
+  }
+
+  const writable_props = ["res", "visitCount", "articleCount"];
   Object.keys($$props).forEach(key => {
     if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console.warn("<Index> was created with unknown prop '".concat(key, "'"));
   });
@@ -2324,14 +3339,60 @@ function instance($$self, $$props) {
     $$scope
   } = $$props;
   (0, _internal.validate_slots)("Index", $$slots, []);
-  return [];
+  const $$binding_groups = [[]];
+
+  function input0_change_handler() {
+    checkedTheme = this.__value;
+    $$invalidate(3, checkedTheme);
+  }
+
+  function input1_change_handler() {
+    checkedTheme = this.__value;
+    $$invalidate(3, checkedTheme);
+  }
+
+  $$self.$set = $$props => {
+    if ("res" in $$props) $$invalidate(0, res = $$props.res);
+    if ("visitCount" in $$props) $$invalidate(1, visitCount = $$props.visitCount);
+    if ("articleCount" in $$props) $$invalidate(2, articleCount = $$props.articleCount);
+  };
+
+  $$self.$capture_state = () => ({
+    flip: _animate.flip,
+    quintOut: _easing.quintOut,
+    fly: _transition.fly,
+    onMount: _svelte.onMount,
+    res,
+    visitCount,
+    articleCount,
+    checkedTheme,
+    getCookie,
+    setTheme
+  });
+
+  $$self.$inject_state = $$props => {
+    if ("res" in $$props) $$invalidate(0, res = $$props.res);
+    if ("visitCount" in $$props) $$invalidate(1, visitCount = $$props.visitCount);
+    if ("articleCount" in $$props) $$invalidate(2, articleCount = $$props.articleCount);
+    if ("checkedTheme" in $$props) $$invalidate(3, checkedTheme = $$props.checkedTheme);
+  };
+
+  if ($$props && "$$inject" in $$props) {
+    $$self.$inject_state($$props.$$inject);
+  }
+
+  return [res, visitCount, articleCount, checkedTheme, setTheme, input0_change_handler, $$binding_groups, input1_change_handler];
 }
 
 class Index extends _internal.SvelteComponentDev {
   constructor(options) {
     super(options);
-    if (!document.getElementById("svelte-1rptoyp-style")) add_css();
-    (0, _internal.init)(this, options, instance, create_fragment, _internal.safe_not_equal, {});
+    if (!document_1.getElementById("svelte-8tfs0l-style")) add_css();
+    (0, _internal.init)(this, options, instance, create_fragment, _internal.safe_not_equal, {
+      res: 0,
+      visitCount: 1,
+      articleCount: 2
+    });
     (0, _internal.dispatch_dev)("SvelteRegisterComponent", {
       component: this,
       tagName: "Index",
@@ -2340,11 +3401,35 @@ class Index extends _internal.SvelteComponentDev {
     });
   }
 
+  get res() {
+    throw new Error("<Index>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+  }
+
+  set res(value) {
+    throw new Error("<Index>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+  }
+
+  get visitCount() {
+    throw new Error("<Index>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+  }
+
+  set visitCount(value) {
+    throw new Error("<Index>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+  }
+
+  get articleCount() {
+    throw new Error("<Index>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+  }
+
+  set articleCount(value) {
+    throw new Error("<Index>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+  }
+
 }
 
 var _default = Index;
 exports.default = _default;
-},{"svelte/internal":"../node_modules/svelte/internal/index.mjs","_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"components/User/Index.svelte":[function(require,module,exports) {
+},{"svelte/internal":"../node_modules/svelte/internal/index.mjs","svelte/animate":"../node_modules/svelte/animate/index.mjs","svelte/easing":"../node_modules/svelte/easing/index.mjs","svelte/transition":"../node_modules/svelte/transition/index.mjs","svelte":"../node_modules/svelte/index.mjs","_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"components/User/Index.svelte":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -26484,7 +27569,310 @@ class Index extends _internal.SvelteComponentDev {
 
 var _default = Index;
 exports.default = _default;
-},{"svelte/internal":"../node_modules/svelte/internal/index.mjs","./Create.svelte":"components/Post/Create.svelte","./Read.svelte":"components/Post/Read.svelte"}],"../node_modules/axios/lib/helpers/bind.js":[function(require,module,exports) {
+},{"svelte/internal":"../node_modules/svelte/internal/index.mjs","./Create.svelte":"components/Post/Create.svelte","./Read.svelte":"components/Post/Read.svelte"}],"components/Admin/Index.svelte":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _internal = require("svelte/internal");
+
+var _svelte = require("svelte");
+
+/* components/Admin/Index.svelte generated by Svelte v3.23.2 */
+const {
+  document: document_1
+} = _internal.globals;
+const file = "components/Admin/Index.svelte";
+
+function add_css() {
+  var style = (0, _internal.element)("style");
+  style.id = "svelte-kqzfma-style";
+  style.textContent = "label.svelte-kqzfma span i.svelte-kqzfma{display:inline-block;width:25px;height:25px}#theme-rustic+span.svelte-kqzfma.svelte-kqzfma{right:20px}#theme-rustic+span.svelte-kqzfma i.svelte-kqzfma:nth-child(1){background-color:#49a79f}#theme-rustic+span.svelte-kqzfma i.svelte-kqzfma:nth-child(2){background-color:#3a5f6b}#theme-rustic+span.svelte-kqzfma i.svelte-kqzfma:nth-child(3){background-color:#b2f5ea}#theme-rustic+span.svelte-kqzfma i.svelte-kqzfma:nth-child(4){background-color:#ffb87a}#theme-rustic+span.svelte-kqzfma i.svelte-kqzfma:nth-child(5){background-color:#ffe28e}#theme-cyber+span.svelte-kqzfma.svelte-kqzfma{right:20px}#theme-cyber+span.svelte-kqzfma i.svelte-kqzfma:nth-child(1){background-color:#01100e}#theme-cyber+span.svelte-kqzfma i.svelte-kqzfma:nth-child(2){background-color:#b100ff}#theme-cyber+span.svelte-kqzfma i.svelte-kqzfma:nth-child(3){background-color:#b26bef}#theme-cyber+span.svelte-kqzfma i.svelte-kqzfma:nth-child(4){background-color:#7affd0}#theme-cyber+span.svelte-kqzfma i.svelte-kqzfma:nth-child(5){background-color:#28ff00}\n";
+  (0, _internal.append_dev)(document_1.head, style);
+}
+
+function create_fragment(ctx) {
+  let div;
+  let fieldset;
+  let legend;
+  let t1;
+  let p0;
+  let label0;
+  let input0;
+  let input0_value_value;
+  let t2;
+  let span0;
+  let i0;
+  let i1;
+  let i2;
+  let i3;
+  let i4;
+  let t3;
+  let p1;
+  let label1;
+  let input1;
+  let input1_value_value;
+  let t4;
+  let span1;
+  let i5;
+  let i6;
+  let i7;
+  let i8;
+  let i9;
+  let mounted;
+  let dispose;
+  const block = {
+    c: function create() {
+      div = (0, _internal.element)("div");
+      fieldset = (0, _internal.element)("fieldset");
+      legend = (0, _internal.element)("legend");
+      legend.textContent = "Theme";
+      t1 = (0, _internal.space)();
+      p0 = (0, _internal.element)("p");
+      label0 = (0, _internal.element)("label");
+      input0 = (0, _internal.element)("input");
+      t2 = (0, _internal.text)(" Rustic (default)\n                ");
+      span0 = (0, _internal.element)("span");
+      i0 = (0, _internal.element)("i");
+      i1 = (0, _internal.element)("i");
+      i2 = (0, _internal.element)("i");
+      i3 = (0, _internal.element)("i");
+      i4 = (0, _internal.element)("i");
+      t3 = (0, _internal.space)();
+      p1 = (0, _internal.element)("p");
+      label1 = (0, _internal.element)("label");
+      input1 = (0, _internal.element)("input");
+      t4 = (0, _internal.text)(" Cyber\n                ");
+      span1 = (0, _internal.element)("span");
+      i5 = (0, _internal.element)("i");
+      i6 = (0, _internal.element)("i");
+      i7 = (0, _internal.element)("i");
+      i8 = (0, _internal.element)("i");
+      i9 = (0, _internal.element)("i");
+      (0, _internal.add_location)(legend, file, 2, 8, 91);
+      (0, _internal.attr_dev)(input0, "type", "radio");
+      (0, _internal.attr_dev)(input0, "name", "theme");
+      (0, _internal.attr_dev)(input0, "id", "theme-rustic");
+      (0, _internal.attr_dev)(input0, "class", "form-radio text-indigo-600 w-6 h-6");
+      input0.__value = input0_value_value = "rustic";
+      input0.value = input0.__value;
+      /*$$binding_groups*/
+
+      ctx[3][0].push(input0);
+      (0, _internal.add_location)(input0, file, 5, 16, 179);
+      (0, _internal.attr_dev)(i0, "class", "svelte-kqzfma");
+      (0, _internal.add_location)(i0, file, 10, 39, 481);
+      (0, _internal.attr_dev)(i1, "class", "svelte-kqzfma");
+      (0, _internal.add_location)(i1, file, 10, 46, 488);
+      (0, _internal.attr_dev)(i2, "class", "svelte-kqzfma");
+      (0, _internal.add_location)(i2, file, 10, 53, 495);
+      (0, _internal.attr_dev)(i3, "class", "svelte-kqzfma");
+      (0, _internal.add_location)(i3, file, 10, 60, 502);
+      (0, _internal.attr_dev)(i4, "class", "svelte-kqzfma");
+      (0, _internal.add_location)(i4, file, 10, 67, 509);
+      (0, _internal.attr_dev)(span0, "class", "absolute svelte-kqzfma");
+      (0, _internal.add_location)(span0, file, 10, 16, 458);
+      (0, _internal.attr_dev)(label0, "class", "text-2xl svelte-kqzfma");
+      (0, _internal.add_location)(label0, file, 4, 12, 138);
+      (0, _internal.add_location)(p0, file, 3, 8, 122);
+      (0, _internal.attr_dev)(input1, "type", "radio");
+      (0, _internal.attr_dev)(input1, "name", "theme");
+      (0, _internal.attr_dev)(input1, "id", "theme-cyber");
+      (0, _internal.attr_dev)(input1, "class", "form-radio text-indigo-600 w-6 h-6");
+      input1.__value = input1_value_value = "cyber";
+      input1.value = input1.__value;
+      /*$$binding_groups*/
+
+      ctx[3][0].push(input1);
+      (0, _internal.add_location)(input1, file, 15, 16, 623);
+      (0, _internal.attr_dev)(i5, "class", "svelte-kqzfma");
+      (0, _internal.add_location)(i5, file, 20, 39, 912);
+      (0, _internal.attr_dev)(i6, "class", "svelte-kqzfma");
+      (0, _internal.add_location)(i6, file, 20, 46, 919);
+      (0, _internal.attr_dev)(i7, "class", "svelte-kqzfma");
+      (0, _internal.add_location)(i7, file, 20, 53, 926);
+      (0, _internal.attr_dev)(i8, "class", "svelte-kqzfma");
+      (0, _internal.add_location)(i8, file, 20, 60, 933);
+      (0, _internal.attr_dev)(i9, "class", "svelte-kqzfma");
+      (0, _internal.add_location)(i9, file, 20, 67, 940);
+      (0, _internal.attr_dev)(span1, "class", "absolute svelte-kqzfma");
+      (0, _internal.add_location)(span1, file, 20, 16, 889);
+      (0, _internal.attr_dev)(label1, "class", "text-2xl svelte-kqzfma");
+      (0, _internal.add_location)(label1, file, 14, 12, 582);
+      (0, _internal.add_location)(p1, file, 13, 8, 566);
+      (0, _internal.attr_dev)(fieldset, "class", "border border-2 w-5/6 mx-auto py-6 px-10 m-6 relative");
+      (0, _internal.add_location)(fieldset, file, 1, 4, 10);
+      (0, _internal.add_location)(div, file, 0, 0, 0);
+    },
+    l: function claim(nodes) {
+      throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    },
+    m: function mount(target, anchor) {
+      (0, _internal.insert_dev)(target, div, anchor);
+      (0, _internal.append_dev)(div, fieldset);
+      (0, _internal.append_dev)(fieldset, legend);
+      (0, _internal.append_dev)(fieldset, t1);
+      (0, _internal.append_dev)(fieldset, p0);
+      (0, _internal.append_dev)(p0, label0);
+      (0, _internal.append_dev)(label0, input0);
+      input0.checked = input0.__value ===
+      /*checkedTheme*/
+      ctx[0];
+      (0, _internal.append_dev)(label0, t2);
+      (0, _internal.append_dev)(label0, span0);
+      (0, _internal.append_dev)(span0, i0);
+      (0, _internal.append_dev)(span0, i1);
+      (0, _internal.append_dev)(span0, i2);
+      (0, _internal.append_dev)(span0, i3);
+      (0, _internal.append_dev)(span0, i4);
+      (0, _internal.append_dev)(fieldset, t3);
+      (0, _internal.append_dev)(fieldset, p1);
+      (0, _internal.append_dev)(p1, label1);
+      (0, _internal.append_dev)(label1, input1);
+      input1.checked = input1.__value ===
+      /*checkedTheme*/
+      ctx[0];
+      (0, _internal.append_dev)(label1, t4);
+      (0, _internal.append_dev)(label1, span1);
+      (0, _internal.append_dev)(span1, i5);
+      (0, _internal.append_dev)(span1, i6);
+      (0, _internal.append_dev)(span1, i7);
+      (0, _internal.append_dev)(span1, i8);
+      (0, _internal.append_dev)(span1, i9);
+
+      if (!mounted) {
+        dispose = [(0, _internal.listen_dev)(input0, "change",
+        /*input0_change_handler*/
+        ctx[2]), (0, _internal.listen_dev)(input0, "click",
+        /*setTheme*/
+        ctx[1], false, false, false), (0, _internal.listen_dev)(input1, "change",
+        /*input1_change_handler*/
+        ctx[4]), (0, _internal.listen_dev)(input1, "click",
+        /*setTheme*/
+        ctx[1], false, false, false)];
+        mounted = true;
+      }
+    },
+    p: function update(ctx, [dirty]) {
+      if (dirty &
+      /*checkedTheme*/
+      1) {
+        input0.checked = input0.__value ===
+        /*checkedTheme*/
+        ctx[0];
+      }
+
+      if (dirty &
+      /*checkedTheme*/
+      1) {
+        input1.checked = input1.__value ===
+        /*checkedTheme*/
+        ctx[0];
+      }
+    },
+    i: _internal.noop,
+    o: _internal.noop,
+    d: function destroy(detaching) {
+      if (detaching) (0, _internal.detach_dev)(div);
+      /*$$binding_groups*/
+
+      ctx[3][0].splice(
+      /*$$binding_groups*/
+      ctx[3][0].indexOf(input0), 1);
+      /*$$binding_groups*/
+
+      ctx[3][0].splice(
+      /*$$binding_groups*/
+      ctx[3][0].indexOf(input1), 1);
+      mounted = false;
+      (0, _internal.run_all)(dispose);
+    }
+  };
+  (0, _internal.dispatch_dev)("SvelteRegisterBlock", {
+    block,
+    id: create_fragment.name,
+    type: "component",
+    source: "",
+    ctx
+  });
+  return block;
+}
+
+function instance($$self, $$props, $$invalidate) {
+  let checkedTheme = "rustic";
+  (0, _svelte.onMount)(async () => {
+    axios.get("/api/v1/getTheme").then(response => {
+      $$invalidate(0, checkedTheme = response.data.theme);
+    });
+  });
+
+  function setTheme(e) {
+    let date = new Date();
+    date.setTime(Date.now() + 1000 * 60 * 60 * 24 * 365);
+    document.cookie = "theme=".concat(e.target.value, ";expires=").concat(date.toGMTString(), ";path=/;SameSite=Strict;");
+    $$invalidate(0, checkedTheme = e.target.value);
+    location.reload();
+  }
+
+  const writable_props = [];
+  Object.keys($$props).forEach(key => {
+    if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console.warn("<Index> was created with unknown prop '".concat(key, "'"));
+  });
+  let {
+    $$slots = {},
+    $$scope
+  } = $$props;
+  (0, _internal.validate_slots)("Index", $$slots, []);
+  const $$binding_groups = [[]];
+
+  function input0_change_handler() {
+    checkedTheme = this.__value;
+    $$invalidate(0, checkedTheme);
+  }
+
+  function input1_change_handler() {
+    checkedTheme = this.__value;
+    $$invalidate(0, checkedTheme);
+  }
+
+  $$self.$capture_state = () => ({
+    onMount: _svelte.onMount,
+    checkedTheme,
+    setTheme
+  });
+
+  $$self.$inject_state = $$props => {
+    if ("checkedTheme" in $$props) $$invalidate(0, checkedTheme = $$props.checkedTheme);
+  };
+
+  if ($$props && "$$inject" in $$props) {
+    $$self.$inject_state($$props.$$inject);
+  }
+
+  return [checkedTheme, setTheme, input0_change_handler, $$binding_groups, input1_change_handler];
+}
+
+class Index extends _internal.SvelteComponentDev {
+  constructor(options) {
+    super(options);
+    if (!document_1.getElementById("svelte-kqzfma-style")) add_css();
+    (0, _internal.init)(this, options, instance, create_fragment, _internal.safe_not_equal, {});
+    (0, _internal.dispatch_dev)("SvelteRegisterComponent", {
+      component: this,
+      tagName: "Index",
+      options,
+      id: create_fragment.name
+    });
+  }
+
+}
+
+var _default = Index;
+exports.default = _default;
+},{"svelte/internal":"../node_modules/svelte/internal/index.mjs","svelte":"../node_modules/svelte/index.mjs","_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../node_modules/axios/lib/helpers/bind.js":[function(require,module,exports) {
 'use strict';
 
 module.exports = function bind(fn, thisArg) {
@@ -28263,6 +29651,8 @@ var _Index2 = _interopRequireDefault(require("./User/Index.svelte"));
 
 var _Index3 = _interopRequireDefault(require("./Post/Index.svelte"));
 
+var _Index4 = _interopRequireDefault(require("./Admin/Index.svelte"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /* components/App.svelte generated by Svelte v3.23.2 */
@@ -28370,7 +29760,7 @@ function create_else_block(ctx) {
     ctx
   });
   return block;
-} // (1:0) {#if location.pathname == '/' }
+} // (1:0) {#if location.pathname === '/' || location.pathname === ''}
 
 
 function create_if_block(ctx) {
@@ -28405,7 +29795,7 @@ function create_if_block(ctx) {
     block,
     id: create_if_block.name,
     type: "if",
-    source: "(1:0) {#if location.pathname == '/' }",
+    source: "(1:0) {#if location.pathname === '/' || location.pathname === ''}",
     ctx
   });
   return block;
@@ -28420,7 +29810,7 @@ function create_fragment(ctx) {
   const if_blocks = [];
 
   function select_block_type(ctx, dirty) {
-    if (location.pathname == "/") return 0;
+    if (location.pathname === "/" || location.pathname === "") return 0;
     return 1;
   }
 
@@ -28477,7 +29867,8 @@ function instance($$self, $$props, $$invalidate) {
   const routes = {
     main: _Index.default,
     user: _Index2.default,
-    post: _Index3.default
+    post: _Index3.default,
+    shielded: _Index4.default
   };
   let controller = location.pathname.split("/")[1];
   const writable_props = ["csrf", "theme"];
@@ -28499,6 +29890,7 @@ function instance($$self, $$props, $$invalidate) {
     Main: _Index.default,
     User: _Index2.default,
     Post: _Index3.default,
+    Admin: _Index4.default,
     csrf,
     theme,
     routes,
@@ -28569,7 +29961,7 @@ class App extends _internal.SvelteComponentDev {
 
 var _default = App;
 exports.default = _default;
-},{"svelte/internal":"../node_modules/svelte/internal/index.mjs","./Main/Index.svelte":"components/Main/Index.svelte","./User/Index.svelte":"components/User/Index.svelte","./Post/Index.svelte":"components/Post/Index.svelte","axios":"../node_modules/axios/index.js"}],"index.js":[function(require,module,exports) {
+},{"svelte/internal":"../node_modules/svelte/internal/index.mjs","./Main/Index.svelte":"components/Main/Index.svelte","./User/Index.svelte":"components/User/Index.svelte","./Post/Index.svelte":"components/Post/Index.svelte","./Admin/Index.svelte":"components/Admin/Index.svelte","axios":"../node_modules/axios/index.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -28618,7 +30010,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54157" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55297" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

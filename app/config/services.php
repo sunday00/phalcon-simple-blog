@@ -135,7 +135,7 @@ $di->set('flashSession', function () {
     $session->setAdapter($redis);
     $flash   = new FlashSession($escaper, $session);
     $flash->setCssClasses([
-        'error'   => 'alert alert-danger msg',
+        'error'   => 'w-full bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded fixed bottom-0',
         'success' => 'alert alert-success msg',
         'notice'  => 'alert alert-info msg',
         'warning' => 'alert alert-warning msg'

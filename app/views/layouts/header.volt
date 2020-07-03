@@ -22,9 +22,14 @@
             <a href="/post" class="block mt-4 lg:inline-block lg:mt-0  text-{{theme}}-light hover:text-white mr-4">
                 Articles
             </a>
-            <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0  text-{{theme}}-light hover:text-white">
+            <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0  text-{{theme}}-light hover:text-white mr-4">
                 About
             </a>
+            {%- if session.role -%}
+            <a href="{{ url.get(['for':'admin']) }}" class="block mt-4 lg:inline-block lg:mt-0  text-{{theme}}-light hover:text-white">
+                Manage
+            </a>
+            {%- endif -%}
         </div>
         <div>
             {%- if session.role -%}

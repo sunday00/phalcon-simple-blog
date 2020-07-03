@@ -15,9 +15,17 @@ class AdminRoutes extends Group
             'controller' => 'admin',
             'action' => 'dashboard',
             'params' => 1
-        ])->setName('admin');;
+        ])->setName('admin');
 
+        $this->addGet('/api/v1/info', [
+            'controller' => 'index',
+            'action' => 'info',
+        ])->setName('info');
 
+        $this->addGet('/api/v1/getTheme', [
+            'controller' => 'admin',
+            'action' => 'getTheme',
+        ])->setName('getTheme');
 
 //        $this->add('/aka/news/{str1}/{str2}', [
 //            'controller' => 'post',

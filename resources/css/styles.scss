@@ -2,8 +2,6 @@
 
 @tailwind components;
 
-@tailwind utilities;
-
 @font-face {
   font-family: "fredric";
   src: url("../font/Fredericka_the_Great/FrederickatheGreat-Regular.ttf");
@@ -24,12 +22,20 @@
   line-height: 3rem;
 }
 
-.app-left {
-  background-image: url("../img/left-background.jpg");
+.app-left.bg-rustic-accent{
+  background-image: url("../img/left-background-rustic.jpg");
   background-size: auto 107%;
   background-position-y: bottom;
   background-position-x: center;
+}
+.app-left.bg-cyber-accent{
+  background-image: url("../img/left-background-cyber.jpg");
+  background-size: auto 107%;
+  background-position-y: top;
+  background-position-x: center;
+}
 
+.app-left {
   h1 {
     font-family: fredric;
     color: white;
@@ -72,3 +78,9 @@
     padding: 15px;
   }
 }
+
+button{
+  @apply text-blue-200;
+}
+
+@tailwind utilities;
