@@ -5,7 +5,10 @@ namespace App\Controllers;
 
 use Phalcon\Mvc\Model\Criteria;
 use Phalcon\Paginator\Adapter\Model;
+
 use App\Models\Post;
+use App\Services\TagServices;
+
 use Phalcon\Helper\Arr;
 
 class PostController extends ControllerBase
@@ -18,6 +21,12 @@ class PostController extends ControllerBase
         $numberPage = $this->request->getQuery('page', 'int', 1);
         $parameters = Criteria::fromInput($this->di, '\App\Models\Post', $_GET)->getParams();
         $parameters['order'] = "id desc";
+
+        $tagQuery = ($this->request->getQuery('tag', 'string', null));
+        if($tagQuery){
+            $posts = \App\Models\Tag::findFirst("title='{$tagQuery}'")->posts->toArray();
+            $parameters[] = "id in (".implode("," , Arr::pluck( (array) $posts, 'id' )).")" ;
+        }
 
         $paginator = new Model(
             [
@@ -52,6 +61,15 @@ class PostController extends ControllerBase
         $paginate->convertedItems = $convertedItems;
 
         $this->view->page = $paginate;
+
+        if($tagQuery){
+            $tagParam = "&tag={$tagQuery}";
+            $this->view->setVar('tagParam', $tagParam);
+            $this->view->tagParam = $tagParam;
+        } else {
+            $this->view->setVar('tagParam', '');
+            $this->view->tagParam = '';
+        }
     }
 
     /**
@@ -103,7 +121,9 @@ class PostController extends ControllerBase
     public function readDataAction($id)
     {
         $post = Post::findFirst("id={$id}");
-        return json_encode($post);
+        $post = (object) array_merge((array) $post, ['tags' => $post->tags->toArray()]);
+
+        return json_encode( $post );
     }
 
     /**
@@ -128,6 +148,9 @@ class PostController extends ControllerBase
         $post = Post::findFirst($id);
         $post->title = $this->request->getJsonRawBody()->title;
         $post->body = json_encode($this->request->getJsonRawBody()->blocks);
+
+        $post->tags = TagServices::updateTag($id, $this->request);
+
         $originalFiles = $this->request->getJsonRawBody()->originalFiles;
         $files = $this->request->getJsonRawBody()->files;
         $deletedFiles = array_diff(\App\Plugins\Arr::pluck($originalFiles, 'url'), \App\Plugins\Arr::pluck($files, 'url'));
@@ -168,12 +191,21 @@ class PostController extends ControllerBase
         $post->title = $this->request->getPost("title", "string");
         $post->body = str_replace("&#34;", "\"", urldecode( $this->request->getPost("content", "string") ));
         $post->user_id = $this->session->get("user");
+        $tags = TagServices::storeTag($this->request);
+
+        if($tags['newTags']){
+            $post->tags = $tags['newTags'];
+        }
 
         if (!$post->save()) {
             return json_encode([
                 'status'    => 'fail',
                 'error'     => 'fail to store'
             ]);
+        }
+
+        if($tags['existedTags']){
+            TagServices::savePersistTags( $post->id, $tags['existedTags'] );
         }
 
         $this->fileService->saveFile($post->id, str_replace( "&#34;", "\"", $this->request->getPost("files", "string") ));
@@ -244,6 +276,8 @@ class PostController extends ControllerBase
         foreach( $post->getFile() as $file){
             unlink(BASE_PATH."/public".$file->stored_name);
         }
+
+        TagServices::deleteForeign($id);
 
         if (!$post->delete()) {
             return json_encode([

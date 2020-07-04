@@ -5,6 +5,7 @@ namespace App\Controllers;
 
 use App\Models\Visitor;
 use App\Models\Post;
+use App\Services\TagServices;
 
 class IndexController extends ControllerBase
 {
@@ -25,10 +26,13 @@ class IndexController extends ControllerBase
 
         $cnt = $visitor->count();
 
+
+
         return json_encode([
             'success'   => 1,
-            'visit'   => $cnt,
-            'post'      => $post
+            'visit'     => $cnt,
+            'post'      => $post,
+            'tags'      => TagServices::getMostAppliedTags()
         ]);
     }
 

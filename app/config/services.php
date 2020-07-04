@@ -192,3 +192,10 @@ $di->set(
         return new \App\Services\FileServices($di);
     }
 );
+
+$di->set(
+    'tagService',
+    function () use ($di) {
+        return new \App\Services\TagServices($di);
+    }
+);

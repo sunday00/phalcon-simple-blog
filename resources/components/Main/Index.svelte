@@ -18,6 +18,12 @@
     </div>
     {/if}
 
+    <div class="mx-3 my-10 text-center">
+        {#each tags as tag}
+            <Tag tagName="{tag}" mode="read" theme="{theme}">{tag}</Tag>
+        {/each}
+    </div>
+
     <div>
         <fieldset class="border border-2 w-5/6 mx-auto py-6 px-10 m-6 relative">
             <legend>Theme</legend>
@@ -51,9 +57,13 @@
     import { fly } from 'svelte/transition';
     import { onMount } from 'svelte';
 
+    import Tag from '../Post/createElements/Tag.svelte'
+
+    export let theme;
     export let res = false;
     export let visitCount = 0;
     export let articleCount = 0;
+    export let tags = [];
 
     let checkedTheme = 'rustic';
 
@@ -64,20 +74,23 @@
             checkedTheme = response.data.theme;
         });
 
-        if ( getCookie('visited') && getCookie('posts')){
+        if ( getCookie('visited') && getCookie('posts') && getCookie('tags')){
             visitCount = getCookie('visited');
             articleCount = getCookie('posts');
+            tags = getCookie('tags').split(',');
             return ;
         }
 
         axios.get('/api/v1/info').then((response) => {
             visitCount = response.data.visit;
             articleCount = response.data.post;
+            tags = response.data.tags;
 
             let date = new Date();
             date.setTime(Date.now() + 1000 * 60 * 60 * 24);
             document.cookie = `visited=${visitCount};expires=${date.toGMTString()};path=/;SameSite=Strict;`;
             document.cookie = `posts=${articleCount};expires=${date.toGMTString()};path=/;SameSite=Strict;`;
+            document.cookie = `tags=${tags};expires=${date.toGMTString()};path=/;SameSite=Strict;`;
         });
     });
 

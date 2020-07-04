@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
+
 class Tag extends \Phalcon\Mvc\Model
 {
 
@@ -24,7 +26,7 @@ class Tag extends \Phalcon\Mvc\Model
     {
         $this->setSchema("phalcon_blog");
         $this->setSource("tag");
-        $this->hasMany('id', 'App\Models\PostTag', 'tag_id', ['alias' => 'PostTag']);
+        $this->hasManyToMany('id', 'App\Models\PostTag', 'tag_id', 'post_id', 'App\Models\Post', 'id', ['alias' => 'posts']);
     }
 
     /**
@@ -49,4 +51,24 @@ class Tag extends \Phalcon\Mvc\Model
         return parent::findFirst($parameters);
     }
 
+    public static function getMostAppliedTags ()
+    {
+        $sql = "SELECT t.title, COUNT(tag_id) as cnt FROM post_tag pt
+            LEFT JOIN tag t
+            ON pt.tag_id = t.id
+            GROUP BY pt.tag_id ORDER BY cnt DESC";
+        $model = new Tag();
+
+        return new Resultset(
+            null,
+            $model,
+            $model->getReadConnection()->query($sql)
+        );
+
+    }
+
+    public function reset()
+    {
+        // TODO: Implement reset() method.
+    }
 }

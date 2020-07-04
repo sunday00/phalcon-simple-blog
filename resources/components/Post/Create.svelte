@@ -5,6 +5,17 @@
                type="text"
                bind:value={title} />
         <div id="editorjs"></div>
+        <div class="tags my-4 mx-4">
+            {#each tags as tag}
+                <Tag theme={theme} on:delTag={delTag} tagName="{tag}" mode="create">{tag}</Tag>
+            {/each}
+        </div>
+        <div>
+            tags : to add tag, input some text and press enter key.
+            <input type="text" on:keydown={addTag}
+                   class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-3 my-4 block w-2/5 appearance-none leading-normal"
+            />
+        </div>
         <div class="flex flex-col">
             <input type="submit" value="submit" class="self-end bg-{theme}-primary hover:bg-{theme}-accent text-white font-bold py-2 px-4 mt-4 rounded" />
         </div>
@@ -22,13 +33,17 @@
     import Marker from '../vendor/marker.js';
     import Quote from '../vendor/quote.js';
 
+    import Tag from './createElements/Tag.svelte';
+
     export let csrf;
     export let theme;
     export let mode = 'create';
+
     let title = '';
     let content = '';
     let files = [];
     let originalFiles = [];
+    let tags = [];
 
     class Image extends ImageTool{
         constructor({data, api, config}) {
@@ -63,6 +78,7 @@
         formData.append(csrf.name, csrf.value);
         formData.append('title', title);
         formData.append('content', encodeURIComponent( JSON.stringify( (outputData.blocks) ) ));
+        formData.append('tags', JSON.stringify(tags));
         formData.append('files', JSON.stringify(files));
         axios.post(url, formData, {
             headers: { 'content-type': 'multipart/form-data' },
@@ -78,6 +94,7 @@
             csrf,
             title,
             blocks: outputData.blocks,
+            tags,
             originalFiles,
             files
         }
@@ -155,10 +172,33 @@
                             files.push(block.data.file);
                         }
                     });
+                    response.data.tags.forEach((tagObj) => {
+                        tags.push( tagObj.title );
+                    });
+
+                    tags = tags;
                     editor.blocks.delete(0);
                 });
         }
     });
+
+    function addTag (e) {
+        if(e.key.toLowerCase() === 'enter'){
+            e.preventDefault();
+
+            if( tags.indexOf(e.target.value) < 0) {
+                tags.push( e.target.value );
+                tags = tags;
+            }
+
+            e.target.value = '';
+        }
+    }
+
+    function delTag(e){
+        tags.splice(tags.indexOf(e.detail.dataset.name), 1);
+        tags = tags;
+    }
 
     function submit (e) {
         editor.save().then((outputData) => {

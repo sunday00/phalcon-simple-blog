@@ -1,7 +1,7 @@
 {#if location.pathname === '/' || location.pathname === ''}
-    <Main></Main>
+    <Main theme="{theme}"></Main>
 {:else}
-    <svelte:component this="{routes[controller.toLowerCase()]}" csrf="{csrf}" theme="{theme}"/>
+    <svelte:component this="{routes[controller.toLowerCase()]}" csrf="{csrf}" theme="{theme}" />
 {/if}
 
 <script>

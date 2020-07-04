@@ -21,8 +21,8 @@
         <div class="col-sm-11">
             <nav>
                 <ul class="pagination flex pl-0 rounded list-none flex-wrap mb-10">
-                    <li class="flex-1 lg:hidden xl:block"><?php echo $this->tag->linkTo(["post", "First", 'class' => 'block mx-auto text-xs font-semibold flex w-8 h-8 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-green-500 bg-white text-green-500', 'id' => 'first']) ?></li>
-                    <li class="flex-1"><?php echo $this->tag->linkTo(["post?page=" . $page->getPrevious(), "Prev", 'class' => 'block mx-auto text-xs font-semibold flex w-8 h-8 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-green-500 bg-white text-green-500', 'id' => 'prev']) ?></li>
+                    <li class="flex-1 lg:hidden xl:block"><?php echo $this->tag->linkTo(["post". str_replace('&','?',$tagParam), "First", 'class' => 'block mx-auto text-xs font-semibold flex w-8 h-8 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-green-500 bg-white text-green-500', 'id' => 'first']) ?></li>
+                    <li class="flex-1"><?php echo $this->tag->linkTo(["post?page=" . $page->getPrevious() . $tagParam, "Prev", 'class' => 'block mx-auto text-xs font-semibold flex w-8 h-8 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-green-500 bg-white text-green-500', 'id' => 'prev']) ?></li>
 
                     {% if page.getCurrent() % 10 is 0  %}
                         {%- set minus = 10 -%}
@@ -40,15 +40,15 @@
                     {% for pg in ( min )..( max ) %}
                         <li class="flex-1 hidden lg:block">
                             {% if pg === page.getCurrent() %}
-                                <a href="/post?page={{ pg }}" class="text-xs flex w-8 h-8 mx-auto p-0 rounded-full items-center justify-center relative border border-solid border-{{ theme }}-primary bg-white bg-{{ theme }}-primary text-white">{{ pg }}</a>
+                                <a href="/post?page={{ pg }}{{ tagParam }}" class="text-xs flex w-8 h-8 mx-auto p-0 rounded-full items-center justify-center relative border border-solid border-{{ theme }}-primary bg-white bg-{{ theme }}-primary text-white">{{ pg }}</a>
                             {% else %}
-                                <a href="/post?page={{ pg }}" class="text-xs flex w-8 h-8 mx-auto p-0 rounded-full items-center justify-center relative border border-solid border-{{ theme }}-primary bg-white text-{{ theme }}-primary">{{ pg }}</a>
+                                <a href="/post?page={{ pg }}{{ tagParam }}" class="text-xs flex w-8 h-8 mx-auto p-0 rounded-full items-center justify-center relative border border-solid border-{{ theme }}-primary bg-white text-{{ theme }}-primary">{{ pg }}</a>
                             {% endif %}
                         </li>
                     {% endfor %}
 
-                    <li class="flex-1"><?php echo $this->tag->linkTo(["post?page=" . $page->getNext(), "Next", 'class' => 'block mx-auto first:ml-0 text-xs font-semibold flex w-8 h-8 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-green-500 bg-white text-green-500', 'id' => 'next']) ?></li>
-                    <li class="flex-1 lg:hidden xl:block"><?php echo $this->tag->linkTo(["post?page=" . $page->getLast(), "Last", 'class' => 'block mx-auto first:ml-0 text-xs font-semibold flex w-8 h-8 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-green-500 bg-white text-green-500', 'id' => 'last']) ?></li>
+                    <li class="flex-1"><?php echo $this->tag->linkTo(["post?page=" . $page->getNext() . $tagParam, "Next", 'class' => 'block mx-auto first:ml-0 text-xs font-semibold flex w-8 h-8 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-green-500 bg-white text-green-500', 'id' => 'next']) ?></li>
+                    <li class="flex-1 lg:hidden xl:block"><?php echo $this->tag->linkTo(["post?page=" . $page->getLast() . $tagParam, "Last", 'class' => 'block mx-auto first:ml-0 text-xs font-semibold flex w-8 h-8 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-green-500 bg-white text-green-500', 'id' => 'last']) ?></li>
                 </ul>
             </nav>
         </div>

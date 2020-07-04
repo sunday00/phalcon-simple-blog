@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class Post extends \Phalcon\Mvc\Model
+class PostTag extends \Phalcon\Mvc\Model
 {
 
     /**
@@ -15,37 +15,13 @@ class Post extends \Phalcon\Mvc\Model
      *
      * @var integer
      */
-    public $user_id;
+    public $tag_id;
 
     /**
      *
-     * @var string
+     * @var integer
      */
-    public $title;
-
-    /**
-     *
-     * @var string
-     */
-    public $body;
-
-    /**
-     *
-     * @var string
-     */
-    public $active;
-
-    /**
-     *
-     * @var string
-     */
-    public $created_at;
-
-    /**
-     *
-     * @var string
-     */
-    public $updated_at;
+    public $post_id;
 
     /**
      * Initialize method for model.
@@ -53,17 +29,16 @@ class Post extends \Phalcon\Mvc\Model
     public function initialize()
     {
         $this->setSchema("phalcon_blog");
-        $this->setSource("post");
-        $this->hasMany('id', 'App\Models\File', 'post_id', ['alias' => 'File']);
-        $this->hasManyToMany('id', 'App\Models\PostTag', 'post_id', 'tag_id', 'App\Models\Tag', 'id', ['alias' => 'tags']);
-        $this->belongsTo('user_id', 'App\Models\User', 'id', ['alias' => 'User']);
+        $this->setSource("post_tag");
+//        $this->belongsTo('post_id', 'App\Models\Post', 'id', ['alias' => 'Post']);
+//        $this->belongsTo('tag_id', 'App\Models\Tag', 'id', ['alias' => 'Tag']);
     }
 
     /**
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Post[]|Post|\Phalcon\Mvc\Model\ResultSetInterface
+     * @return PostTag[]|PostTag|\Phalcon\Mvc\Model\ResultSetInterface
      */
     public static function find($parameters = null): \Phalcon\Mvc\Model\ResultsetInterface
     {
@@ -74,7 +49,7 @@ class Post extends \Phalcon\Mvc\Model
      * Allows to query the first record that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Post|\Phalcon\Mvc\Model\ResultInterface
+     * @return PostTag|\Phalcon\Mvc\Model\ResultInterface
      */
     public static function findFirst($parameters = null)
     {

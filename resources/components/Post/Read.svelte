@@ -21,6 +21,13 @@
             {/if}
         {/each}
     </div>
+
+    <div class="tags">
+        {#each tags as tag}
+            <Tag theme={theme} tagName="{tag.title}" mode="read">{tag.title}</Tag>
+        {/each}
+    </div>
+
     <div class="flex">
         <a href="/post/edit/{location.href.split('/').pop()}"
            class="bg-{ theme }-primary hover:bg-{ theme }-accent text-white font-bold py-2 px-4 mt-4 mr-4 rounded">
@@ -32,6 +39,7 @@
         </form>
     </div>
 </div>
+
 {#if bodyElement && bodyElement.children}
     <Now doms="{bodyElement.children}" theme="{theme}"></Now>
 {/if}
@@ -60,10 +68,13 @@
     import Quote from './readElements/Quote.svelte';
     import Embed from './readElements/Embed.svelte';
 
+    import Tag from './createElements/Tag.svelte';
+
     export let theme;
 
     let title;
     let blocks = [];
+    let tags = [];
 
     let error_title;
     let error_message;
@@ -72,6 +83,7 @@
         .then((response) => {
             title = response.data.title;
             blocks = JSON.parse(response.data.body);
+            tags = response.data.tags;
     });
 
     let bodyElement;
