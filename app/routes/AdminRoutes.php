@@ -26,6 +26,11 @@ class AdminRoutes extends Group
             'controller' => 'admin',
             'action' => 'getTheme',
         ])->setName('getTheme');
+        
+        $this->addGet('/about', [
+            'controller' => 'index',
+            'action' => 'about',
+        ])->setName('about');
 
 //        $this->add('/aka/news/{str1}/{str2}', [
 //            'controller' => 'post',
