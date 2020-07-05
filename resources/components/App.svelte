@@ -11,6 +11,7 @@
     import User from './User/Index.svelte';
     import Post from './Post/Index.svelte';
     import Admin from './Admin/Index.svelte';
+    import About from './About/Index.svelte';
 
     export let csrf;
     export let theme;
@@ -19,6 +20,7 @@
         main : Main,
         user : User,
         post : Post,
+        about : About,
         shielded : Admin
     }
 
