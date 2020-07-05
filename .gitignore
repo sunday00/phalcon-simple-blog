@@ -11,3 +11,4 @@ app/config/config.php
 public/img/**
 !public/img/favicon.ico
 !public/img/favicon.png
+dist
