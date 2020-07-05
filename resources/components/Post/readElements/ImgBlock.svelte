@@ -9,14 +9,17 @@ export let data;
 export let theme;
 
 let classname = '';
+
+console.log(data);
+
 if( data.withBackground ){
-    classname + ` bg-${theme}-gray`;
+    classname += ` bg-${theme}-gray`;
 }
 
 if( data.stretched ){
-    classname + ` w-full`;
+    classname += ` w-full`;
 } else {
-    classname + 'w-1/3 mx-auto block';
+    classname += 'w-2/3 mx-auto block';
 }
 
 </script>
