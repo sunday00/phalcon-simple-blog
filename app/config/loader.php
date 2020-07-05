@@ -18,15 +18,12 @@ $loader->registerFiles([
 ]);
 
 $loader->registerNamespaces([
-    'App\Routes'        => '/app/routes/',
-    'App\Controllers'   => '/app/controllers/',
-    'App\Models'        => '/app/models/',
-    'App\Services'      => '/app/services/',
-    'App\Plugins'       => '/app/plugins/',
-]);
-
-$loader->registerClasses([
-    'App\Plugins\Arr' => 'app/plugins/Arr.php',
+    'App\Routes'        => APP_PATH.'/routes/',
+    'App\Controllers'   => APP_PATH.'/controllers/',
+    'App\Models'        => APP_PATH.'/models/',
+    'App\Services'      => APP_PATH.'/services/',
+    'App\Plugins'       => APP_PATH.'/plugins/',
 ]);
 
 $loader->register();
+

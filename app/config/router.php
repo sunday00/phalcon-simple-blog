@@ -10,7 +10,6 @@ $router = $di->getRouter();
 //$router->add('/user/sign', 'User::doSign')->via(['POST'])->setName('userLogin');
 
 // $router->add()...;;
-
 $router->mount(new AdminRoutes());
 $router->mount(new UserRoutes());
 $router->mount(new PostRoutes());

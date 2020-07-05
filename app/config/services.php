@@ -152,7 +152,6 @@ $di->setShared('session', function () {
     $session = new SessionManager();
     $factory = new AdapterFactory( new SerializerFactory );
     $redis = new Redis($factory, $config->redis->toArray());
-
     $session->setAdapter($redis)->start();
 
     return $session;
