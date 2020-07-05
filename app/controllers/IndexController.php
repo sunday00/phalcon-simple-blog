@@ -35,6 +35,11 @@ class IndexController extends ControllerBase
             'tags'      => TagServices::getMostAppliedTags()
         ]);
     }
+    
+    public function aboutAction ()
+    {
+
+    }
 
 }
 
