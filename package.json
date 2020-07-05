@@ -17,6 +17,7 @@
   "dependencies": {
     "@codexteam/ajax": "^4.2.0",
     "@editorjs/embed": "^2.3.1",
+    "@fortawesome/fontawesome-free": "^5.13.1",
     "autoprefixer": "^9.8.4",
     "axios": "^0.19.2",
     "postcss-cli": "^7.1.1"
