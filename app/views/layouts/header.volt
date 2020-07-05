@@ -22,7 +22,7 @@
             <a href="/post" class="block mt-4 lg:inline-block lg:mt-0  text-{{theme}}-light hover:text-white mr-4">
                 Articles
             </a>
-            <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0  text-{{theme}}-light hover:text-white mr-4">
+            <a href="/about" class="block mt-4 lg:inline-block lg:mt-0  text-{{theme}}-light hover:text-white mr-4">
                 About
             </a>
             {%- if session.role -%}
