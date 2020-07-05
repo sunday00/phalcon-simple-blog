@@ -10,7 +10,7 @@
         <link rel="shortcut icon" type="image/x-icon" href="<?php echo $this->url->get('img/favicon.ico')?>"/>
 
         <link rel="stylesheet" href="/dist/styles.5c32a3d8.css">
-        <script src="/dist/styles.5c32a3d8.js"></script>
+	<script src="/dist/styles.5c32a3d8.js"></script>
         <link rel="stylesheet" href="/dist/resources.e31bb0bc.css">
 
     </head>

@@ -8,4 +8,6 @@ const app = new App({
     },
 });
 
+console.log(app);
+
 export default app;

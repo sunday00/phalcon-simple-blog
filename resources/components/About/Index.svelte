@@ -78,6 +78,7 @@
 
     export let theme;
     export let csrf;
+
 </script>
 
 <style>
