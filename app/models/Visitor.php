@@ -29,7 +29,7 @@ class Visitor extends \Phalcon\Mvc\Model
     public function initialize()
     {
         $this->setSchema("phalcon_blog");
-        $this->setSource("Visitor");
+        $this->setSource("visitor");
     }
 
     /**
